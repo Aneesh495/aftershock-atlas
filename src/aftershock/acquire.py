@@ -57,6 +57,12 @@ def sources() -> list[Source]:
                "cartographic reference only", "Coarse borders do not establish political status or longitudinal comparability."),
     ]
     result.extend([
+        Source("excess_2023", "https://cdn.who.int/media/docs/default-source/world-health-data-platform/covid-19-excessmortality/2023-05-19_covid-19_gem.zip?sfvrsn=9a95fc1a_4",
+               "zip", 10_000_000, "CC BY-NC-SA 3.0 IGO; noncommercial derived data under same terms", "https://www.who.int/data/sets/global-excess-deaths-associated-with-COVID-19-modelled-estimates",
+               "WHO modeled excess mortality 2020-2021; May 2023 release", "Modeled uncertainty is not observed daily mortality; modeled countries differ in input support."),
+        Source("excess_2022", "https://cdn.who.int/media/docs/default-source/world-health-data-platform/covid-19-excessmortality/2022-03-25_covid-19_gem.zip?sfvrsn=2d5835e0_2",
+               "zip", 10_000_000, "CC BY-NC-SA 3.0 IGO; noncommercial derived data under same terms", "https://www.who.int/data/sets/global-excess-deaths-associated-with-COVID-19-modelled-estimates",
+               "WHO modeled excess mortality 2020-2021; May 2022 release", "Superseded release retained solely for revision sensitivity."),
         Source("survey", "https://data.cdc.gov/resource/8pt5-q6wp.csv?" + urlencode({"$limit": 100000}),
                "csv", 35_000_000, "Public Domain U.S. Government", "https://data.cdc.gov/d/8pt5-q6wp",
                "Household Pulse waves 2020-2024; published aggregate estimates", "Not a matched longitudinal sample; no pre-2020 equivalent; nonresponse and phase changes."),

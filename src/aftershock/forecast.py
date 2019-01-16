@@ -75,7 +75,8 @@ def summarize_predictions(rows: list[dict]) -> list[dict]:
             groups.setdefault((r["model"], r["metric"], group), []).append(r)
     results = []
     for (model, metric, group), records in sorted(groups.items()):
-        values = lambda key: [r[key] for r in records]
+        def values(key):
+            return [r[key] for r in records]
         score = proper_scores(values("truth_t"), values("mean_t"), values("sd_t"), values("lower_t"), values("upper_t"))
         results.append({"model": model, "metric": metric, "group": group, **score,
                         "countries": len({r["region"] for r in records}), "first_test_year": min(r["target_year"] for r in records),

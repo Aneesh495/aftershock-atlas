@@ -197,12 +197,12 @@ def build_panel() -> dict:
             if duplicate:
                 raise ValueError(f"Duplicate measurement population: {duplicate}")
             coverage = records(db, """SELECT metric, kind, unit, frequency, count(*) row_count, count(value) nonmissing,
-                count(DISTINCT region) regions, min(event_start) first, max(event_end) last,
+                count(DISTINCT region) regions, min(event_start) first_date, max(event_end) last_date,
                 sum(CASE WHEN value<0 THEN 1 ELSE 0 END) negative_corrections,
                 count(DISTINCT CASE WHEN length(region)=3 AND value IS NOT NULL THEN region END) countries
                 FROM observations GROUP BY ALL ORDER BY metric""")
-            per_region = records(db, """SELECT region,metric,count(value) nonmissing, min(event_start) first,
-                max(event_end) last, count(*) total FROM observations WHERE \"group\"='total' GROUP BY region,metric""")
+            per_region = records(db, """SELECT region,metric,count(value) nonmissing, min(event_start) first_date,
+                max(event_end) last_date, count(*) total FROM observations WHERE \"group\"='total' GROUP BY region,metric""")
         output = {"schema_version": 1, "created_at": now(), "rows": count,
                   "sha256": digest(out / "observations.parquet"), "coverage": coverage,
                   "sources": {k: v["sha256"] for k, v in index.items() if v["status"] == "acquired"},

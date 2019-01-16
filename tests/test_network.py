@@ -24,7 +24,9 @@ def test_all_gradients_against_finite_differences():
 
 def test_checkpoint_replays_optimizer_and_rng(tmp_path):
     model = TemporalNetwork(2, 1, 29, 4)
-    x = np.ones((8, 2)); y = np.ones((8, 1)); mask = y.astype(bool)
+    x = np.ones((8, 2))
+    y = np.ones((8, 1))
+    mask = y.astype(bool)
     model.step(model.objective(x, y, mask, np.ones(8))[1])
     model.save(tmp_path / "saved.npz", {"data": "known"})
     restored, extra = TemporalNetwork.load(tmp_path / "saved.npz")
