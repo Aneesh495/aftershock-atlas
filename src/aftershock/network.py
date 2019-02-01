@@ -81,8 +81,12 @@ class TemporalNetwork:
     @classmethod
     def load(cls, path: Path) -> tuple[TemporalNetwork, dict]:
         import json
+        from zipfile import ZipFile
         if path.stat().st_size > 20_000_000:
             raise ValueError("Oversized checkpoint")
+        with ZipFile(path) as archive:
+            if len(archive.infolist()) > 20 or sum(i.file_size for i in archive.infolist()) > 20_000_000:
+                raise ValueError("Checkpoint expansion exceeds budget")
         with np.load(path, allow_pickle=False) as saved:
             state = json.loads(saved["state"].tobytes())
             model = cls(state["inputs"], state["outcomes"], state["seed"], state["hidden"])

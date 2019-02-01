@@ -53,7 +53,9 @@ def write_json(path: Path, value: Any) -> None:
 def read_json(path: Path, limit: int = 32_000_000) -> Any:
     if path.stat().st_size > limit:
         raise ValueError(f"JSON exceeds {limit} bytes: {path.name}")
-    return json.loads(path.read_bytes())
+    def reject_constant(value):
+        raise ValueError(f"Nonfinite JSON constant: {value}")
+    return json.loads(path.read_bytes(), parse_constant=reject_constant)
 
 
 def append_json(path: Path, value: Any) -> None:
