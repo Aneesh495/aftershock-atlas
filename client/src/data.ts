@@ -42,7 +42,11 @@ export function safe(text: unknown): string {
 
 export function table(rows: Record<string, unknown>[], limit = 80): string {
   if (!rows.length) return '<p class="empty">No eligible observations for this selection.</p>';
-  const columns = Object.keys(rows[0]).filter(k => typeof rows[0][k] !== 'object' || rows[0][k] === null).slice(0, 10);
+  const available = Object.keys(rows[0]).filter(k => typeof rows[0][k] !== 'object' || rows[0][k] === null);
+  const columns = available.slice(0, 10);
+  if (columns.includes('lower') && available.includes('upper') && !columns.includes('upper')) {
+    columns.pop(); columns.splice(columns.indexOf('lower')+1,0,'upper');
+  }
   return `<div class="table-scroll"><table><thead><tr>${columns.map(c => `<th scope="col">${safe(c.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${rows.slice(0,limit).map(r => `<tr>${columns.map(c => `<td>${safe(typeof r[c] === 'number' ? format(r[c],3) : r[c] ?? 'Unavailable')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${rows.length > limit ? `<p class="micro">Showing ${limit} of ${rows.length} rows. Export includes all eligible rows.</p>` : ''}`;
 }
 
