@@ -169,8 +169,8 @@ def build_panel() -> dict:
     country_list = [{"id": r["id"], "iso2": r["iso2Code"], "name": r["name"],
                      "region": r["region"]["value"], "income": r["incomeLevel"]["value"],
                      "longitude": number(r["longitude"]), "latitude": number(r["latitude"]),
-                     "valid_start": "2000-01-01", "valid_end": "2026-12-31",
-                     "timezone": "multiple or source-local calendar", "crosswalk_status": "identity only; historical changes unresolved"}
+                     "valid_start": None, "valid_end": None, "source_reference_start": "2000-01-01",
+                     "timezone": "not harmonized; source-local dates only", "crosswalk_status": "current identifiers only; historical boundaries and backcasts unresolved"}
                     for r in registry if r["region"]["id"] != "NA"]
     countries = {r["id"] for r in country_list}
     def all_rows():

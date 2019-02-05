@@ -25,7 +25,7 @@ export interface State {
   view: View; metric: string; primary: string; comparison: string; year: number;
   indexed: boolean; scenario: boolean; rate: boolean; study: string; subgroup: string; vintage: string;
 }
-export interface Series { name: string; color: string; points: { x: number; y: number | null; low?: number; high?: number }[]; dashed?: boolean }
+export interface Series { name: string; color: string; points: { x: number; y: number | null; low?: number; high?: number; breakBefore?: boolean }[]; dashed?: boolean }
 export interface SurveyRow {
   region: string; event_start: string; event_end: string; value: number | null; lower: number | null;
   upper: number | null; group: string; phase: string; suppressed?: boolean; suppression_reason?: string;
