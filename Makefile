@@ -6,6 +6,7 @@ PY=uv run --frozen
 RUN_ID ?= diagnostic
 PROFILE ?= diagnostic
 EVIDENCE ?= evidence/$(RUN_ID)
+EXPECTED_SOURCE ?= $(shell git rev-parse HEAD)
 .PHONY: bootstrap doctor build test data demo bench stress docs acceptance verify release covid-data panel fit forecasts causal studies atlas
 bootstrap:
 	uv sync --frozen
@@ -13,6 +14,7 @@ bootstrap:
 build:
 	$(PY) python -m compileall -q src
 	cd client && npm run build
+	$(PY) python -c "import shutil; shutil.copytree('client/dist','dist',dirs_exist_ok=True)"
 
 doctor data covid-data panel fit forecasts causal studies atlas bench stress docs:
 	$(PY) aftershock $@
@@ -25,6 +27,6 @@ demo:
 acceptance:
 	$(PY) aftershock acceptance --run-id $(RUN_ID) --profile $(PROFILE)
 verify:
-	$(PY) aftershock verify --evidence $(EVIDENCE) --expected-source $$(git rev-parse HEAD)
+	$(PY) aftershock verify --evidence $(EVIDENCE) --expected-source $(EXPECTED_SOURCE)
 release:
-	$(PY) aftershock release
+	$(PY) aftershock release --evidence $(EVIDENCE)

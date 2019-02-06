@@ -38,6 +38,8 @@ def package_release(evidence: str | None) -> dict:
                 zipped.write(path, arcname=source["path"])
         zipped.write(ROOT / "configs/data-inputs.json", arcname="SNAPSHOT.json")
         zipped.write(ROOT / "docs/DATA_RIGHTS.md", arcname="DATA_RIGHTS.md")
+    if digest(snapshot) != read_json(ROOT / "configs/SNAPSHOT.json")["sha256"]:
+        raise ValueError("Packaged core input archive differs from frozen restoration identity")
     receipt = {"release_kind": "preview", "full_acceptance": False, "executable_source": source,
                "verification": verification, "evidence_identity": bundle.name,
                "files": {p.name: {"sha256": digest(p), "bytes": p.stat().st_size} for p in (archive, snapshot)},

@@ -1,0 +1,14 @@
+# Architecture decisions
+
+- [001: Measurement kinds are separate](001-measurement-kinds-are-separate.md)
+- [002: Acquisition conservatively bounds availability](002-acquisition-conservatively-bounds-availability.md)
+- [003: Stream into Arrow and query with bounded DuckDB](003-stream-into-arrow-and-query-with-bounded-duckdb.md)
+- [004: Keep current geography distinct from historical identity](004-keep-current-geography-distinct-from-historical-identity.md)
+- [005: Implement the temporal learner directly](005-implement-the-temporal-learner-directly.md)
+- [006: Freeze country and time splits before fitting](006-freeze-country-and-time-splits-before-fitting.md)
+- [007: Store complete optimizer and RNG state](007-store-complete-optimizer-and-rng-state.md)
+- [008: Distinguish predictive scenarios from causal effects](008-distinguish-predictive-scenarios-from-causal-effects.md)
+- [009: Reuse provider survey estimates without inventing design information](009-reuse-provider-survey-estimates-without-inventing-design-information.md)
+- [010: Keep host associations separate from viral estimates](010-keep-host-associations-separate-from-viral-estimates.md)
+- [011: Export a safe static snapshot with an optional local API](011-export-a-safe-static-snapshot-with-an-optional-local-api.md)
+- [012: Verify semantics against trusted source](012-verify-semantics-against-trusted-source.md)

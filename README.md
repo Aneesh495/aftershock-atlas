@@ -1,12 +1,12 @@
 # Aftershock Atlas
 
-Aftershock Atlas compares population-level pandemic-era trajectories while preserving data definitions, revisions, uncertainty, and the boundary between description, prediction, and causal evidence.
+A research atlas of pandemic-era trajectories across mortality, employment, economic output, education, health services, surveys, policy and aggregate biological evidence.
 
-This repository is under active construction. See [build status](docs/BUILD_STATUS.md) for executed work and incomplete gates. It is broader than mortality forecasting: employment, economic output, education, health service coverage, surveys, policy, and aggregate biological evidence have distinct contracts.
+![Aftershock Atlas comparing US and UK mortality trajectories](docs/media/atlas-desktop.jpg)
 
-## Development
+## Run
 
-Python 3.13, uv, Node 24, npm, Git, and Graphviz are used. Dependencies and acquisition limits are pinned. No participant records or individual genomes are used.
+Requires Python 3.13, uv, Node 24, npm and Graphviz. Tested on macOS arm64. Linux correctness and packaging run in CI.
 
 ```sh
 make bootstrap
@@ -21,4 +21,39 @@ make atlas
 make demo
 ```
 
-Publication and results will be documented only after they are verified.
+Open http://127.0.0.1:8765. Select two countries and an outcome, switch to the predictive no-shock band, inspect study S06, then open the subnational and biological evidence views. An exported public snapshot is included for offline browsing after `make build`; acquisition and fitting reproduce the research outputs.
+
+## What runs
+
+The acquired panel contains 851,150 typed records. WHO surveillance has 240 reporting areas. Annual World Bank series contain up to 217 economies, including territories, with explicit missingness. The atlas keeps WHO modeled excess mortality separate from reported COVID deaths, published US survey estimates, two CDC state mortality studies, UK mobility and released HGI aggregate associations.
+
+An original NumPy temporal network is trained from random initialization for three seeds alongside four classical baselines and untrained controls. Sixty outcome/model configurations have held-out predictions. Some learned point scores improve; interval calibration degrades substantially across the pandemic period. See [findings](docs/FINDINGS.md) and [the thesis](docs/THESIS.md).
+
+**This is a working research preview. Full acceptance is incomplete.** Historical as-of forecasting, complete geography crosswalks, independent survey design auditing, hours and learning outcomes, and several domain requirements remain open. See [build status](docs/BUILD_STATUS.md). The runnable profile is not a substitute for those gates.
+
+## Verification
+
+```sh
+make test
+make bench
+make stress
+make docs
+make acceptance RUN_ID=my-diagnostic PROFILE=diagnostic
+make verify EVIDENCE=evidence/my-diagnostic
+```
+
+The independent verifier reads frozen upstream bytes, checks every included measurement, recomputes scores, reconstructs chronological features and replays saved parameters. Ten subprocess negative controls exercise rehashed semantic mutations, corruption, missing artifacts, source mismatch and failed replay. Full campaigns use `PROFILE=full` and return nonzero while any mandatory domain gate is incomplete.
+
+## Mechanisms and research
+
+- [Architecture and editable diagrams](docs/ARCHITECTURE.md)
+- [Measurement and schema contracts](docs/CONTRACTS.md)
+- [Frozen experiment protocol](docs/EXPERIMENT_PLAN.md)
+- [Data rights and model card](docs/DATA_RIGHTS.md)
+- [Four complete execution walkthroughs](docs/walkthroughs/README.md)
+- [Reproduction and recovery](docs/REPRODUCING.md)
+- [Evidence format and claim ledger](docs/EVIDENCE.md)
+- [Design decisions](docs/adr/README.md)
+- [Contributing](docs/CONTRIBUTING.md)
+
+The source is MIT licensed. Datasets keep their own terms, including WHO excess mortality's CC BY-NC-SA 3.0 IGO terms. No participant records, individual genomes, clinical recommendations or race-as-biology inference are included.

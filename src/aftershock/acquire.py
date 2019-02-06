@@ -133,13 +133,18 @@ def acquire_one(source: Source, raw: Path, refresh: bool = False) -> dict:
 
 def acquire(refresh: bool = False, only: list[str] | None = None) -> dict:
     raw = ROOT / "data/raw"
+    if not (raw / "index.json").exists() and (ROOT / "configs/SNAPSHOT.json").exists() and not refresh:
+        restore_snapshot(raw)
     with exclusive(raw / ".acquire.lock"):
         index = read_json(raw / "index.json") if (raw / "index.json").exists() else {}
+        pinned = read_json(ROOT / "configs/data-inputs.json") if (ROOT / "configs/data-inputs.json").exists() else {}
         for source in sources():
             if only and source.id not in only:
                 continue
             try:
                 index[source.id] = {"status": "acquired", **acquire_one(source, raw, refresh)}
+                if not refresh and source.id in pinned and index[source.id]["sha256"] != pinned[source.id]["sha256"]:
+                    raise ValueError("Source drifted from frozen inputs; register a new vintage or restore the release snapshot")
                 print(f"acquired {source.id}: {index[source.id]['bytes']} bytes", flush=True)
             except (RuntimeError, ValueError, subprocess.TimeoutExpired) as e:
                 append_json(raw / "failures.jsonl", {"source": source.id, "at": now(), "error": str(e)})
@@ -147,3 +152,39 @@ def acquire(refresh: bool = False, only: list[str] | None = None) -> dict:
                 print(f"blocked {source.id}: {e}", flush=True)
             write_json(raw / "index.json", index)
     return index
+
+
+def restore_snapshot(raw: Path) -> None:
+    """Restore only manifest-declared distributable bytes, with bounded ZIP expansion."""
+    from zipfile import ZipFile
+    import shutil
+    from .io import contained
+    snapshot = read_json(ROOT / "configs/SNAPSHOT.json")
+    source = Source("core_snapshot", snapshot["url"], "zip", 100_000_000,
+                    "Mixed source terms; see DATA_RIGHTS.md", snapshot["url"], "immutable release snapshot", "Raw HGI and mobility excluded")
+    receipt = acquire_one(source, raw)
+    archive_path = raw / receipt["path"]
+    if receipt["sha256"] != snapshot["sha256"]:
+        raise ValueError("Release snapshot identity mismatch")
+    pinned = read_json(ROOT / "configs/data-inputs.json")
+    expected = {r["path"]: r for r in pinned.values() if r["redistribute"]}
+    index = {}
+    usage(250_000_000)
+    with ZipFile(archive_path) as archive:
+        if sum(i.file_size for i in archive.infolist()) > 250_000_000:
+            raise ValueError("Snapshot expansion exceeds budget")
+        if set(archive.namelist()) != set(expected) | {"SNAPSHOT.json", "DATA_RIGHTS.md"}:
+            raise ValueError("Unexpected snapshot members")
+        for name, record in expected.items():
+            member = archive.getinfo(name)
+            if member.file_size != record["bytes"] or ((member.external_attr >> 16) & 0o170000) == 0o120000:
+                raise ValueError("Invalid snapshot member size or type")
+            path = contained(raw, name)
+            with atomic_path(path) as temporary:
+                with archive.open(member) as origin, temporary.open("wb") as target:
+                    shutil.copyfileobj(origin, target, 1 << 20)
+                if digest(temporary) != record["sha256"]:
+                    raise ValueError("Snapshot upstream byte mismatch")
+            index[record["id"]] = record
+            write_json(raw / record["id"] / "latest.json", record)
+    write_json(raw / "index.json", index)
