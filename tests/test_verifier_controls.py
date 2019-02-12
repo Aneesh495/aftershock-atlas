@@ -5,6 +5,7 @@ from zipfile import ZIP_DEFLATED, ZipFile
 import pytest
 
 from aftershock.io import write_json
+from aftershock.features import held_out
 from aftershock.network import TemporalNetwork
 from aftershock.verification import verify_forecasts, verify_manifest
 
@@ -30,7 +31,7 @@ def test_manifest_rejects_corruption_and_missing_artifacts(tmp_path):
 
 def test_structurally_valid_future_feature_is_semantically_rejected(tmp_path):
     row = {"model": "synthetic_probe", "metric": "employment", "region": "USA", "target_year": 2020,
-           "feature_last_year": 2020}
+           "feature_last_year": 2020, "held_out_region": held_out("USA")}
     write_json(tmp_path / "predictions.json", [row] * 1001)
     write_json(tmp_path / "fit.json", {"scores": []})
     with pytest.raises(ValueError, match="Future feature label"):

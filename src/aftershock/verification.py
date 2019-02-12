@@ -124,6 +124,8 @@ def verify_forecasts(bundle: Path, annual: dict) -> dict:
         key = row["model"], row["region"], row["target_year"], row["metric"]
         require(key not in identities, "Duplicate forecast population")
         identities.add(key)
+        expected_holdout = int(hashlib.sha256(row["region"].encode()).hexdigest(), 16) % 5 == 0
+        require(row["held_out_region"] == expected_holdout, "Country holdout assignment was reclassified")
         require(2019 <= row["target_year"] <= 2024, "Future label or shifted test era")
         require(row["feature_last_year"] == row["target_year"] - 1, "Future feature label or feature chronology violation")
         truth = annual.get((row["region"], row["metric"], row["target_year"]))
@@ -171,6 +173,13 @@ def verify_model_replay(bundle: Path, annual: dict) -> dict:
     predictions = read_json(bundle / "predictions.json", 64_000_000)
     lookup = {(r["model"], r["region"], r["target_year"], r["metric"]): r for r in predictions}
     outcomes = preprocessing["outcomes"]
+    require(outcomes == ["employment", "gdp", "school", "immunization", "mortality", "life_expectancy"], "Outcome order differs from frozen contract")
+    eligible = [(region, year) for region in sorted({k[0] for k in annual}) for year in range(2004, 2025)
+                if any((region, metric, year) in annual and (region, metric, year - 1) in annual for metric in outcomes)]
+    require([(k["region"], k["target_year"]) for k in keys] == eligible, "Feature population omitted eligible country-years")
+    for key in keys:
+        expected_holdout = int(hashlib.sha256(key["region"].encode()).hexdigest(), 16) % 5 == 0
+        require(key["held_out_region"] == expected_holdout and key["feature_last_year"] == key["target_year"] - 1, "Feature split or chronology reclassified")
     raw = np.array([[annual.get((key["region"], metric, year), np.nan)
                      for year in range(key["target_year"] - 4, key["target_year"]) for metric in outcomes] for key in keys])
     for j in range(1, raw.shape[1], len(outcomes)):
@@ -179,6 +188,12 @@ def verify_model_replay(bundle: Path, annual: dict) -> dict:
     center_x, scale_x = np.nanmean(raw[fit_rows], axis=0), np.maximum(np.nanstd(raw[fit_rows], axis=0), 1e-4)
     require(np.allclose(center_x, preprocessing["xmean"]) and np.allclose(scale_x, preprocessing["xscale"]), "Preprocessing fitted on wrong population")
     expected_x = np.concatenate([np.nan_to_num((raw - center_x) / scale_x), np.isfinite(raw).astype(float)], axis=1)
+    next_levels = np.array([[annual.get((key["region"], metric, key["target_year"]), np.nan) for metric in outcomes] for key in keys])
+    next_levels[:, 1] = np.log1p(next_levels[:, 1])
+    expected_base = raw.reshape(len(raw), 4, len(outcomes))[:, -1, :]
+    expected_target = next_levels - expected_base
+    expected_center_y = np.nanmean(expected_target[fit_rows], axis=0)
+    expected_scale_y = np.maximum(np.nanstd(expected_target[fit_rows], axis=0), 1e-4)
     for row in preprocessing["train"] + preprocessing["validation"]:
         require(not row["held_out_region"], "Held-out country leaked into fitting or calibration")
     require(all(r["target_year"] <= 2015 for r in preprocessing["train"]), "Future training label")
@@ -186,6 +201,9 @@ def verify_model_replay(bundle: Path, annual: dict) -> dict:
     with np.load(bundle / "models/replay-inputs.npz", allow_pickle=False) as arrays:
         x, base, mask, scale, center = [arrays[name] for name in ("x", "base", "mask", "yscale", "ymean")]
         require(np.allclose(x, expected_x, rtol=1e-12, atol=1e-12), "Feature values use future or incorrect raw observations")
+        require(np.allclose(base, expected_base, equal_nan=True), "Forecast base detached from preceding source value")
+        require(np.array_equal(mask, np.isfinite(expected_target)), "Outcome missingness mask was changed")
+        require(np.allclose(center, expected_center_y) and np.allclose(scale, expected_scale_y), "Target preprocessing fitted on wrong population")
         require(len(keys) == len(x) and len(probes) >= 8, "Frozen replay probes missing")
         replayed = 0
         for seed in (11, 29, 47):
