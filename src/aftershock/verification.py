@@ -130,16 +130,19 @@ def verify_forecasts(bundle: Path, annual: dict) -> dict:
         require(row["feature_last_year"] == row["target_year"] - 1, "Future feature label or feature chronology violation")
         truth = annual.get((row["region"], row["metric"], row["target_year"]))
         require(truth is not None and math.isclose(truth, row["truth"], rel_tol=1e-10, abs_tol=1e-9), "Forecast truth detached from raw panel")
+        transformed_truth = math.log1p(truth) if row["metric"] == "gdp" else truth
+        require(math.isclose(transformed_truth, row["truth_t"], rel_tol=1e-10, abs_tol=1e-9), "Scored truth uses incorrect target transformation")
         require(row["availability_mode"] == "retrospective_final_vintage", "Forged historical information set")
         for name in ("truth_t", "mean_t", "sd_t", "lower_t", "upper_t"):
             require(math.isfinite(row[name]), "Nonfinite forecast quantity")
         require(row["sd_t"] > 0 and row["lower_t"] <= row["mean_t"] <= row["upper_t"], "Invalid predictive interval")
-        for label in ("all", "held_out_country" if row["held_out_region"] else "retained_country"):
+        for label in ("all", "held_out_country" if row["held_out_region"] else "retained_country",
+                      "country:" + row["region"], "year:" + str(row["target_year"])):
             groups[row["model"], row["metric"], label].append(row)
     require(len({(r["model"], r["metric"]) for r in predictions}) >= 30, "Fewer than required nonempty model configurations")
     for record in scores["scores"]:
         rows = groups[record["model"], record["metric"], record["group"]]
-        require(len(rows) == record["n"], "Forecast scoring denominator mismatch")
+        require(len(rows) == record["n"], "Forecast scoring denominator mismatch: " + str((record["model"], record["metric"], record["group"])))
         actual, mu, sd, lower, upper = (np.array([r[k] for r in rows]) for k in ("truth_t", "mean_t", "sd_t", "lower_t", "upper_t"))
         z = (actual - mu) / sd
         phi = np.exp(-.5 * z * z) / math.sqrt(2 * math.pi)
