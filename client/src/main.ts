@@ -1,7 +1,7 @@
 import './style.css';
 import {atlasView,type Rendered} from './atlas-view';
 import {biologyView,coverageView,methodsView,sourcesView,studiesView,subnationalView} from './research-views';
-import {download,format,read,safe} from './data';
+import {clearPreparedExport,download,format,read,safe} from './data';
 import {persist,restore} from './state';
 import type {Index,State,View} from './types';
 
@@ -18,7 +18,7 @@ function shell():void {
   app.innerHTML=`<aside class="sidebar"><a class="brand" href="?view=atlas" aria-label="Aftershock Atlas home"><span class="brand-mark">a<span>+</span></span><span>aftershock<strong>ATLAS</strong></span></a><div class="nav-caption">RESEARCH WORKSPACE</div><nav aria-label="Main navigation">${navigation.map(n=>`<button data-view="${n.id}" class="nav-item" aria-label="${n.label}" title="${n.label}"><span aria-hidden="true">${n.icon}</span><span>${n.label}</span></button>`).join('')}</nav><div class="sidebar-bottom"><div class="project-note"><span class="mini-mark">↳</span><p>A record of change.<br>A study of what remains.</p></div><a href="https://github.com/Aneesh495/aftershock-atlas" target="_blank" rel="noreferrer">Source & reproducibility <span>↗</span></a><div class="edition-note">NON-PERSONAL RESEARCH DEMO<br>FULL ACCEPTANCE INCOMPLETE</div></div></aside><div class="main-shell"><header class="topbar"><div class="breadcrumb">Aftershock Atlas <span>/</span> <strong id="current-view">Explore</strong></div><div class="topbar-actions"><span class="snapshot"><i></i>Acquired Nov 11, 2026</span><button id="export" class="export-button" aria-label="Export currently selected data as CSV">↓ <span>Export data</span></button></div></header><main id="workspace" tabindex="-1"><div class="loading">Loading research workspace…</div></main><footer><span>AFTERSHOCK ATLAS <span class="footer-sep">/</span> Population-level research</span><span>Sources have limits. Conclusions should too.</span></footer><div id="announcements" role="status" aria-live="polite" class="sr-only"></div></div>`;
   document.querySelector('#export')!.addEventListener('click',()=>{
     download(exportRows,`aftershock-${state.view}-${state.metric}`);
-    document.querySelector('#announcements')!.textContent=`Exported ${exportRows.length} source-bound rows.`;
+    document.querySelector('#announcements')!.textContent=`Prepared ${exportRows.length} source-bound rows. Use the Save CSV link.`;
   });
   bindViews(app);
 }
@@ -32,6 +32,7 @@ function bindViews(root:HTMLElement):void {
 }
 
 function update(patch:Partial<State>,focus=false):void {
+  clearPreparedExport();
   const previousFocus=(document.activeElement as HTMLElement)?.id;
   state={...state,...patch};persist(state);void render(focus?undefined:previousFocus,focus);
 }

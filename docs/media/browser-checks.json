@@ -1,0 +1,94 @@
+{
+  "steps": [
+    {
+      "name": "mortality no-shock band and persisted country selection",
+      "at": "2026-11-11T21:34:39.386Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.4932,0168.493deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6382,0178.638deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6782,0188.678deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6972,0198.697deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA10.272,02010.27deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA10.42,02110.4deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA9.82,0229.8deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA9.22,0239.2deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA92,0249deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,025Unavailabledeaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSA9.2deaths/1000 people/year+0.5 deaths/1000 people/year since 2019",
+          "United KingdomGBR9.5deaths/1000 people/year+0.5 deaths/1000 people/year since 2019"
+        ],
+        "focus": null,
+        "horizontalOverflow": false,
+        "scenario": true,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "mortality"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
+    },
+    {
+      "name": "prepared source-bound CSV export",
+      "at": "2026-11-11T21:34:42.933Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.4932,0168.493deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6382,0178.638deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6782,0188.678deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6972,0198.697deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA10.272,02010.27deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA10.42,02110.4deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA9.82,0229.8deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA9.22,0239.2deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA92,0249deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,025Unavailabledeaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSA9.2deaths/1000 people/year+0.5 deaths/1000 people/year since 2019",
+          "United KingdomGBR9.5deaths/1000 people/year+0.5 deaths/1000 people/year since 2019"
+        ],
+        "focus": "export",
+        "horizontalOverflow": false,
+        "scenario": true,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "mortality"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
+    },
+    {
+      "name": "employment after mortality comparison",
+      "at": "2026-11-11T21:34:48.769Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=employment&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "ebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.3912,01659.391percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.8242,01759.824percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA60.1532,01860.153percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA60.5432,01960.543percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA56.5982,02056.598percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA58.2112,02158.211percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.5382,02259.538percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.8212,02359.821percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.4672,02459.467percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.1142,02559.114percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSA59.8percent age 15+-0.7 percent age 15+ since 2019",
+          "United KingdomGBR59.3percent age 15+-1 percent age 15+ since 2019"
+        ],
+        "focus": "export",
+        "horizontalOverflow": false,
+        "scenario": true,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "employment"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
+    }
+  ]
+}
