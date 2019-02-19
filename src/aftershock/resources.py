@@ -34,15 +34,18 @@ def tree_bytes(path: Path) -> int:
 
 
 def usage(reserve: int = 0, root: Path = ROOT) -> dict:
+    accounting_root = Path(os.environ.get("AFTERSHOCK_ACCOUNTING_ROOT", str(root))).resolve()
+    if not root.resolve().is_relative_to(accounting_root):
+        raise ValueError("Accounting root must contain this checkout and its attributable files")
     volume = Path("/System/Volumes/Data") if platform.system() == "Darwin" else root
     disk = shutil.disk_usage(volume)
-    local = tree_bytes(root)
+    local = tree_bytes(accounting_root)
     # Initial installer cache attribution is conservative, separately recorded.
     external_cache = 250_000_000 if platform.system() == "Darwin" else 0
     result = {"at": now(), "project_bytes": local, "external_cache_attribution": external_cache,
               "volume_used": disk.used, "reserve": reserve, "project_limit": PROJECT_LIMIT,
               "volume_limit": MAC_LIMIT, "volume_free": disk.free}
-    append_json(root / ".agent-local/resources.jsonl", result)
+    append_json(accounting_root / ".agent-local/resources.jsonl", result)
     if local + external_cache + reserve > PROJECT_LIMIT:
         raise RuntimeError("Project storage budget would be exceeded")
     if disk.used + reserve > MAC_LIMIT:

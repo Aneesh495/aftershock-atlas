@@ -89,6 +89,136 @@
         ],
         "title": "Different shocks.Uneven recoveries."
       }
+    },
+    {
+      "name": "unsupported late adoption cohort and causal limits",
+      "at": "2026-11-11T21:36:37.490Z",
+      "url": "http://127.0.0.1:8765/?view=studies&metric=employment&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "t this analysis supportsSome group-time cells can be calculated, but school closures coincide with other policies and epidemic changes. The two-country late-adoption cohort fails minimum support. Causal identification is not established.ComparisonOxford adoption cohorts versus not-yet-treated places with support checksMissingnessAt least five treated and five controls; four pre-period years for trend checkUncertaintyCountry bootstrap where eligible; null estimates where unsupportedMaterial differenceOne employment percentage pointAlternate explanationsPolicy bundles · Reverse causation · Anticipation · SpilloversReproducible study tablebaseline yearbootstrap replicatescohortcontrol neffectestimandlowerupperstatustarget year2,0194992,0208-0.714unconditional group-time ATT under unverified parallel trends and no interference-1.340.117computed_under_assumptions2,0202,0194992,0206-0.688unconditional group-time ATT under unverified parallel trends and no interference-1.256-0.051computed_under_assumptions2,0212,0194992,0206-0.332unconditional group-time ATT under unverified parallel trends and no interference-0.9620.254computed_under_assumptions2,0222,0194992,02060.134unconditional group-time ATT under unverified parallel trends and no interference-0.5140.737computed_under_assumptions2,0232,0194992,02060.463unconditional group-time ATT under unverified parallel trends and no interference-0.2391.086computed_under_assumptions2,0242,020Unavailable2,0216Unavailableunconditional group-time ATT under unverified parallel trends and no interferenceUnavailableUnavailableunsupported2,0212,020Unavailable2,0216Unavailableunconditional group-time ATT under unverified parallel trends and no interferenceUnavailableUnavailableunsupported2,0222,020Unavailable2,0216Unavailableunconditional group-time ATT under unverified parallel trends and no interferenceUnavailableUnavailableunsupported2,0232,020Unavailable2,0216Unavailableunconditional group-time ATT under unverified parallel trends and no interferenceUnavailableUnavailableunsupported2,024Protocol v1 was frozen before study-table execution, after source inspection and engineering pilots. It is not a blinded external preregistration.",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Twelve questions.Evidence with boundaries."
+      }
+    },
+    {
+      "name": "subnational state comparison and phase-bounded survey curves",
+      "at": "2026-11-11T21:36:49.317Z",
+      "url": "http://127.0.0.1:8765/?view=subnational&metric=employment&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "42020-07-09upstream_public_aggregate;weighted_by_provider;phase=1total40.91US-CAupstream_public_aggregate48.244.52020-07-212020-07-16upstream_public_aggregate;weighted_by_provider;phase=1total41.21US-CAupstream_public_aggregate47.144.12020-08-312020-08-19upstream_public_aggregate;weighted_by_provider;phase=2total35.22US-CAupstream_public_aggregate40.7382020-09-142020-09-02upstream_public_aggregate;weighted_by_provider;phase=2total36.92US-CAupstream_public_aggregate41.339.12020-09-282020-09-16upstream_public_aggregate;weighted_by_provider;phase=2total39.72US-CAupstream_public_aggregate44.942.32020-10-122020-09-30upstream_public_aggregate;weighted_by_provider;phase=2total402US-CAupstream_public_aggregate44.942.42020-10-262020-10-14upstream_public_aggregate;weighted_by_provider;phase=2total37.42US-CAupstream_public_aggregate42.539.92020-11-092020-10-28upstream_public_aggregate;weighted_by_provider;phase=3.0 (Oct 28 - Dec 21)total40.13.0 (Oct 28 - Dec 21)US-CAupstream_public_aggregate47.443.72020-11-232020-11-11upstream_public_aggregate;weighted_by_provider;phase=3.0 (Oct 28 - Dec 21)total41.33.0 (Oct 28 - Dec 21)US-CAupstream_public_aggregate4945.12020-12-072020-11-25upstream_public_aggregate;weighted_by_provider;phase=3.0 (Oct 28 - Dec 21)total40.13.0 (Oct 28 - Dec 21)US-CAupstream_public_aggregate46.343.2Showing 20 of 144 rows. Export includes all eligible rows.CALIFORNIA / STATE OF OCCURRENCERegistered mortality and a predictive baselineRegistered deathsPre-2020 count modeldeaths / event week2,4575,0737,68910,30512,92120142015201720192021Held-out 2020-2022 interval coverage: 43.3% for nominal 90% bands. Miscalibration is retained.Not joined: counts by occurrence, no matching residence-based rate denominator. These state counts are not age-adjusted disparity rates.FLORIDA / STATE OF OCCURRENCERegistered mortality and a predictive baselineRegistered deathsPre-2020 count modeldeaths / event week2,5723,8945,2176,5397,86120142015201720192021Held-out 2020-2022 interval coverage: 35.7% for nominal 90% bands. Miscalibration is retained.Not joined: counts by occurrence, no matching residence-based rate denominator. These state counts are not age-adjusted disparity rates.",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "subgroup",
+            "value": "total"
+          }
+        ],
+        "title": "Place matters.So do denominators."
+      }
+    },
+    {
+      "name": "separate host associations and weighted viral estimates",
+      "at": "2026-11-11T21:36:50.590Z",
+      "url": "http://127.0.0.1:8765/?view=biology&metric=employment&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "AGGREGATE BIOLOGICAL EVIDENCETwo distinctlines of inquiry.Human host associations and viral surveillance stay in separate schemas. Neither is a biological explanation of national or ethnic-group outcomes.HUMAN HOST ASSOCIATIONSHGI released summary statisticsTechnical interpretation9,443aligned variants9,328same effect direction243ambiguous variants excludedConcordance is not independent replicationThe severe respiratory and hospitalized case definitions share cohorts and controls. Selected top variants, linkage disequilibrium and sample overlap limit interpretation. These odds ratios do not estimate personal risks.GRCh38 variantA2 odds ratio95% Wald intervalA2 / B2 directionchr3:45818159G → A2.0721.981 to 2.168Concordantchr3:46237659C → T1.7221.62 to 1.83Concordantchr19:4717660A → G1.2711.235 to 1.309Concordantchr21:33237639A → G1.2061.175 to 1.239Concordantchr19:10352442G → C1.4651.366 to 1.572Concordantchr6:41515007A → C0.7150.67 to 0.763Concordantchr1:155202934T → C0.8230.789 to 0.857Concordantchr11:34480495C → T0.8970.876 to 0.918Concordantchr17:49863260C → A1.3381.255 to 1.426Concordantchr13:112881427C → T1.1481.114 to 1.184Concordantchr2:60480453A → G0.8910.867 to 0.915Concordantchr16:89196249G → A1.1621.119 to 1.206ConcordantDisplay representatives use 1 Mb bins for compression, not LD independence. BH adjustments apply only to the selected set. HGI release 7 and phenotype definitions ↗VIRAL LINEAGE ESTIMATESAn archived US surveillance windowB.1.617.2B.1.1.529weighted percent, biweekly-1219508111120212021No raw submissions as prevalenceThis extract uses one frozen CDC weighted publication. Provider-flagged unreliable cells remain suppressed. Aggregate lineage labels may overlap, so arbitrary shares are not summed.CDC genomic surveillance definitions ↗",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Two distinctlines of inquiry."
+      }
+    },
+    {
+      "name": "UTC lineage calendar labels and bounded percent axis",
+      "at": "2026-11-11T21:39:06.358Z",
+      "url": "http://127.0.0.1:8765/?view=biology&metric=employment&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "AGGREGATE BIOLOGICAL EVIDENCETwo distinctlines of inquiry.Human host associations and viral surveillance stay in separate schemas. Neither is a biological explanation of national or ethnic-group outcomes.HUMAN HOST ASSOCIATIONSHGI released summary statisticsTechnical interpretation9,443aligned variants9,328same effect direction243ambiguous variants excludedConcordance is not independent replicationThe severe respiratory and hospitalized case definitions share cohorts and controls. Selected top variants, linkage disequilibrium and sample overlap limit interpretation. These odds ratios do not estimate personal risks.GRCh38 variantA2 odds ratio95% Wald intervalA2 / B2 directionchr3:45818159G → A2.0721.981 to 2.168Concordantchr3:46237659C → T1.7221.62 to 1.83Concordantchr19:4717660A → G1.2711.235 to 1.309Concordantchr21:33237639A → G1.2061.175 to 1.239Concordantchr19:10352442G → C1.4651.366 to 1.572Concordantchr6:41515007A → C0.7150.67 to 0.763Concordantchr1:155202934T → C0.8230.789 to 0.857Concordantchr11:34480495C → T0.8970.876 to 0.918Concordantchr17:49863260C → A1.3381.255 to 1.426Concordantchr13:112881427C → T1.1481.114 to 1.184Concordantchr2:60480453A → G0.8910.867 to 0.915Concordantchr16:89196249G → A1.1621.119 to 1.206ConcordantDisplay representatives use 1 Mb bins for compression, not LD independence. BH adjustments apply only to the selected set. HGI release 7 and phenotype definitions ↗VIRAL LINEAGE ESTIMATESAn archived US surveillance windowB.1.617.2B.1.1.529weighted percent, biweekly025507510020212022No raw submissions as prevalenceThis extract uses one frozen CDC weighted publication. Provider-flagged unreliable cells remain suppressed. Aggregate lineage labels may overlap, so arbitrary shares are not summed.CDC genomic surveillance definitions ↗",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Two distinctlines of inquiry."
+      }
+    },
+    {
+      "name": "real missing source error with export disabled",
+      "at": "2026-11-11T21:39:06.608Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "DATA COULD NOT BE LOADEDThis view is unavailable.Cannot load school: HTTP 404Retry this viewSuccessful data remains cached in this browser session. An unavailable source is never filled with example values.",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "This view is unavailable."
+      }
+    },
+    {
+      "name": "successful retry after source restoration",
+      "at": "2026-11-11T21:39:41.194Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "-vintage retrospective panelUSA97.6532,01597.653gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA98.772,01698.77gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA98.9522,01798.952gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA99.2762,01899.276gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA100.0632,019100.063gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA100.512,020100.51gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA101.1922,021101.192gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA97.4732,02297.473gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,023Unavailablegross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,024Unavailablegross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,025Unavailablegross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSAUnavailablegross percentNo matched 2019 baseline",
+          "United KingdomGBR112.1gross percent-5 gross percent since 2019"
+        ],
+        "focus": null,
+        "horizontalOverflow": false,
+        "scenario": true,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "school"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
+    },
+    {
+      "name": "390px constrained layout",
+      "at": "2026-11-11T21:39:41.386Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "-vintage retrospective panelUSA97.6532,01597.653gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA98.772,01698.77gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA98.9522,01798.952gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA99.2762,01899.276gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA100.0632,019100.063gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA100.512,020100.51gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA101.1922,021101.192gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA97.4732,02297.473gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,023Unavailablegross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,024Unavailablegross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,025Unavailablegross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSAUnavailablegross percentNo matched 2019 baseline",
+          "United KingdomGBR112.1gross percent-5 gross percent since 2019"
+        ],
+        "focus": null,
+        "horizontalOverflow": false,
+        "scenario": true,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "school"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
     }
   ]
 }
