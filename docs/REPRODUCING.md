@@ -7,7 +7,6 @@ The tracked public snapshot can run without upstream network access:
 ```sh
 make bootstrap
 make build
-cp -R client/dist dist
 make demo
 ```
 
@@ -32,3 +31,7 @@ Panel construction writes to an atomic temporary file with 8192-row batches. A f
 The project checks attributed local storage before known growth and records private samples under `.agent-local/`. Acquisition caps apply to compressed bytes and parsers cap expanded rows or workbook sizes. The local HTTP server limits active requests to eight and uses 15-second socket timeouts. DuckDB uses two threads, a 512 MB memory limit and at most 256 MB spill.
 
 No paid compute or unattended scheduler is used. CPU diagnostics are separate from scientific acceptance. A full campaign with missing sources, unsupported assumptions or incomplete verification returns nonzero and keeps failure artifacts.
+
+## Static preview archive
+
+Extract `aftershock-atlas-preview.tar.gz`, enter the extracted `aftershock-atlas` folder and run `python3 -m http.server 8765 --directory dist`. This archive contains the static atlas, paper and source cards. Clone the repository for the Python research commands.
