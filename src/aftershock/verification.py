@@ -28,7 +28,7 @@ def trusted_inputs(expected: str) -> dict:
     subprocess.run(["git", "cat-file", "-e", expected + "^{commit}"], cwd=ROOT, check=True, capture_output=True)
     names = subprocess.check_output(["git", "ls-tree", "-r", "--name-only", expected], cwd=ROOT, text=True).splitlines()
     selected = [p for p in names if p.startswith(("src/", "configs/", "client/src/", "tests/", "scripts/", ".github/")) or p in
-                {"pyproject.toml", "uv.lock", "client/package-lock.json", "client/package.json", "client/index.html", "Makefile", "docs/EXPERIMENT_PLAN.md"}]
+                {"pyproject.toml", "uv.lock", "client/package-lock.json", "client/package.json", "client/index.html", "Makefile", "docs/EXPERIMENT_PLAN.md", "docs/EXTENSION_PLAN_V2.md"}]
     result = {}
     for name in selected:
         content = subprocess.check_output(["git", "show", f"{expected}:{name}"], cwd=ROOT)
@@ -114,9 +114,9 @@ def verify_observations(bundle: Path, datasets: dict) -> dict:
             "surveillance_regions": len(regions["covid_deaths"])}
 
 
-def verify_forecasts(bundle: Path, annual: dict) -> dict:
-    predictions = read_json(bundle / "predictions.json", 64_000_000)
-    scores = read_json(bundle / "fit.json")
+def verify_forecasts(bundle: Path, annual: dict, prediction_file="predictions.json", score_file="fit.json", minimum_configurations=30) -> dict:
+    predictions = read_json(bundle / prediction_file, 64_000_000)
+    scores = read_json(bundle / score_file)
     require(len(predictions) > 1000, "Empty forecast workload")
     groups = defaultdict(list)
     identities = set()
@@ -139,7 +139,9 @@ def verify_forecasts(bundle: Path, annual: dict) -> dict:
         for label in ("all", "held_out_country" if row["held_out_region"] else "retained_country",
                       "country:" + row["region"], "year:" + str(row["target_year"])):
             groups[row["model"], row["metric"], label].append(row)
-    require(len({(r["model"], r["metric"]) for r in predictions}) >= 30, "Fewer than required nonempty model configurations")
+    require(len({(r["model"], r["metric"]) for r in predictions}) >= minimum_configurations, "Fewer than required nonempty model configurations")
+    score_identities = [(r["model"], r["metric"], r["group"]) for r in scores["scores"]]
+    require(len(score_identities) == len(set(score_identities)) and set(score_identities) == set(groups), "Missing or duplicate forecast score populations")
     for record in scores["scores"]:
         rows = groups[record["model"], record["metric"], record["group"]]
         require(len(rows) == record["n"], "Forecast scoring denominator mismatch: " + str((record["model"], record["metric"], record["group"])))
@@ -315,6 +317,9 @@ def verify_bundle(path: str | Path, expected_source: str) -> dict:
     forecasts = verify_forecasts(bundle, annual)
     replay = verify_model_replay(bundle, annual)
     domain = verify_domain_semantics(bundle)
+    from .verification_extension import verify_dynamic, verify_survey_design
+    extension = {"survey": verify_survey_design(bundle), "dynamic": verify_dynamic(bundle, annual),
+                 "dynamic_scores": verify_forecasts(bundle, annual, "dynamic-predictions.json", "dynamic.json", 6)}
     commands = [json.loads(line) for line in (bundle / "COMMANDS.jsonl").read_text().splitlines()]
     require(len(commands) >= 5 and all(r["exit"] == 0 for r in commands), "Required command missing or failed")
     acceptance = read_json(bundle / "ACCEPTANCE.json")
@@ -322,5 +327,5 @@ def verify_bundle(path: str | Path, expected_source: str) -> dict:
     if acceptance["profile"] == "full":
         require(all(g["status"] == "passed" for g in acceptance["gates"]), "Full profile has incomplete domain gates")
     return {"status": "passed", "profile": acceptance["profile"], "source": expected_source,
-            "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain,
+            "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain, "extension": extension,
             "full_acceptance": acceptance["profile"] == "full"}

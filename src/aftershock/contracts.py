@@ -73,7 +73,7 @@ METRICS = {m.id: m for m in [
     Metric("allcause_weekly", "Registered all-cause deaths", "mortality", "deaths", "weekly", Kind.OBSERVED,
            "CDC state of occurrence, event week; pre-2020 final and 2020-2023 provisional", 0),
     Metric("anxiety", "Anxiety or depression symptoms", "mental_health", "weighted percent adults", "survey_wave",
-           Kind.SURVEY, "Household Pulse published weighted PHQ-2/GAD-2 symptom estimate, past 7 days", 0, 100),
+           Kind.SURVEY, "Household Pulse weighted PHQ-2/GAD-2 symptoms; 7-day reference before 2021-07-21, 14 days thereafter", 0, 100),
 ]}
 
 

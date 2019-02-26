@@ -9,7 +9,7 @@ import sys
 def main() -> int:
     parser = argparse.ArgumentParser(prog="aftershock")
     parser.add_argument("command", choices=["doctor", "data", "covid-data", "panel", "fit", "forecasts", "causal",
-        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys"])
+        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic"])
     parser.add_argument("--run-id", default="diagnostic")
     parser.add_argument("--profile", choices=["diagnostic", "full"], default="diagnostic")
     parser.add_argument("--evidence")
@@ -29,6 +29,12 @@ def main() -> int:
             if any(v == "blocked" for v in result.values()):
                 print(json.dumps(result, indent=2))
                 return 1
+        elif command == "survey-data":
+            from .survey_design import acquire_design
+            result = acquire_design(args.refresh)
+        elif command == "dynamic":
+            from .dynamic import fit_dynamic
+            result = fit_dynamic()
         elif command == "panel":
             from .panel import build_panel
             result = build_panel()

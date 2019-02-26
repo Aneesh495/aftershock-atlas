@@ -323,6 +323,50 @@
         ],
         "title": "Twelve questions.Evidence with boundaries."
       }
+    },
+    {
+      "name": "extension WHO vintage CSV contains 48 selected revision rows",
+      "at": "2026-11-12T01:00:23.976Z",
+      "url": "http://127.0.0.1:8765/?view=studies&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=total&vintage=2022",
+      "observed": {
+        "body": ",581.587modeled event year; not calendar-aligned with report datesmodeled_excess_estimate20,428.233.678AZECOVID deaths summed by WHO report week5,8685222,793.811-272.692modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-5,898.439-136.346BDICOVID deaths summed by WHO report week226,027.8353,258.443modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-3,214.725271.537BDICOVID deaths summed by WHO report week12710,310.19416,540.231modeled event year; not calendar-aligned with report datesmodeled_excess_estimate15,003.6230.854BELCOVID deaths summed by WHO report week19,3744217,961.7863,794.365modeled event year; not calendar-aligned with report datesmodeled_excess_estimate2,098.5260.43BELCOVID deaths summed by WHO report week8,818525,530.102184.447modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-7,755.9334.192BENCOVID deaths summed by WHO report week44167,387.5283,765.836modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-3,820.33232.187BENCOVID deaths summed by WHO report week1173111,394.36911.713modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-11,151.28311.689BFACOVID deaths summed by WHO report week782214,421.7928,028.475modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-4,829.4633.592BFACOVID deaths summed by WHO report week2394121,773.649Showing 30 of 388 rows. Use the view’s export controls for the complete selected table.Published WHO revisionMay 2023 releaseMay 2022 releaseExport selected revision tableregionyearmonthmodeled excessreleaserevisionGBR2,02017,5202022-637.04GBR2,0202-4,2162022-5.638GBR2,02034,0132022849.27GBR2,020444,9732022-832.182GBR2,020515,4752022-1,539.677GBR2,02066852022-197.581GBR2,0207-4092022-193.481GBR2,02081,2422022-361.31GBR2,0209-122022135.284GBR2,020104,6422022-108.264GBR2,020117,6302022-271.657GBR2,020123,9612022-607.049Showing 12 of 48 rows. Use the view’s export controls for the complete selected table.Protocol v1 was frozen before study-table execution, after source inspection and engineering pilots. It is not a blinded external preregistration.",
+        "cards": [],
+        "focus": "export-revisions",
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "excess-vintage",
+            "value": "2022"
+          }
+        ],
+        "title": "Twelve questions.Evidence with boundaries."
+      }
+    },
+    {
+      "name": "extension survey design, 22 of 24 matches, 24-row safe CSV",
+      "at": "2026-11-12T01:00:32.286Z",
+      "url": "http://127.0.0.1:8765/?view=studies&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S10&subgroup=total&vintage=2022",
+      "observed": {
+        "body": "r30.86229.54132.184109,498,146.92327,12031-0.138FemaleSymptoms of Anxiety Disorder35.38234.50436.261115,443,549.32941,61935.4-0.018FemaleSymptoms of Depressive Disorder26.11325.15927.066115,346,348.98941,62026.10.013FemaleSymptoms of Anxiety Disorder or Depressive Disorder40.5839.60441.557115,112,693.95841,52340.7-0.12Hispanic or LatinoSymptoms of Anxiety Disorder36.2833.41639.14536,428,105.9845,39936.3-0.02Hispanic or LatinoSymptoms of Depressive Disorder29.39926.75932.03836,343,557.1345,39029.4-0.001Hispanic or LatinoSymptoms of Anxiety Disorder or Depressive Disorder42.62739.66245.59236,275,008.4555,37542.7-0.073Non-Hispanic White, single raceSymptoms of Anxiety Disorder29.01828.15829.879143,681,982.90952,813290.018Non-Hispanic White, single raceSymptoms of Depressive Disorder21.3720.62222.117143,559,509.73752,81321.4-0.03Non-Hispanic White, single raceSymptoms of Anxiety Disorder or Depressive Disorder33.44832.59234.305143,308,149.7352,69433.6-0.152Non-Hispanic Black, single raceSymptoms of Anxiety Disorder32.84430.28835.39925,101,596.4885,28832.80.044Non-Hispanic Black, single raceSymptoms of Depressive Disorder25.58923.70327.47525,138,077.4495,28725.6-0.011Non-Hispanic Black, single raceSymptoms of Anxiety Disorder or Depressive Disorder38.80336.30141.30525,041,982.555,27238.9-0.097Non-Hispanic Asian, single raceSymptoms of Anxiety Disorder26.30623.61928.99411,372,610.9662,83226.30.006Non-Hispanic Asian, single raceSymptoms of Depressive Disorder23.5620.22726.89411,395,447.0082,83723.6-0.04Non-Hispanic Asian, single raceSymptoms of Anxiety Disorder or Depressive Disorder31.74428.36235.12511,361,204.6532,82731.9-0.156Non-Hispanic, other races and multiple racesSymptoms of Anxiety Disorder38.21134.27442.1478,639,439.8042,48138.20.011Non-Hispanic, other races and multiple racesSymptoms of Depressive Disorder28.26824.74431.7928,626,505.7282,47728.3-0.032Non-Hispanic, other races and multiple racesSymptoms of Anxiety Disorder or Depressive Disorder43.90139.82547.9778,624,495.4942,47543.90.001Export week 1 design tableProtocol v1 was frozen before study-table execution, after source inspection and engineering pilots. It is not a blinded external preregistration.",
+        "cards": [],
+        "focus": "export-survey-design",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Twelve questions.Evidence with boundaries."
+      }
+    },
+    {
+      "name": "extension methods exposes hierarchical losses and reused-test interpretation",
+      "at": "2026-11-12T01:00:48.068Z",
+      "url": "http://127.0.0.1:8765/?view=methods&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S10&subgroup=total&vintage=2022",
+      "observed": {
+        "body": "61retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonemployment8440.02pooled_ridge0.754allexploratory reused test outcomes, not a fresh confirmatory comparisongdp1,2340.023pooled_ridge0.772held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisongdp2900.023pooled_ridge0.749retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisongdp9440.023persistence0.895allexploratory reused test outcomes, not a fresh confirmatory comparisonschool749-0.047persistence0.926held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonschool176-0.048persistence0.885retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonschool573-0.047pooled_ridge0.861allexploratory reused test outcomes, not a fresh confirmatory comparisonimmunization1,1570.003pooled_ridge0.851held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonimmunization276-0.009pooled_ridge0.864retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonimmunization8810.007pooled_ridge0.687allexploratory reused test outcomes, not a fresh confirmatory comparisonmortality1,302-0.036pooled_ridge0.653held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonmortality300-0.058pooled_ridge0.697retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonmortality1,002-0.029pooled_ridge0.612allexploratory reused test outcomes, not a fresh confirmatory comparisonlife_expectancy1,302-0.021pooled_ridge0.573held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonlife_expectancy300-0.042pooled_ridge0.624retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonlife_expectancy1,002-0.015Exact source identityExecutable source at export: 52c55d9921af98678804772b9c41250f6918a4fcArrow panel: bee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba86440Source, experiment protocol, verifier and build status ↗Full acceptance is incomplete. This public non-personal demo includes bounded scientific results and explicit missing-evidence states.",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Measurement first.Inference second."
+      }
     }
   ]
 }

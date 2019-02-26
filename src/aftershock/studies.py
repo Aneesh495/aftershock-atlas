@@ -139,8 +139,9 @@ def run_studies() -> dict:
            "remote_instruction_available": False, "learning_assessment_available": False},
            "Gross secondary enrollment changes are observed for a selected subset of countries. Enrollment, remote instruction and learning attainment are distinct outcomes. Missing assessment data prevents a learning-loss estimate.", "partial_outcome_support")
     result(10, survey["phase_changes"], {"states": survey["state_count"], "phases": survey["phases"],
-           "suppressed": survey["suppressed"], "independent_weight_recomputation": False},
-           "Within-phase published symptom estimates vary across US groups and states. Nonresponse, design weights and cross-wave covariance cannot be independently audited from this aggregate extract.", "partial_design_support")
+           "suppressed": survey["suppressed"], "independent_weight_recomputation": "week_1_only",
+           "weight_point_matches": survey["design_replay"]["point_matches"], "weight_point_comparisons": survey["design_replay"]["point_comparisons"]},
+           "Within-phase published symptom estimates vary across US groups and states. A separate week 1 public-use replay audits person and replicate weights and source-defined subgroup denominators. Later weights, nonresponse bias and cross-wave covariance remain unresolved. The question reference period changes in July 2021.", "partial_design_support")
     dominant = {}
     for row in lineage["rows"]:
         if row["value"] is not None and (row["week"] not in dominant or row["value"] > dominant[row["week"]]["value"]):

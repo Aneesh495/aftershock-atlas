@@ -36,7 +36,7 @@ def gates() -> list[dict]:
         ("G03", "passed", "Independent source-parser, matched annual denominators and direct age-standardization replay", "age-replay.json"),
         ("G04", "passed", f"{coverage['covid_deaths']['countries']} surveillance countries; real multiyear health and economic panel", "observations.csv"),
         ("G05", "passed", "WHO 2022 and 2023 modeled excess releases, input support and changed age bands retained", "excess.json"),
-        ("G06", "blocked", "Published aggregates lack survey design weights, PSU identities and nonresponse denominators", "surveys.json"),
+        ("G06", "blocked", "Week 1 replicate weights and nonresponse sensitivity replayed; later-wave design auditing remains incomplete", "surveys.json"),
         ("G07", "blocked", "GDP and enrollment run; hours, remote instruction and learning assessments absent", "studies.json"),
         ("G08", "unverified", "Provider-released US subgroup estimates retain labels and suppression; independent subgroup denominator audit incomplete", "surveys.json"),
         ("G09", "passed", "Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit", "genetics.json"),
@@ -75,9 +75,10 @@ def execute_stage(bundle: Path, name: str, command: list[str], timeout: int = 60
 
 def assemble(bundle: Path, source: str, profile: str) -> None:
     results = ROOT / "data/results"
-    for name in ("predictions", "fit", "age-replay", "studies", "genetics", "causal", "surveys", "excess", "subnational", "lineages", "mobility", "scenarios"):
+    for name in ("predictions", "fit", "age-replay", "studies", "genetics", "causal", "surveys", "excess", "subnational", "lineages", "mobility", "scenarios", "survey-design", "dynamic", "dynamic-predictions"):
         shutil.copyfile(results / f"{name}.json", bundle / f"{name}.json")
     shutil.copytree(ROOT / "data/models", bundle / "models", ignore=shutil.ignore_patterns("resume.npz", "history.json"))
+    write_json(bundle / "SURVEY_INPUTS.json", read_json(ROOT / "configs/survey-inputs.json"))
     source_files = trusted_inputs(source)
     write_json(bundle / "SOURCE_INPUTS.json", {"commit": source, "files": source_files, "protocol_sha256": digest(ROOT / "docs/EXPERIMENT_PLAN.md")})
     sources = read_json(ROOT / "configs/data-inputs.json")
@@ -171,6 +172,9 @@ def negative_controls(bundle: Path, source: str) -> dict:
     mutate("invalid-effect-sign", "genetics.json", json_change(lambda a: a["representatives"][0].update(a2_beta=-a["representatives"][0]["a2_beta"])), "Invalid genetic effect sign")
     mutate("shifted-placebo", "causal.json", json_change(lambda a: a["pseudo_onsets"][0].update(baseline_year=2000)), "Shifted placebo")
     mutate("shared-sample-reclassification", "genetics.json", json_change(lambda a: a.update(independent_replication=True)), "Shared-sample genetics")
+    mutate("survey-variance-factor", "survey-design.json", json_change(lambda a: a.update(variance_factor=1 / 80)), "Invalid survey variance factor")
+    mutate("survey-denominator", "survey-design.json", json_change(lambda a: a["rows"][0].update(denominator=1.)), "Survey weighted denominator mismatch")
+    mutate("dynamic-parameters", "dynamic.json", json_change(lambda a: a["fits"][0]["chosen"]["parameters"].__setitem__(0, 10.)), "Dynamic training likelihood replay mismatch")
     mutate("corruption", "genetics.json", lambda b: b + b" ", "Artifact checksum", rehash=False)
     mutate("missing-artifact", "genetics.json", lambda b: None, "Unlisted or missing", rehash=False)
     mutate("source-mismatch", "SOURCE_INPUTS.json", json_change(lambda a: a.update(commit="0" * 40)), "Source commit mismatch")
@@ -198,7 +202,7 @@ def acceptance(run_id: str, profile: str) -> dict:
     source = source_commit()
     write_json(bundle / "START.json", {"source": source, "profile": profile, "at": now()})
     try:
-        for name in ("panel", "fit", "forecasts", "causal", "studies", "atlas"):
+        for name in ("panel", "fit", "dynamic", "forecasts", "causal", "studies", "atlas"):
             execute_stage(bundle, name, [sys.executable, "-m", "aftershock.cli", name])
         execute_stage(bundle, "correctness", [sys.executable, "-m", "pytest", "-q"])
         assemble(bundle, source, profile)

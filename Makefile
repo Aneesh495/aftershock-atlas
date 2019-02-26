@@ -7,7 +7,7 @@ RUN_ID ?= diagnostic
 PROFILE ?= diagnostic
 EVIDENCE ?= evidence/$(RUN_ID)
 EXPECTED_SOURCE ?= $(shell git rev-parse HEAD)
-.PHONY: bootstrap doctor build test data demo bench stress docs acceptance verify release covid-data panel fit forecasts causal studies atlas
+.PHONY: bootstrap doctor build test data demo bench stress docs acceptance verify release covid-data panel fit forecasts causal studies atlas survey-data surveys dynamic
 bootstrap:
 	uv sync --frozen
 	cd client && npm ci --cache ../.agent-local/npm-cache
@@ -16,7 +16,7 @@ build:
 	cd client && npm run build
 	$(PY) python -c "import shutil; shutil.copytree('client/dist','dist',dirs_exist_ok=True)"
 
-doctor data covid-data panel fit forecasts causal studies atlas bench stress docs:
+doctor data covid-data panel fit forecasts causal studies atlas bench stress docs survey-data surveys dynamic:
 	$(PY) aftershock $@
 test:
 	$(PY) ruff check src tests

@@ -20,6 +20,8 @@ A scientific campaign must use the frozen exact inputs. Do not overwrite the sou
 
 ## Interruption
 
+The version 2 extension uses separately pinned Census sources in `configs/survey-inputs.json`. `make survey-data` acquires their exact bytes under ignored `data/private-survey/`; it never adds respondent files to the aggregate input snapshot. `make data` includes this step. The verifier needs this local lawful download to replay weights, while evidence bundles contain only safe aggregate results and source identities. Run `make dynamic` after `make fit` for the registered hierarchical comparator. See [extension results](EXTENSION_RESULTS.md) for retained disagreements and model losses.
+
 Successful raw files are content-addressed and hash-checked before reuse. Re-run `make data` after interruption. Temporary partial files are removed. If a process is forcibly killed, inspect a lock's PID before removing the stale project-owned lock. Never remove a lock owned by a live writer.
 
 `make fit` resumes atomic checkpoints only when the panel and protocol identities match. Seed directories contain initialized parameters, best parameters, restart state and loss history. A completed validation-patience run does not execute extra epochs when resumed. Preserve the old directory and its hashes before adopting a new protocol.

@@ -9,6 +9,7 @@ client/dist/
 dist/
 releases/
 data/raw/
+data/private-survey/
 data/panel/
 data/models/
 data/results/
