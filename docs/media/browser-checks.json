@@ -367,6 +367,166 @@
         "selection": [],
         "title": "Measurement first.Inference second."
       }
+    },
+    {
+      "name": "source-frozen extension methods and source identity fc8cfd3",
+      "at": "2026-11-12T01:09:56.715Z",
+      "url": "http://127.0.0.1:8765/?view=methods&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S10&subgroup=total&vintage=2022",
+      "observed": {
+        "body": "61retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonemployment8440.02pooled_ridge0.754allexploratory reused test outcomes, not a fresh confirmatory comparisongdp1,2340.023pooled_ridge0.772held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisongdp2900.023pooled_ridge0.749retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisongdp9440.023persistence0.895allexploratory reused test outcomes, not a fresh confirmatory comparisonschool749-0.047persistence0.926held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonschool176-0.048persistence0.885retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonschool573-0.047pooled_ridge0.861allexploratory reused test outcomes, not a fresh confirmatory comparisonimmunization1,1570.003pooled_ridge0.851held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonimmunization276-0.009pooled_ridge0.864retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonimmunization8810.007pooled_ridge0.687allexploratory reused test outcomes, not a fresh confirmatory comparisonmortality1,302-0.036pooled_ridge0.653held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonmortality300-0.058pooled_ridge0.697retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonmortality1,002-0.029pooled_ridge0.612allexploratory reused test outcomes, not a fresh confirmatory comparisonlife_expectancy1,302-0.021pooled_ridge0.573held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonlife_expectancy300-0.042pooled_ridge0.624retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonlife_expectancy1,002-0.015Exact source identityExecutable source at export: fc8cfd3d5215fd39a920a0c645139a141c9543b8Arrow panel: bee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba86440Source, experiment protocol, verifier and build status ↗Full acceptance is incomplete. This public non-personal demo includes bounded scientific results and explicit missing-evidence states.",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Measurement first.Inference second."
+      }
+    },
+    {
+      "name": "fc8 walkthrough employment observations USA versus GBR",
+      "at": "2026-11-12T01:10:23.438Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=employment&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=0&rate=0&study=S10&subgroup=total&vintage=2022",
+      "observed": {
+        "body": "ebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.3912,01659.391percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.8242,01759.824percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA60.1532,01860.153percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA60.5432,01960.543percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA56.5982,02056.598percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA58.2112,02158.211percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.5382,02259.538percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.8212,02359.821percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.4672,02459.467percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.1142,02559.114percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSA59.8percent age 15+-0.7 percent age 15+ since 2019",
+          "United KingdomGBR59.3percent age 15+-1 percent age 15+ since 2019"
+        ],
+        "focus": "scenario",
+        "horizontalOverflow": false,
+        "scenario": false,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "employment"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
+    },
+    {
+      "name": "fc8 walkthrough crude mortality observations USA versus GBR",
+      "at": "2026-11-12T01:10:31.128Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=0&rate=0&study=S10&subgroup=total&vintage=2022",
+      "observed": {
+        "body": "a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.4932,0168.493deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6382,0178.638deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6782,0188.678deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6972,0198.697deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA10.272,02010.27deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA10.42,02110.4deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA9.82,0229.8deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA9.22,0239.2deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA92,0249deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,025Unavailabledeaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSA9.2deaths/1000 people/year+0.5 deaths/1000 people/year since 2019",
+          "United KingdomGBR9.5deaths/1000 people/year+0.5 deaths/1000 people/year since 2019"
+        ],
+        "focus": "scenario",
+        "horizontalOverflow": false,
+        "scenario": false,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "mortality"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
+    },
+    {
+      "name": "fc8 walkthrough switched mortality to predictive no-shock band",
+      "at": "2026-11-12T01:10:31.200Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S10&subgroup=total&vintage=2022",
+      "observed": {
+        "body": "a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.4932,0168.493deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6382,0178.638deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6782,0188.678deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA8.6972,0198.697deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA10.272,02010.27deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA10.42,02110.4deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA9.82,0229.8deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA9.22,0239.2deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA92,0249deaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,025Unavailabledeaths/1000 people/yearmodeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSA9.2deaths/1000 people/year+0.5 deaths/1000 people/year since 2019",
+          "United KingdomGBR9.5deaths/1000 people/year+0.5 deaths/1000 people/year since 2019"
+        ],
+        "focus": "scenario",
+        "horizontalOverflow": false,
+        "scenario": true,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "mortality"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
+    },
+    {
+      "name": "fc8 walkthrough candidate causal identification failure",
+      "at": "2026-11-12T01:10:32.545Z",
+      "url": "http://127.0.0.1:8765/?view=studies&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2022",
+      "observed": {
+        "body": "t this analysis supportsSome group-time cells can be calculated, but school closures coincide with other policies and epidemic changes. The two-country late-adoption cohort fails minimum support. Causal identification is not established.ComparisonOxford adoption cohorts versus not-yet-treated places with support checksMissingnessAt least five treated and five controls; four pre-period years for trend checkUncertaintyCountry bootstrap where eligible; null estimates where unsupportedMaterial differenceOne employment percentage pointAlternate explanationsPolicy bundles · Reverse causation · Anticipation · SpilloversReproducible study tablebaseline yearbootstrap replicatescohortcontrol neffectestimandlowerupperstatustarget year2,0194992,0208-0.714unconditional group-time ATT under unverified parallel trends and no interference-1.340.117computed_under_assumptions2,0202,0194992,0206-0.688unconditional group-time ATT under unverified parallel trends and no interference-1.256-0.051computed_under_assumptions2,0212,0194992,0206-0.332unconditional group-time ATT under unverified parallel trends and no interference-0.9620.254computed_under_assumptions2,0222,0194992,02060.134unconditional group-time ATT under unverified parallel trends and no interference-0.5140.737computed_under_assumptions2,0232,0194992,02060.463unconditional group-time ATT under unverified parallel trends and no interference-0.2391.086computed_under_assumptions2,0242,020Unavailable2,0216Unavailableunconditional group-time ATT under unverified parallel trends and no interferenceUnavailableUnavailableunsupported2,0212,020Unavailable2,0216Unavailableunconditional group-time ATT under unverified parallel trends and no interferenceUnavailableUnavailableunsupported2,0222,020Unavailable2,0216Unavailableunconditional group-time ATT under unverified parallel trends and no interferenceUnavailableUnavailableunsupported2,0232,020Unavailable2,0216Unavailableunconditional group-time ATT under unverified parallel trends and no interferenceUnavailableUnavailableunsupported2,024Protocol v1 was frozen before study-table execution, after source inspection and engineering pilots. It is not a blinded external preregistration.",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Twelve questions.Evidence with boundaries."
+      }
+    },
+    {
+      "name": "fc8 walkthrough source-defined US age subgroup with separate CA and FL occurrence studies",
+      "at": "2026-11-12T01:10:46.957Z",
+      "url": "http://127.0.0.1:8765/?view=subnational&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=By+Age%3A+18+-+29+years&vintage=2022",
+      "observed": {
+        "body": "07-212020-07-16upstream_public_aggregate;weighted_by_provider;phase=1By Age: 18 - 29 years51.317USAupstream_public_aggregate55.62020-08-182020-07-22upstream_public_aggregate;weighted_by_provider;phase=-1;suppressedBy Age: 18 - 29 yearsUnavailable-17USAupstream_public_aggregateUnavailable2020-08-312020-08-19upstream_public_aggregate;weighted_by_provider;phase=2By Age: 18 - 29 years47.527USAupstream_public_aggregate50.52020-09-142020-09-02upstream_public_aggregate;weighted_by_provider;phase=2By Age: 18 - 29 years4527USAupstream_public_aggregate49.52020-09-282020-09-16upstream_public_aggregate;weighted_by_provider;phase=2By Age: 18 - 29 years47.927USAupstream_public_aggregate51.92020-10-122020-09-30upstream_public_aggregate;weighted_by_provider;phase=2By Age: 18 - 29 years50.527USAupstream_public_aggregate55.12020-10-262020-10-14upstream_public_aggregate;weighted_by_provider;phase=2By Age: 18 - 29 years49.827USAupstream_public_aggregate54.42020-11-092020-10-28upstream_public_aggregate;weighted_by_provider;phase=3.0 (Oct 28 - Dec 21)By Age: 18 - 29 years55.83.0 (Oct 28 - Dec 21)7USAupstream_public_aggregate61.52020-11-232020-11-11upstream_public_aggregate;weighted_by_provider;phase=3.0 (Oct 28 - Dec 21)By Age: 18 - 29 years55.43.0 (Oct 28 - Dec 21)7USAupstream_public_aggregate60.7Showing 20 of 82 rows. Use the view’s export controls for the complete selected table.CALIFORNIA / STATE OF OCCURRENCERegistered mortality and a predictive baselineRegistered deathsPre-2020 count modeldeaths / event week2,4575,0737,68910,30512,92120142016201820202022Held-out 2020-2022 interval coverage: 43.3% for nominal 90% bands. Miscalibration is retained.Not joined: counts by occurrence, no matching residence-based rate denominator. These state counts are not age-adjusted disparity rates.FLORIDA / STATE OF OCCURRENCERegistered mortality and a predictive baselineRegistered deathsPre-2020 count modeldeaths / event week2,5723,8945,2176,5397,86120142016201820202022Held-out 2020-2022 interval coverage: 35.7% for nominal 90% bands. Miscalibration is retained.Not joined: counts by occurrence, no matching residence-based rate denominator. These state counts are not age-adjusted disparity rates.",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "subgroup",
+            "value": "By Age: 18 - 29 years"
+          }
+        ],
+        "title": "Place matters.So do denominators."
+      }
+    },
+    {
+      "name": "fc8 walkthrough separate HGI host association and viral lineage evidence",
+      "at": "2026-11-12T01:10:47.099Z",
+      "url": "http://127.0.0.1:8765/?view=biology&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=By+Age%3A+18+-+29+years&vintage=2022",
+      "observed": {
+        "body": "AGGREGATE BIOLOGICAL EVIDENCETwo distinctlines of inquiry.Human host associations and viral surveillance stay in separate schemas. Neither is a biological explanation of national or ethnic-group outcomes.HUMAN HOST ASSOCIATIONSHGI released summary statisticsTechnical interpretation9,443aligned variants9,328same effect direction243ambiguous variants excludedConcordance is not independent replicationThe severe respiratory and hospitalized case definitions share cohorts and controls. Selected top variants, linkage disequilibrium and sample overlap limit interpretation. These odds ratios do not estimate personal risks.GRCh38 variantA2 odds ratio95% Wald intervalA2 / B2 directionchr3:45818159G → A2.0721.981 to 2.168Concordantchr3:46237659C → T1.7221.62 to 1.83Concordantchr19:4717660A → G1.2711.235 to 1.309Concordantchr21:33237639A → G1.2061.175 to 1.239Concordantchr19:10352442G → C1.4651.366 to 1.572Concordantchr6:41515007A → C0.7150.67 to 0.763Concordantchr1:155202934T → C0.8230.789 to 0.857Concordantchr11:34480495C → T0.8970.876 to 0.918Concordantchr17:49863260C → A1.3381.255 to 1.426Concordantchr13:112881427C → T1.1481.114 to 1.184Concordantchr2:60480453A → G0.8910.867 to 0.915Concordantchr16:89196249G → A1.1621.119 to 1.206ConcordantDisplay representatives use 1 Mb bins for compression, not LD independence. BH adjustments apply only to the selected set. HGI release 7 and phenotype definitions ↗VIRAL LINEAGE ESTIMATESAn archived US surveillance windowB.1.617.2B.1.1.529weighted percent, biweekly025507510020212022No raw submissions as prevalenceThis extract uses one frozen CDC weighted publication. Provider-flagged unreliable cells remain suppressed. Aggregate lineage labels may overlap, so arbitrary shares are not summed.CDC genomic surveillance definitions ↗",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Two distinctlines of inquiry."
+      }
+    },
+    {
+      "name": "fc8 mobile 390 px survey-design tables contain horizontal scrolling",
+      "at": "2026-11-12T01:11:05.031Z",
+      "url": "http://127.0.0.1:8765/?view=studies&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S10&subgroup=By+Age%3A+18+-+29+years&vintage=2022",
+      "observed": {
+        "body": "r30.86229.54132.184109,498,146.92327,12031-0.138FemaleSymptoms of Anxiety Disorder35.38234.50436.261115,443,549.32941,61935.4-0.018FemaleSymptoms of Depressive Disorder26.11325.15927.066115,346,348.98941,62026.10.013FemaleSymptoms of Anxiety Disorder or Depressive Disorder40.5839.60441.557115,112,693.95841,52340.7-0.12Hispanic or LatinoSymptoms of Anxiety Disorder36.2833.41639.14536,428,105.9845,39936.3-0.02Hispanic or LatinoSymptoms of Depressive Disorder29.39926.75932.03836,343,557.1345,39029.4-0.001Hispanic or LatinoSymptoms of Anxiety Disorder or Depressive Disorder42.62739.66245.59236,275,008.4555,37542.7-0.073Non-Hispanic White, single raceSymptoms of Anxiety Disorder29.01828.15829.879143,681,982.90952,813290.018Non-Hispanic White, single raceSymptoms of Depressive Disorder21.3720.62222.117143,559,509.73752,81321.4-0.03Non-Hispanic White, single raceSymptoms of Anxiety Disorder or Depressive Disorder33.44832.59234.305143,308,149.7352,69433.6-0.152Non-Hispanic Black, single raceSymptoms of Anxiety Disorder32.84430.28835.39925,101,596.4885,28832.80.044Non-Hispanic Black, single raceSymptoms of Depressive Disorder25.58923.70327.47525,138,077.4495,28725.6-0.011Non-Hispanic Black, single raceSymptoms of Anxiety Disorder or Depressive Disorder38.80336.30141.30525,041,982.555,27238.9-0.097Non-Hispanic Asian, single raceSymptoms of Anxiety Disorder26.30623.61928.99411,372,610.9662,83226.30.006Non-Hispanic Asian, single raceSymptoms of Depressive Disorder23.5620.22726.89411,395,447.0082,83723.6-0.04Non-Hispanic Asian, single raceSymptoms of Anxiety Disorder or Depressive Disorder31.74428.36235.12511,361,204.6532,82731.9-0.156Non-Hispanic, other races and multiple racesSymptoms of Anxiety Disorder38.21134.27442.1478,639,439.8042,48138.20.011Non-Hispanic, other races and multiple racesSymptoms of Depressive Disorder28.26824.74431.7928,626,505.7282,47728.3-0.032Non-Hispanic, other races and multiple racesSymptoms of Anxiety Disorder or Depressive Disorder43.90139.82547.9778,624,495.4942,47543.90.001Export week 1 design tableProtocol v1 was frozen before study-table execution, after source inspection and engineering pilots. It is not a blinded external preregistration.",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Twelve questions.Evidence with boundaries."
+      }
     }
   ]
 }

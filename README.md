@@ -43,11 +43,12 @@ make acceptance RUN_ID=my-diagnostic PROFILE=diagnostic
 make verify EVIDENCE=evidence/my-diagnostic
 ```
 
-The independent verifier reads frozen upstream bytes, checks every included measurement, recomputes scores, reconstructs chronological features and replays saved parameters. Thirteen subprocess negative-control recipes exercise rehashed semantic mutations, corruption, missing artifacts, source mismatch and failed replay. Full campaigns use `PROFILE=full` and return nonzero while any mandatory domain gate is incomplete.
+The independent verifier reads frozen upstream bytes, checks every included measurement, recomputes scores, reconstructs chronological features and replays saved parameters. Fourteen subprocess negative-control recipes exercise rehashed semantic mutations, corruption, missing artifacts, source mismatch and failed replay. Full campaigns use `PROFILE=full` and return nonzero while any mandatory domain gate is incomplete.
 
 ## Mechanisms and research
 
 - [Architecture and editable diagrams](docs/ARCHITECTURE.md)
+- [Requirement and artifact map](docs/COVERAGE_GAPS.md)
 - [Measurement and schema contracts](docs/CONTRACTS.md)
 - [Frozen experiment protocol](docs/EXPERIMENT_PLAN.md)
 - [Data rights and model card](docs/DATA_RIGHTS.md)

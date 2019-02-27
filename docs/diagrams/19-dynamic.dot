@@ -1,0 +1,14 @@
+digraph Dynamic {
+ graph [rankdir=LR,bgcolor="white",pad="0.3",fontname="Helvetica",label="Exploratory hierarchical dynamic forecast",labelloc=t];
+ node [shape=box,style="rounded,filled",fillcolor="#eef3e9",color="#819880",fontname="Helvetica",fontsize=10];
+ edge [color="#64836a",fontname="Helvetica",fontsize=8];
+ "training countries, 2004-2015 targets" -> "weighted conditional likelihood" -> "shared slope prior, Q, R and damping";
+ "three fixed starts" -> "weighted conditional likelihood";
+ "four lagged levels and missingness" -> "country-window level / slope state";
+ "shared slope prior, Q, R and damping" -> "country-window level / slope state" -> "Gaussian prediction and covariance";
+ "retained-country validation, 2016-2018" -> "90 percent residual calibration";
+ "Gaussian prediction and covariance" -> "90 percent residual calibration" -> "2019-2024 scores by country and year";
+ "2019-2024 scores by country and year" -> "losses and undercoverage retained";
+ "scalar independent recurrence" -> "mean, variance and likelihood replay";
+ "reused version 1 test outcomes" -> "exploratory interpretation" [color="#a05a37"];
+}
