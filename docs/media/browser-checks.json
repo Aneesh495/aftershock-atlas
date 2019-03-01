@@ -527,6 +527,37 @@
         "selection": [],
         "title": "Twelve questions.Evidence with boundaries."
       }
+    },
+    {
+      "name": "8bd15fb final 24-row survey export with source commit",
+      "at": "2026-11-12T01:22:33.582Z",
+      "url": "http://127.0.0.1:8765/?view=studies&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S10&subgroup=By+Age%3A+18+-+29+years&vintage=2022",
+      "observed": {
+        "body": "r30.86229.54132.184109,498,146.92327,12031-0.138FemaleSymptoms of Anxiety Disorder35.38234.50436.261115,443,549.32941,61935.4-0.018FemaleSymptoms of Depressive Disorder26.11325.15927.066115,346,348.98941,62026.10.013FemaleSymptoms of Anxiety Disorder or Depressive Disorder40.5839.60441.557115,112,693.95841,52340.7-0.12Hispanic or LatinoSymptoms of Anxiety Disorder36.2833.41639.14536,428,105.9845,39936.3-0.02Hispanic or LatinoSymptoms of Depressive Disorder29.39926.75932.03836,343,557.1345,39029.4-0.001Hispanic or LatinoSymptoms of Anxiety Disorder or Depressive Disorder42.62739.66245.59236,275,008.4555,37542.7-0.073Non-Hispanic White, single raceSymptoms of Anxiety Disorder29.01828.15829.879143,681,982.90952,813290.018Non-Hispanic White, single raceSymptoms of Depressive Disorder21.3720.62222.117143,559,509.73752,81321.4-0.03Non-Hispanic White, single raceSymptoms of Anxiety Disorder or Depressive Disorder33.44832.59234.305143,308,149.7352,69433.6-0.152Non-Hispanic Black, single raceSymptoms of Anxiety Disorder32.84430.28835.39925,101,596.4885,28832.80.044Non-Hispanic Black, single raceSymptoms of Depressive Disorder25.58923.70327.47525,138,077.4495,28725.6-0.011Non-Hispanic Black, single raceSymptoms of Anxiety Disorder or Depressive Disorder38.80336.30141.30525,041,982.555,27238.9-0.097Non-Hispanic Asian, single raceSymptoms of Anxiety Disorder26.30623.61928.99411,372,610.9662,83226.30.006Non-Hispanic Asian, single raceSymptoms of Depressive Disorder23.5620.22726.89411,395,447.0082,83723.6-0.04Non-Hispanic Asian, single raceSymptoms of Anxiety Disorder or Depressive Disorder31.74428.36235.12511,361,204.6532,82731.9-0.156Non-Hispanic, other races and multiple racesSymptoms of Anxiety Disorder38.21134.27442.1478,639,439.8042,48138.20.011Non-Hispanic, other races and multiple racesSymptoms of Depressive Disorder28.26824.74431.7928,626,505.7282,47728.3-0.032Non-Hispanic, other races and multiple racesSymptoms of Anxiety Disorder or Depressive Disorder43.90139.82547.9778,624,495.4942,47543.90.001Export week 1 design tableProtocol v1 was frozen before study-table execution, after source inspection and engineering pilots. It is not a blinded external preregistration.",
+        "cards": [],
+        "focus": "export-survey-design",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Twelve questions.Evidence with boundaries."
+      }
+    },
+    {
+      "name": "8bd15fb final WHO 2023 CSV has release units license and upstream SHA256",
+      "at": "2026-11-12T01:22:45.630Z",
+      "url": "http://127.0.0.1:8765/?view=studies&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023",
+      "observed": {
+        "body": "85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,0202-4,221.6382023-5.638modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,02034,862.272023849.27modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,020444,140.8182023-832.182modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,020513,935.3232023-1,539.677modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,0206487.4192023-197.581modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,0207-602.4812023-193.481modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,0208880.692023-361.31modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,0209123.2842023135.284modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,020104,533.7362023-108.264modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,020117,358.3432023-271.657modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371GBR2,020123,353.9512023-607.049modeled_excess_estimatedeaths / monthfc61f08e4e85314e1a9c83e4fc2538b7860b9b387cf35b2058f947666c30d4018bd15fb2e9110197f32cf84ada81fd0b533c4371Showing 12 of 48 rows. Use the view’s export controls for the complete selected table.Protocol v1 was frozen before study-table execution, after source inspection and engineering pilots. It is not a blinded external preregistration.",
+        "cards": [],
+        "focus": "export-revisions",
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "excess-vintage",
+            "value": "2023"
+          }
+        ],
+        "title": "Twelve questions.Evidence with boundaries."
+      }
     }
   ]
 }

@@ -2,15 +2,15 @@
 
 Status: working research preview. Full acceptance is incomplete.
 
-Executable source: `fc8cfd3d5215fd39a920a0c645139a141c9543b8`.
+Executable source: `8bd15fb2e9110197f32cf84ada81fd0b533c4371`.
 
-The source was pushed, cloned from GitHub into a clean isolated checkout, and executed with frozen input bytes. The diagnostic bundle is `evidence/extension-clean-20261111`. Full profile `evidence/extension-full-20261111` returned exit 1 and preserved incomplete gate evidence.
+The source was pushed, cloned from GitHub into a clean isolated checkout, and executed with frozen input bytes. The diagnostic bundle is `evidence/release-clean-20261111`. Full profile `evidence/release-full-20261111` returned exit 1 and preserved incomplete gate evidence.
 
-The diagnostic independently checked 209,894 measurement records, 68,570 predictions, 12,370 score groups, 175 joint multiyear economies, 174 saved-model predictions, four age contrasts and twenty released genetic probes. Thirteen subprocess mutations were rejected for their intended reasons. Thirty-one correctness and integration tests passed.
+The diagnostic independently checked 209,894 measurement records, 68,570 predictions, 12,370 score groups, 175 joint multiyear economies, 174 saved-model predictions, four age contrasts and twenty released genetic probes. Fourteen subprocess mutations were rejected for their intended reasons. Thirty-one correctness and integration tests passed.
 
 The exploratory extension separately replayed 6,857 dynamic predictions, their 1,237 score groups and 24 Census design cells from 74,413 public-use respondents with 80 replicate weights. No respondent records enter evidence or the website. Twenty-two of 24 point comparisons met the prespecified tolerance; the failures remain visible. All 18 model starts converged, but the dynamic model lost on three families. See [extension results](EXTENSION_RESULTS.md).
 
-Hosted engineering checks and Pages deployment passed for the executable source: [workflow run](https://github.com/Aneesh495/aftershock-atlas/actions/runs/43131820744). This workflow does not certify full scientific acceptance.
+Hosted engineering checks and Pages deployment passed for the executable source: [workflow run](https://github.com/Aneesh495/aftershock-atlas/actions/runs/43133290855). This workflow does not certify full scientific acceptance.
 
 | Gate | Full-profile status | Evidence and limitation |
 | --- | --- | --- |
@@ -34,7 +34,7 @@ Hosted engineering checks and Pages deployment passed for the executable source:
 ## Exact replay
 
 ```sh
-make verify EVIDENCE=evidence/extension-clean-20261111 EXPECTED_SOURCE=fc8cfd3d5215fd39a920a0c645139a141c9543b8
+make verify EVIDENCE=evidence/release-clean-20261111 EXPECTED_SOURCE=8bd15fb2e9110197f32cf84ada81fd0b533c4371
 ```
 
 Use the explicit executable source when the branch contains later report-only commits. The verifier checks runtime files against that source, parses the frozen bytes, and never replaces absent work.
