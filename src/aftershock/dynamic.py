@@ -10,11 +10,13 @@ from .io import ROOT, digest, read_json, source_commit, write_json
 from .resources import usage
 
 
-def filter_windows(windows: np.ndarray, parameters: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Forecast one step after each four-lag window, without reading any targets."""
+def filter_windows(windows: np.ndarray, parameters: np.ndarray, horizon: int = 1) -> tuple[np.ndarray, np.ndarray]:
+    """Propagate beyond four lags, without reading any future measurements."""
     values = np.asarray(windows, dtype=float)
     if values.ndim != 2 or values.shape[1] != 4:
         raise ValueError("Four chronological lag columns required")
+    if not isinstance(horizon, int) or not 1 <= horizon <= 10:
+        raise ValueError("Forecast horizon must be an integer from one through ten")
     prior_mean, log_tau, log_q_level, log_q_slope, log_r, phi = np.asarray(parameters, float)
     if not np.isfinite(parameters).all() or not 0 <= phi <= 1:
         raise ValueError("Invalid dynamic parameters")
@@ -31,13 +33,13 @@ def filter_windows(windows: np.ndarray, parameters: np.ndarray) -> tuple[np.ndar
     state = np.column_stack([np.zeros(n), np.full(n, prior_mean)])
     covariance = np.broadcast_to(np.diag([r, tau]), (n, 2, 2)).copy()
     identity = np.eye(2)
-    for t in range(1, 5):
+    for t in range(1, 4 + horizon):
         active = first < t
         predicted = state @ transition.T
         propagated = transition @ covariance @ transition.T + q
         state[active], covariance[active] = predicted[active], propagated[active]
-        if t == 4:
-            break
+        if t >= 4:
+            continue
         observed = active & valid[:, t]
         residual = values[observed, t] - origin[observed] - state[observed, 0]
         gain = covariance[observed, :, 0] / (covariance[observed, 0, 0] + r)[:, None]

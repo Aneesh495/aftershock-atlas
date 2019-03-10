@@ -107,13 +107,13 @@ def verify_survey_design(bundle):
     return {"public_use_records": sample_n, "aggregate_design_cells": 24, "replicates": 80, "raw_in_bundle": False}
 
 
-def scalar_dynamic(values, parameters):
+def scalar_dynamic(values, parameters, horizon=1):
     prior, log_tau, log_ql, log_qs, log_r, phi = parameters
     tau, ql, qs, r = [math.exp(x) for x in (log_tau, log_ql, log_qs, log_r)]
     first = next(i for i, y in enumerate(values) if math.isfinite(y))
     origin = values[first]
     a, b, p00, p01, p11 = 0., prior, r, 0., tau
-    for t in range(first + 1, 5):
+    for t in range(first + 1, 4 + horizon):
         a, b = a + phi * b, phi * b
         p00, p01, p11 = p00 + 2 * phi * p01 + phi ** 2 * p11 + ql, phi * p01 + phi ** 2 * p11, phi ** 2 * p11 + qs
         if t < 4 and math.isfinite(values[t]):
