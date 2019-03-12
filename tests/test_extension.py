@@ -25,22 +25,23 @@ def test_symptom_complete_items_and_source_categories():
     assert "eligible_respondents" not in hidden
 
 
-def test_dynamic_prediction_scalar_kalman_known_truth():
+@pytest.mark.parametrize("horizon", [1, 2])
+def test_dynamic_prediction_scalar_kalman_known_truth(horizon):
     parameters = np.array([0., np.log(2.), np.log(.1), np.log(.2), np.log(.3), .8])
     observed = np.array([10., 12., np.nan, 15.])
     state, covariance = np.array([0., 0.]), np.diag([.3, 2.])
     transition = np.array([[1., .8], [0., .8]])
-    for t in range(1, 5):
+    for t in range(1, 4 + horizon):
         state = transition @ state
         covariance = transition @ covariance @ transition.T + np.diag([.1, .2])
         if t < 4 and np.isfinite(observed[t]):
             gain = covariance[:, 0] / (covariance[0, 0] + .3)
             state += gain * (observed[t] - 10 - state[0])
             covariance -= np.outer(gain, covariance[0].copy())
-    mean, variance = filter_windows(observed[None], parameters)
+    mean, variance = filter_windows(observed[None], parameters, horizon=horizon)
     assert mean[0] == pytest.approx(10 + state[0])
     assert variance[0] == pytest.approx(covariance[0, 0] + .3)
-    shifted_mean, shifted_variance = filter_windows((observed + 1000)[None], parameters)
+    shifted_mean, shifted_variance = filter_windows((observed + 1000)[None], parameters, horizon=horizon)
     assert shifted_mean[0] == pytest.approx(mean[0] + 1000)
     assert shifted_variance[0] == pytest.approx(variance[0])
 
