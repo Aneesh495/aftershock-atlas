@@ -28,6 +28,12 @@ Successful raw files are content-addressed and hash-checked before reuse. Re-run
 
 Panel construction writes to an atomic temporary file with 8192-row batches. A failed write preserves the prior complete file. The aggregate panel is rebuilt from exact raw inputs rather than incrementally mutating rows in place. Geography or measurement changes therefore invalidate downstream identities.
 
+## Historical editions
+
+`make history-data` restores the frozen public history snapshot when the local source index is absent, then verifies the 43 pinned partitions. An explicit refresh checks current upstream bytes and rejects drift. `make history-panel`, `make history-fit` and `make history-atlas` construct archived observations, fit fresh or identity-matched resumable models and export bounded edition/metric partitions. Run `make atlas` afterward to register every public file hash in the browser index. The browser rejects changed bytes before parsing them and offers a retry after the source is repaired.
+
+The core and historical input ZIPs are separate immutable artifacts. The Census public-use survey ZIP remains a separate lawful acquisition under ignored storage. No input archive or evidence bundle includes respondent records. Historical GDP exports use the explicit within-edition index unit. See the [protocol](HISTORICAL_PLAN_V3.md) and [pilot results](HISTORICAL_RESULTS.md) before interpreting the new forecasts.
+
 ## Storage and costs
 
 The project checks attributed local storage before known growth and records private samples under `.agent-local/`. Acquisition caps apply to compressed bytes and parsers cap expanded rows or workbook sizes. The local HTTP server limits active requests to eight and uses 15-second socket timeouts. DuckDB uses two threads, a 512 MB memory limit and at most 256 MB spill.

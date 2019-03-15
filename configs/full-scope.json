@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "unsupported_gates": {
+    "G02": "Original cell publication days and historical territorial equivalence are unverified",
+    "G06": "Later-wave survey design and nonresponse auditing are incomplete",
+    "G07": "Working hours, remote instruction and learning assessments are absent",
+    "G08": "Independent subgroup denominator and contextual audits are incomplete",
+    "G10": "Pandemic uncertainty calibration and full historical availability proof remain incomplete",
+    "G12": "Four required studies have incomplete outcome or design support",
+    "G13": "Required domain coverage is incomplete in the atlas"
+  },
+  "interpretation": "Source-frozen capability limits. Evidence cannot promote these gates by changing saved pass flags. Reassess only in a new source revision with actual supporting implementation and evidence."
+}

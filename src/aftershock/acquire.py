@@ -154,6 +154,8 @@ def acquire(refresh: bool = False, only: list[str] | None = None) -> dict:
     if only is None:
         from .survey_design import acquire_design
         acquire_design(refresh)
+        from .history import acquire_history
+        acquire_history(refresh)
     return index
 
 

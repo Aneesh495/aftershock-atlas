@@ -19,6 +19,12 @@ Google LLC, Google COVID-19 Community Mobility Reports, accessed November 11, 20
 
 The selected HGI variants are not independent observations. A2 and B2 share samples, phenotype nesting and controls. One representative per 1 Mb display bin is not LD clumping. Selected-set BH adjustments cannot establish genome-wide FDR. No reference build conversion, ancestry inference, individual prediction or explanation of national genetic differences is attempted.
 
+## Historical editions and public-use survey handling
+
+`configs/history-inputs.json` separately freezes 43 WDI archive partitions, including the edition catalogue and seven indicators in six official editions. These public country aggregates retain World Bank CC BY 4.0 with additional source terms. The [archive documentation](https://datatopics.worldbank.org/world-development-indicators/wdi-archives.html) warns that current metadata may replace historical definitions. GDP is indexed within each edition to avoid asserting an unverified historical dollar price base. Edition-month bounds are provider designations, not witnessed original cell release days.
+
+`configs/survey-inputs.json` identifies the lawful Census week 1 public-use ZIP and method statement. The U.S. Government release is public use; no reidentification is attempted. The respondent ZIP remains in ignored local storage and is excluded from release snapshots, examples and evidence. Only disclosure-checked aggregates enter those artifacts. The core input snapshot remains the original immutable v0.1.0-preview archive; the historical archive snapshot contains WDI aggregates only.
+
 ## Model card
 
 The primary original model is a shared tanh temporal network with six Gaussian outcome heads. Four lagged annual levels per outcome and missingness masks form 48 inputs; the shared layer has 48 hidden units. Adam starts from random initialization at seeds 11, 29 and 47. Loss uses observed outcome masks and country-balanced training weights. Validation chooses stopping and interval calibration. Training checkpoints preserve optimizer and RNG state.

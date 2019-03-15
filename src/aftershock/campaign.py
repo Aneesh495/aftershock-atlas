@@ -25,14 +25,14 @@ def make_manifest(bundle: Path) -> None:
     write_json(bundle / "MANIFEST.json", {"schema_version": 1, "files": files})
 
 
-def gates() -> list[dict]:
+def gates(bundle: Path | None = None) -> list[dict]:
     panel = read_json(ROOT / "data/panel/manifest.json")
     fit = read_json(ROOT / "data/results/fit.json")
     studies = read_json(ROOT / "data/results/studies.json")
     coverage = {r["metric"]: r for r in panel["coverage"]}
     definitions = [
         ("G01", "passed", f"{len(read_json(ROOT / 'configs/data-inputs.json'))} frozen sources; metric-level coverage", "DATASETS.json"),
-        ("G02", "blocked", "Only identity geography crosswalks and current-vintage annual inputs; full historical as-of parity unavailable", "observations.csv"),
+        ("G02", "blocked", "Official archive-month editions present; original cell release-day and historical territory validation incomplete", "observations.csv"),
         ("G03", "passed", "Independent source-parser, matched annual denominators and direct age-standardization replay", "age-replay.json"),
         ("G04", "passed", f"{coverage['covid_deaths']['countries']} surveillance countries; real multiyear health and economic panel", "observations.csv"),
         ("G05", "passed", "WHO 2022 and 2023 modeled excess releases, input support and changed age bands retained", "excess.json"),
@@ -40,7 +40,7 @@ def gates() -> list[dict]:
         ("G07", "blocked", "GDP and enrollment run; hours, remote instruction and learning assessments absent", "studies.json"),
         ("G08", "unverified", "Provider-released US subgroup estimates retain labels and suppression; independent subgroup denominator audit incomplete", "surveys.json"),
         ("G09", "passed", "Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit", "genetics.json"),
-        ("G10", "blocked", f"{fit['completed_configurations']} configurations and three trained seeds; strict historical-vintage forecast campaign unavailable", "fit.json"),
+        ("G10", "blocked", f"{fit['completed_configurations']} original configurations plus 66 archive configurations; release-day proof and pandemic calibration remain incomplete", "history-fit.json"),
         ("G11", "passed", "Real candidate group-time analyses, pretrends, pseudo-onsets and unsupported cells", "causal.json"),
         ("G12", "blocked", f"{studies['count']} executed tables, {studies['partial_support']} with incomplete outcome or design support", "studies.json"),
         ("G13", "unverified", "Atlas implementation exists; interactive source-frozen final walkthrough must be reviewed", "browser-checks.json"),
@@ -48,7 +48,14 @@ def gates() -> list[dict]:
         ("G15", "passed", "Bounded acquisitions, checkpoint resume and measured storage accounting", "ENVIRONMENT.json"),
         ("G16", "unverified", "Requires recorded semantic negative-control subprocesses on this exact source", "negative-controls.json"),
     ]
-    return [{"gate": g, "status": status, "reason": reason, "artifact": artifact} for g, status, reason, artifact in definitions]
+    rows = [{"gate": g, "status": status, "reason": reason, "artifact": artifact} for g, status, reason, artifact in definitions]
+    if bundle is not None and (bundle / "negative-controls.json").exists():
+        controls = read_json(bundle / "negative-controls.json")
+        expected_source = read_json(bundle / "START.json")["source"]
+        if controls["source"] == expected_source and controls["rejected"] == len(controls["controls"]) >= 19:
+            row = next(r for r in rows if r["gate"] == "G16")
+            row.update(status="passed", reason="19 actual source-matched semantic and structural tamper subprocesses rejected")
+    return rows
 
 
 def execute_stage(bundle: Path, name: str, command: list[str], timeout: int = 600) -> None:
@@ -79,6 +86,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
         shutil.copyfile(results / f"{name}.json", bundle / f"{name}.json")
     shutil.copytree(ROOT / "data/models", bundle / "models", ignore=shutil.ignore_patterns("resume.npz", "history.json"))
     write_json(bundle / "SURVEY_INPUTS.json", read_json(ROOT / "configs/survey-inputs.json"))
+    assemble_history(bundle)
     source_files = trusted_inputs(source)
     write_json(bundle / "SOURCE_INPUTS.json", {"commit": source, "files": source_files, "protocol_sha256": digest(ROOT / "docs/EXPERIMENT_PLAN.md")})
     sources = read_json(ROOT / "configs/data-inputs.json")
@@ -103,8 +111,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
     write_json(bundle / "ENVIRONMENT.json", environment)
     keys = read_json(ROOT / "data/models/replay-keys.json")
     eligible = [i for i, k in enumerate(keys) if 2019 <= k["target_year"] <= 2024]
-    indices = sorted(eligible[int(i)] for i in np.linspace(0, len(eligible) - 1, 12))
-    write_json(bundle / "PROBES.json", {"model_indices": indices, "selection": "12 equally spaced test-row identities in frozen country/year order"})
+    write_json(bundle / "PROBES.json", {"model_indices": eligible, "selection": "all eligible test-row identities in frozen country/year order"})
     browser = ROOT / "docs/media/browser-checks.json"
     if browser.exists():
         shutil.copyfile(browser, bundle / "browser-checks.json")
@@ -114,6 +121,28 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
                "completed": {"trained_seeds": 3, "configurations": read_json(results / "fit.json")["completed_configurations"]},
                "full_acceptance": False})
     make_manifest(bundle)
+
+
+def assemble_history(bundle: Path) -> None:
+    """Include public aggregate archive bytes, never respondent-level inputs."""
+    for name in ("history-fit", "history-revisions", "history-anchors", "history-sensitivity"):
+        shutil.copyfile(ROOT / f"data/results/{name}.json", bundle / f"{name}.json")
+    shutil.copytree(ROOT / "data/results/history-predictions", bundle / "history-predictions")
+    shutil.copyfile(ROOT / "data/history/manifest.json", bundle / "history-manifest.json")
+    shutil.copyfile(ROOT / "data/history/observations.parquet", bundle / "history-observations.parquet")
+    sources = read_json(ROOT / "configs/history-inputs.json")
+    for key, record in sources.items():
+        origin = ROOT / "data/history/raw" / record["path"]
+        destination = bundle / "history-raw" / (key + ".json")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        # Immutable source bytes share storage; all bundle paths remain self-contained.
+        try:
+            os.link(origin, destination)
+        except OSError:
+            usage(record["bytes"])
+            shutil.copyfile(origin, destination)
+        record["bundle_path"] = str(destination.relative_to(bundle))
+    write_json(bundle / "HISTORY_INPUTS.json", sources)
 
 
 def negative_controls(bundle: Path, source: str) -> dict:
@@ -134,6 +163,11 @@ def negative_controls(bundle: Path, source: str) -> dict:
         changed = transform(payload)
         if changed is not None:
             target.write_bytes(changed)
+        if relative.startswith("history-predictions/") and rehash:
+            fit_path = destination / "history-fit.json"
+            fit = read_json(fit_path)
+            fit["prediction_files"][Path(relative).stem].update(sha256=digest(target), bytes=target.stat().st_size)
+            write_json(fit_path, fit)
         manifest_path = destination / "MANIFEST.json"
         manifest_path.unlink()
         if rehash:
@@ -176,6 +210,29 @@ def negative_controls(bundle: Path, source: str) -> dict:
     mutate("survey-variance-factor", "survey-design.json", json_change(lambda a: a.update(variance_factor=1 / 80)), "Invalid survey variance factor")
     mutate("survey-denominator", "survey-design.json", json_change(lambda a: a["rows"][0].update(denominator=1.)), "Survey weighted denominator mismatch")
     mutate("dynamic-parameters", "dynamic.json", json_change(lambda a: a["fits"][0]["chosen"]["parameters"].__setitem__(0, 10.)), "Dynamic training likelihood replay mismatch")
+    mutate("later-archive", "history-predictions/employment.json", json_change(lambda a: a[0].update(edition="202312", edition_available_at="2023-12-31T23:59:59+00:00")), "Historical edition follows origin")
+    mutate("forged-archive-bound", "history-predictions/employment.json", json_change(lambda a: a[0].update(edition_available_at="2010-01-01T00:00:00+00:00")), "Forged historical edition bound")
+    mutate("changed-gdp-anchor", "history-anchors.json", json_change(lambda a: next(r for r in a if r["raw_2010"] is not None).update(raw_2010=1.)), "Historical GDP anchor detached from raw edition")
+    def future_history_feature(payload):
+        import io
+        with np.load(io.BytesIO(payload), allow_pickle=False) as saved:
+            arrays = {k: saved[k].copy() for k in saved.files}
+        row = int(np.where(arrays["test"] & arrays["mask"][:, 0])[0][0])
+        column = 18
+        center = np.nanmean(arrays["raw"][arrays["train"]], axis=0)[column]
+        scale = max(float(np.nanstd(arrays["raw"][arrays["train"]], axis=0)[column]), 1e-4)
+        future = arrays["target"][row, 0] + arrays["base"][row, 0]
+        arrays["raw"][row, column] = future
+        arrays["x"][row, column] = (future - center) / scale
+        output = io.BytesIO()
+        np.savez_compressed(output, **arrays)
+        return output.getvalue()
+    mutate("future-history-feature", "models/historical-v3/replay-inputs.npz", future_history_feature, "Historical replay inputs differ from raw archives")
+    def promote_full_scope(record):
+        record.update(profile="full", full_acceptance=True)
+        for gate in record["gates"]:
+            gate["status"] = "passed"
+    mutate("forged-full-pass", "ACCEPTANCE.json", json_change(promote_full_scope), "Full scope claims exceed source-supported capabilities")
     mutate("corruption", "genetics.json", lambda b: b + b" ", "Artifact checksum", rehash=False)
     mutate("missing-artifact", "genetics.json", lambda b: None, "Unlisted or missing", rehash=False)
     mutate("source-mismatch", "SOURCE_INPUTS.json", json_change(lambda a: a.update(commit="0" * 40)), "Source commit mismatch")
@@ -203,19 +260,28 @@ def acceptance(run_id: str, profile: str) -> dict:
     source = source_commit()
     write_json(bundle / "START.json", {"source": source, "profile": profile, "at": now()})
     try:
-        for name in ("panel", "fit", "dynamic", "forecasts", "causal", "studies", "atlas"):
+        for name in ("panel", "history-panel", "fit", "dynamic", "history-fit", "forecasts", "causal", "studies", "history-atlas", "atlas"):
             execute_stage(bundle, name, [sys.executable, "-m", "aftershock.cli", name])
         execute_stage(bundle, "correctness", [sys.executable, "-m", "pytest", "-q"])
         assemble(bundle, source, profile)
-        # Full campaigns preserve a readable bundle and fail until every domain is supported.
-        if profile == "full" and any(g["status"] != "passed" for g in gates()):
-            write_json(bundle / "FULL_INCOMPLETE.json", {"gates": [g for g in gates() if g["status"] != "passed"]})
-            make_manifest(bundle)
-            raise RuntimeError(f"Full acceptance incomplete. Evidence preserved at {bundle}")
-        verified = verify_bundle(bundle, source)
+        # Execute independent checks even when unrelated domain coverage remains incomplete.
+        verify_bundle(bundle, source, require_domain_gates=False)
         negative_controls(bundle, source)
-        verified = verify_bundle(bundle, source)
+        current_gates = gates(bundle)
+        requirements = read_json(bundle / "REQUIREMENTS.json")
+        requirements["gates"] = current_gates
+        write_json(bundle / "REQUIREMENTS.json", requirements)
+        acceptance_record = read_json(bundle / "ACCEPTANCE.json")
+        acceptance_record["gates"] = current_gates
+        write_json(bundle / "ACCEPTANCE.json", acceptance_record)
+        make_manifest(bundle)
+        verified = verify_bundle(bundle, source, require_domain_gates=False)
         write_json(bundle / "VERIFICATION.json", verified)
+        if profile == "full" and any(g["status"] != "passed" for g in current_gates):
+            write_json(bundle / "FULL_INCOMPLETE.json", {"gates": [g for g in current_gates if g["status"] != "passed"],
+                       "source_checks": verified["status"], "full_acceptance": False})
+            make_manifest(bundle)
+            raise RuntimeError(f"Full acceptance incomplete. All source and tamper checks executed. Evidence preserved at {bundle}")
         return {"bundle": str(bundle), **verified}
     except BaseException as error:
         write_json(bundle / "FAILURE.json", {"error": str(error), "type": type(error).__name__, "at": now()})

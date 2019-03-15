@@ -22,6 +22,7 @@ packages = ["src/aftershock"]
 dev = ["pytest==8.4.2", "ruff==0.14.3"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--basetemp=.agent-local/pytest-tmp"
 [tool.ruff]
 line-length = 110
 [tool.ruff.lint]
