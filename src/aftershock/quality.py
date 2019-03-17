@@ -69,16 +69,6 @@ def engineering_campaign(profile: str) -> dict:
 def check_documentation() -> dict:
     markdown = [ROOT / "README.md", *sorted((ROOT / "docs").rglob("*.md"))]
     errors = []
-    for path in markdown:
-        text = path.read_text()
-        if "\u2014" in text:
-            errors.append(str(path.relative_to(ROOT)) + ": forbidden punctuation")
-        for label, target in re.findall(r"\[([^\]]+)\]\(([^)]+)\)", text):
-            if target.startswith(("https://", "http://", "#", "mailto:")):
-                continue
-            local = target.split("#")[0]
-            if local and not (path.parent / local).resolve().exists():
-                errors.append(f"{path.relative_to(ROOT)}: missing {target}")
     diagrams = sorted((ROOT / "docs/diagrams").glob("*.dot"))
     for source in diagrams:
         process = subprocess.run(["dot", "-Tsvg", str(source), "-o", str(source.with_suffix(".svg"))], capture_output=True, text=True)
@@ -89,6 +79,16 @@ def check_documentation() -> dict:
             tree = ET.parse(source.with_suffix(".svg"))
             if not tree.getroot().attrib.get("viewBox"):
                 errors.append(source.name + ": invalid SVG viewport")
+    for path in markdown:
+        text = path.read_text()
+        if "\u2014" in text:
+            errors.append(str(path.relative_to(ROOT)) + ": forbidden punctuation")
+        for label, target in re.findall(r"\[([^\]]+)\]\(([^)]+)\)", text):
+            if target.startswith(("https://", "http://", "#", "mailto:")):
+                continue
+            local = target.split("#")[0]
+            if local and not (path.parent / local).resolve().exists():
+                errors.append(f"{path.relative_to(ROOT)}: missing {target}")
     if len(diagrams) < 12:
         errors.append("At least twelve distinct editable diagrams required")
     if errors:

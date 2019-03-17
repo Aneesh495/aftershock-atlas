@@ -13,3 +13,4 @@
 - [011: Export a safe static snapshot with an optional local API](011-export-a-safe-static-snapshot-with-an-optional-local-api.md)
 - [012: Verify semantics against trusted source](012-verify-semantics-against-trusted-source.md)
 - [013: Reconstruct each origin from its designated archive](013-archive-specific-information-sets.md)
+- [014: Verify browser partitions before parsing](014-verify-browser-partitions-before-parsing.md)

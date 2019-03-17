@@ -571,6 +571,270 @@
         "selection": [],
         "title": "Measurement first.Inference second."
       }
+    },
+    {
+      "name": "v3 pilot GDP edition comparison, index units and 50-row source-bound CSV",
+      "at": "2026-11-12T07:56:35.225Z",
+      "url": "http://127.0.0.1:8765/?view=vintages&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=gdp&edition=201811&revisionEdition=202312",
+      "observed": {
+        "body": "0gdp2,024Zero support is unavailable evidence, not a successful forecast. Historical publication lags can remove entire outcome-year cells.\n    Inspect feature-vintage sensitivityThese rows compare the actual feature endpoint with the initial and current editions. They are diagnostics. Current values do not replace missing historical inputs.archived endpoint tcurrent endpoint tcurrent minus archived teditionendpoint yearinitial edition endpoint tinterpretationmetricregiontarget year4.7034.7090.0062018112,0174.703feature revision sensitivity; current values never fill archived model inputsgdpGBR2,0194.7084.720.0112019122,018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR2,0204.7174.7270.012020122,019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR2,0214.6044.620.0162021122,020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR2,0224.6774.6980.0212022122,021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR2,0234.7394.738-0.0012023122,022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR2,0244.7084.7150.0072018112,0174.708feature revision sensitivity; current values never fill archived model inputsgdpUSA2,0194.7334.7390.0062019122,018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpUSA2,0204.7544.7590.0052020122,019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpUSA2,0214.7184.7340.0162021122,020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpUSA2,0224.7694.7910.0232022122,021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpUSA2,0234.7844.8110.0272023122,022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpUSA2,024Follow both upstream identities201811: 9fe4b257f6037201199af7492244e21d69a74f5ea7a3c59b133a08a93aef68dc202312: c0dfef4ffad07aed20624dd424f053dfe2ae1a62dc7f89b3071208103a432908Official WDI archive catalogue and metadata caveat ↗",
+        "cards": [],
+        "focus": "export",
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "history-metric",
+            "value": "gdp"
+          },
+          {
+            "id": "history-early",
+            "value": "201811"
+          },
+          {
+            "id": "history-late",
+            "value": "202312"
+          },
+          {
+            "id": "history-primary",
+            "value": "USA"
+          },
+          {
+            "id": "history-comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "The past getsrevised too."
+      }
+    },
+    {
+      "name": "v3 actual valid-JSON corruption rejected by browser SHA256; export disabled and prior CSV invalidated",
+      "at": "2026-11-12T08:19:05.975Z",
+      "url": "http://127.0.0.1:8765/?view=vintages&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=school&edition=201811&revisionEdition=202312",
+      "observed": {
+        "body": "DATA COULD NOT BE LOADEDThis view is unavailable.Data identity mismatch for hist_201811_school. Reload for a consistent snapshot.Retry this viewReload current snapshotSuccessful data remains cached in this browser session. An unavailable source is never filled with example values.",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "This view is unavailable."
+      }
+    },
+    {
+      "name": "v3 actual corrupted asset restored; Retry recovered with valid SHA256",
+      "at": "2026-11-12T08:21:45.937Z",
+      "url": "http://127.0.0.1:8765/?view=vintages&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=school&edition=201811&revisionEdition=202312",
+      "observed": {
+        "body": "ure endpoint with the initial and current editions. They are diagnostics. Current values do not replace missing historical inputs.archived endpoint tcurrent endpoint tcurrent minus archived teditionendpoint yearinitial edition endpoint tinterpretationmetricregiontarget yearUnavailable125.63Unavailable2018112,017Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolGBR2,019Unavailable120.088Unavailable2019122,018Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolGBR2,020Unavailable117.157Unavailable2020122,019Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolGBR2,021Unavailable114.617Unavailable2021122,020Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolGBR2,022Unavailable113.719Unavailable2022122,021Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolGBR2,023Unavailable113.203Unavailable2023122,022Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolGBR2,024Unavailable98.952Unavailable2018112,017Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolUSA2,019Unavailable99.276Unavailable2019122,018Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolUSA2,020Unavailable100.063Unavailable2020122,019Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolUSA2,021Unavailable100.51Unavailable2021122,020Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolUSA2,022Unavailable101.192Unavailable2022122,021Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolUSA2,023Unavailable97.473Unavailable2023122,022Unavailablefeature revision sensitivity; current values never fill archived model inputsschoolUSA2,024Follow both upstream identities201811: c9d3bbded7ba74461561da300e11653885e0d4a66e6131c6b62177dc1fffc00c202312: 04229890f693c49123ebd85ceb3ee9c947aba0fe6395e4151202e4adf4424508Official WDI archive catalogue and metadata caveat ↗",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "history-metric",
+            "value": "school"
+          },
+          {
+            "id": "history-early",
+            "value": "201811"
+          },
+          {
+            "id": "history-late",
+            "value": "202312"
+          },
+          {
+            "id": "history-primary",
+            "value": "USA"
+          },
+          {
+            "id": "history-comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "The past getsrevised too."
+      }
+    },
+    {
+      "name": "v3 historical mortality support exposes zero outcomes in five test years",
+      "at": "2026-11-12T08:21:46.025Z",
+      "url": "http://127.0.0.1:8765/?view=vintages&metric=mortality&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=mortality&edition=201811&revisionEdition=202312",
+      "observed": {
+        "body": "e actual feature endpoint with the initial and current editions. They are diagnostics. Current values do not replace missing historical inputs.archived endpoint tcurrent endpoint tcurrent minus archived teditionendpoint yearinitial edition endpoint tinterpretationmetricregiontarget yearUnavailable9.2Unavailable2018112,017Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2,019Unavailable9.2Unavailable2019122,018Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2,020Unavailable9.019Unavailable2020122,019Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2,0219.43510.2680.8332021122,020Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2,022Unavailable9.784Unavailable2022122,021Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2,023Unavailable9.512Unavailable2023122,022Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2,024Unavailable8.638Unavailable2018112,017Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityUSA2,019Unavailable8.678Unavailable2019122,018Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityUSA2,020Unavailable8.697Unavailable2020122,019Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityUSA2,0218.94710.271.3232021122,020Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityUSA2,022Unavailable10.4Unavailable2022122,021Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityUSA2,023Unavailable9.8Unavailable2023122,022Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityUSA2,024Follow both upstream identities201811: e354417c072a0a3ce782c59c4678ed7d72df61be41b3f13cc55492011982df67202312: df649097196651d20c310f08ac6ba8f5efc45f3f564a84b7baea20129739bf6bOfficial WDI archive catalogue and metadata caveat ↗",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "history-metric",
+            "value": "mortality"
+          },
+          {
+            "id": "history-early",
+            "value": "201811"
+          },
+          {
+            "id": "history-late",
+            "value": "202312"
+          },
+          {
+            "id": "history-primary",
+            "value": "USA"
+          },
+          {
+            "id": "history-comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "The past getsrevised too."
+      }
+    },
+    {
+      "name": "V3 reverse-edition GDP comparison and CSV prepared",
+      "at": "2026-11-12T13:40:53.872Z",
+      "url": "http://127.0.0.1:8765/?view=vintages&metric=mortality&primary=IND&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=gdp&edition=202312&revisionEdition=201811",
+      "observed": {
+        "body": "navailable evidence, not a successful forecast. Historical publication lags can remove entire outcome-year cells.\n    Inspect feature-vintage sensitivityThese rows compare the actual feature endpoint with the initial and current editions. Values use log1p of the within-edition GDP index. They are diagnostics. Current values do not replace missing historical inputs.archived endpoint tcurrent endpoint tcurrent minus archived teditionendpoint yearinitial edition endpoint tinterpretationmetricregiontarget year4.7034.7090.00620181120174.703feature revision sensitivity; current values never fill archived model inputsgdpGBR20194.7084.720.0112019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20204.7174.7270.012020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20214.6044.620.0162021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20224.6774.6980.0212022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20234.7394.738-0.0012023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20244.994.982-0.00720181120174.99feature revision sensitivity; current values never fill archived model inputsgdpIND20195.0485.034-0.0152019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20205.0725.061-0.0112020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20214.984.9920.0122021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20225.0595.0760.0172022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20235.1355.1410.0062023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND2024Follow both upstream identities202312: c0dfef4ffad07aed20624dd424f053dfe2ae1a62dc7f89b3071208103a432908201811: 9fe4b257f6037201199af7492244e21d69a74f5ea7a3c59b133a08a93aef68dcOfficial WDI archive catalogue and metadata caveat ↗",
+        "cards": [],
+        "focus": "export",
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "history-metric",
+            "value": "gdp"
+          },
+          {
+            "id": "history-early",
+            "value": "202312"
+          },
+          {
+            "id": "history-late",
+            "value": "201811"
+          },
+          {
+            "id": "history-primary",
+            "value": "IND"
+          },
+          {
+            "id": "history-comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "The past getsrevised too."
+      }
+    },
+    {
+      "name": "V3 historical selection persisted after reload",
+      "at": "2026-11-12T13:41:02.431Z",
+      "url": "http://127.0.0.1:8765/?view=vintages&metric=mortality&primary=IND&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=gdp&edition=202312&revisionEdition=201811",
+      "observed": {
+        "body": "navailable evidence, not a successful forecast. Historical publication lags can remove entire outcome-year cells.\n    Inspect feature-vintage sensitivityThese rows compare the actual feature endpoint with the initial and current editions. Values use log1p of the within-edition GDP index. They are diagnostics. Current values do not replace missing historical inputs.archived endpoint tcurrent endpoint tcurrent minus archived teditionendpoint yearinitial edition endpoint tinterpretationmetricregiontarget year4.7034.7090.00620181120174.703feature revision sensitivity; current values never fill archived model inputsgdpGBR20194.7084.720.0112019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20204.7174.7270.012020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20214.6044.620.0162021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20224.6774.6980.0212022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20234.7394.738-0.0012023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20244.994.982-0.00720181120174.99feature revision sensitivity; current values never fill archived model inputsgdpIND20195.0485.034-0.0152019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20205.0725.061-0.0112020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20214.984.9920.0122021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20225.0595.0760.0172022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20235.1355.1410.0062023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND2024Follow both upstream identities202312: c0dfef4ffad07aed20624dd424f053dfe2ae1a62dc7f89b3071208103a432908201811: 9fe4b257f6037201199af7492244e21d69a74f5ea7a3c59b133a08a93aef68dcOfficial WDI archive catalogue and metadata caveat ↗",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "history-metric",
+            "value": "gdp"
+          },
+          {
+            "id": "history-early",
+            "value": "202312"
+          },
+          {
+            "id": "history-late",
+            "value": "201811"
+          },
+          {
+            "id": "history-primary",
+            "value": "IND"
+          },
+          {
+            "id": "history-comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "The past getsrevised too."
+      }
+    },
+    {
+      "name": "V3 mobile 390px historical GDP layout",
+      "at": "2026-11-12T13:41:11.388Z",
+      "url": "http://127.0.0.1:8765/?view=vintages&metric=mortality&primary=IND&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=gdp&edition=202312&revisionEdition=201811",
+      "observed": {
+        "body": "navailable evidence, not a successful forecast. Historical publication lags can remove entire outcome-year cells.\n    Inspect feature-vintage sensitivityThese rows compare the actual feature endpoint with the initial and current editions. Values use log1p of the within-edition GDP index. They are diagnostics. Current values do not replace missing historical inputs.archived endpoint tcurrent endpoint tcurrent minus archived teditionendpoint yearinitial edition endpoint tinterpretationmetricregiontarget year4.7034.7090.00620181120174.703feature revision sensitivity; current values never fill archived model inputsgdpGBR20194.7084.720.0112019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20204.7174.7270.012020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20214.6044.620.0162021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20224.6774.6980.0212022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20234.7394.738-0.0012023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20244.994.982-0.00720181120174.99feature revision sensitivity; current values never fill archived model inputsgdpIND20195.0485.034-0.0152019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20205.0725.061-0.0112020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20214.984.9920.0122021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20225.0595.0760.0172022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20235.1355.1410.0062023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND2024Follow both upstream identities202312: c0dfef4ffad07aed20624dd424f053dfe2ae1a62dc7f89b3071208103a432908201811: 9fe4b257f6037201199af7492244e21d69a74f5ea7a3c59b133a08a93aef68dcOfficial WDI archive catalogue and metadata caveat ↗",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "history-metric",
+            "value": "gdp"
+          },
+          {
+            "id": "history-early",
+            "value": "202312"
+          },
+          {
+            "id": "history-late",
+            "value": "201811"
+          },
+          {
+            "id": "history-primary",
+            "value": "IND"
+          },
+          {
+            "id": "history-comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "The past getsrevised too."
+      }
+    },
+    {
+      "name": "V3 desktop 1280px historical comparison",
+      "at": "2026-11-12T14:02:46.556Z",
+      "url": "http://127.0.0.1:8765/?view=vintages&metric=mortality&primary=IND&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=gdp&edition=202312&revisionEdition=201811",
+      "observed": {
+        "body": "navailable evidence, not a successful forecast. Historical publication lags can remove entire outcome-year cells.\n    Inspect feature-vintage sensitivityThese rows compare the actual feature endpoint with the initial and current editions. Values use log1p of the within-edition GDP index. They are diagnostics. Current values do not replace missing historical inputs.archived endpoint tcurrent endpoint tcurrent minus archived teditionendpoint yearinitial edition endpoint tinterpretationmetricregiontarget year4.7034.7090.00620181120174.703feature revision sensitivity; current values never fill archived model inputsgdpGBR20194.7084.720.0112019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20204.7174.7270.012020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20214.6044.620.0162021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20224.6774.6980.0212022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20234.7394.738-0.0012023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpGBR20244.994.982-0.00720181120174.99feature revision sensitivity; current values never fill archived model inputsgdpIND20195.0485.034-0.0152019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20205.0725.061-0.0112020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20214.984.9920.0122021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20225.0595.0760.0172022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND20235.1355.1410.0062023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsgdpIND2024Follow both upstream identities202312: c0dfef4ffad07aed20624dd424f053dfe2ae1a62dc7f89b3071208103a432908201811: 9fe4b257f6037201199af7492244e21d69a74f5ea7a3c59b133a08a93aef68dcOfficial WDI archive catalogue and metadata caveat ↗",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "history-metric",
+            "value": "gdp"
+          },
+          {
+            "id": "history-early",
+            "value": "202312"
+          },
+          {
+            "id": "history-late",
+            "value": "201811"
+          },
+          {
+            "id": "history-primary",
+            "value": "IND"
+          },
+          {
+            "id": "history-comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "The past getsrevised too."
+      }
+    },
+    {
+      "name": "V3 source library includes official historical edition partitions",
+      "at": "2026-11-12T14:03:00.712Z",
+      "url": "http://127.0.0.1:8765/?view=sources&metric=mortality&primary=IND&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=gdp&edition=202312&revisionEdition=201811",
+      "observed": {
+        "body": " additional terms; source-specific attributionCaptured (UTC)2026-11-12Upstream bytes5,665,098893b1ed5fa32d3eeca0e186f…Primary source and terms ↗archive_202312_life_expectancyarchive 202312 life expectancyacquiredofficial WDI edition 202312; month bound, not original cell publication dayCurrent metadata may describe earlier editions incorrectly; future-reference estimates are excluded; GDP is internally indexedRightsWorld Bank CC BY 4.0 with additional terms; source-specific attributionCaptured (UTC)2026-11-12Upstream bytes5,571,868e8f1fe62b9c91abe9aa4d006…Primary source and terms ↗archive_202312_mortalityarchive 202312 mortalityacquiredofficial WDI edition 202312; month bound, not original cell publication dayCurrent metadata may describe earlier editions incorrectly; future-reference estimates are excluded; GDP is internally indexedRightsWorld Bank CC BY 4.0 with additional terms; source-specific attributionCaptured (UTC)2026-11-12Upstream bytes5,467,398df649097196651d20c310f08…Primary source and terms ↗archive_202312_populationarchive 202312 populationacquiredofficial WDI edition 202312; month bound, not original cell publication dayCurrent metadata may describe earlier editions incorrectly; future-reference estimates are excluded; GDP is internally indexedRightsWorld Bank CC BY 4.0 with additional terms; source-specific attributionCaptured (UTC)2026-11-12Upstream bytes5,046,5866f0b2bf92525da975b7e82c0…Primary source and terms ↗archive_202312_schoolarchive 202312 schoolacquiredofficial WDI edition 202312; month bound, not original cell publication dayCurrent metadata may describe earlier editions incorrectly; future-reference estimates are excluded; GDP is internally indexedRightsWorld Bank CC BY 4.0 with additional terms; source-specific attributionCaptured (UTC)2026-11-12Upstream bytes5,514,45504229890f693c49123ebd85c…Primary source and terms ↗history_cataloguehistory catalogueacquiredprovider-designated archive catalogue; current acquisitionEdition labels do not provide original cell release daysRightsWorld Bank CC BY 4.0 with additional terms; upstream attributionCaptured (UTC)2026-11-12Upstream bytes5,133a58ffab4141feb86af062964…Primary source and terms ↗",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Follow themeasurement trail."
+      }
     }
   ]
 }
