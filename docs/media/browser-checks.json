@@ -835,6 +835,40 @@
         "selection": [],
         "title": "Follow themeasurement trail."
       }
+    },
+    {
+      "name": "V3 complete model coverage and sensitivity CSV downloads",
+      "at": "2026-11-12T15:43:45.382Z",
+      "url": "http://127.0.0.1:8765/?view=vintages&metric=mortality&primary=IND&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=By+Age%3A+18+-+29+years&vintage=2023&historyMetric=mortality&edition=202312&revisionEdition=201811",
+      "observed": {
+        "body": "ent editions. Values use deaths per 1000 population. They are diagnostics. Current values do not replace missing historical inputs.archived endpoint tcurrent endpoint tcurrent minus archived teditionendpoint yearinitial edition endpoint tinterpretationmetricregiontarget yearUnavailable9.2Unavailable2018112017Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2019Unavailable9.2Unavailable2019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2020Unavailable9.019Unavailable2020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR20219.43510.2680.8332021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2022Unavailable9.784Unavailable2022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2023Unavailable9.512Unavailable2023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityGBR2024Unavailable6.673Unavailable2018112017Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityIND2019Unavailable6.67Unavailable2019122018Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityIND2020Unavailable6.67Unavailable2020122019Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityIND20217.3017.214-0.0872021122020Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityIND2022Unavailable9.259Unavailable2022122021Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityIND2023Unavailable6.576Unavailable2023122022Unavailablefeature revision sensitivity; current values never fill archived model inputsmortalityIND2024Export feature-vintage sensitivityFollow both upstream identities202312: df649097196651d20c310f08ac6ba8f5efc45f3f564a84b7baea20129739bf6b201811: e354417c072a0a3ce782c59c4678ed7d72df61be41b3f13cc55492011982df67Official WDI archive catalogue and metadata caveat ↗",
+        "cards": [],
+        "focus": "history-sensitivity-export",
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "history-metric",
+            "value": "mortality"
+          },
+          {
+            "id": "history-early",
+            "value": "202312"
+          },
+          {
+            "id": "history-late",
+            "value": "201811"
+          },
+          {
+            "id": "history-primary",
+            "value": "IND"
+          },
+          {
+            "id": "history-comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "The past getsrevised too."
+      }
     }
   ]
 }
