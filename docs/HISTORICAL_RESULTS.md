@@ -1,6 +1,6 @@
 # Official-edition historical replay
 
-Status: executed exploratory engineering pilot. A new source-frozen campaign is pending. The earlier releases and their retrospective results remain preserved.
+Status: executed source-frozen exploratory extension. Diagnostic `history-final-clean-20261112` passed at `1bd53f80841fe08c1bfd3a2fafb9c8d53b042cb0`. The separate full profile completed source and tamper checks, then exited 1 on seven incomplete gates. Earlier releases and results remain preserved.
 
 ## Information actually available
 
@@ -10,9 +10,9 @@ Each test target Y uses four reference years Y-5 through Y-2 from the edition se
 
 The provider archive month is a conservative edition bound. It does not establish an original cell publication day, independent witnessed release or stable historical borders. Current country identifiers remain an explicit geographic limitation. The provider also warns that current indicator metadata may describe old editions incorrectly. GDP is therefore internally indexed to 2010=100 separately within every edition. The index removes constant price-base scaling, but methodological, denominator and territorial revisions remain possible. Its model score uses log1p index units and cannot be compared numerically with version 1 dollar scores.
 
-## Executed pilot
+## Executed forecasts
 
-The pilot used 4,001 eligible country-year rows: 1,638 training, 479 validation and 1,235 test rows. Five classical baselines, three freshly initialized network seeds and three untrained controls produced 66 family/model configurations and 42,097 test predictions. The saved table contains 12,067 country, year and held-out-country score groups. The three learned seeds stopped after 68, 52 and 57 epochs. No additional fitting or protocol change followed test review.
+The final source campaign used 4,001 eligible country-year rows: 1,638 training, 479 validation and 1,235 test rows. Five classical baselines, three freshly initialized network seeds and three untrained controls produced 66 family/model configurations and 42,097 test predictions. The saved table contains 12,067 country, year and held-out-country score groups. The three learned seeds stopped after 68, 52 and 57 epochs. No additional fitting or protocol change followed test review.
 
 | Outcome | Validation-selected baseline | Mean learned CRPS improvement | Country-cluster 95% interval |
 | --- | --- | --- | --- |
@@ -51,9 +51,9 @@ The change from version 1 also changes forecast horizon, training period, GDP tr
 
 ## Independent replay and failure boundaries
 
-The pilot receipt `evidence/history-pilot/CHECKS-v2.json` independently parsed all 43 source partitions, reconstructed all 227,850 typed cells and 27,342 early/late revision comparisons, rebuilt feature populations and training normalizers, replayed all saved historical predictions and recomputed score groups, baseline selection and cluster intervals. Later source changes require a new clean campaign. This pilot receipt does not certify those later changes.
+The source-frozen diagnostic independently parsed all 43 source partitions, reconstructed all 227,850 typed cells, 27,342 revision comparisons and 7,812 sensitivity cells, rebuilt feature populations and training normalizers, replayed all saved historical predictions, and recomputed score groups, baseline selection and cluster intervals. Exact executable source is `1bd53f80841fe08c1bfd3a2fafb9c8d53b042cb0`. Original engineering-pilot receipts remain preserved separately.
 
-The new verifier also checks every endpoint-sensitivity cell, direction-change summary, fresh network initialization and two-step baseline covariance. Rehashed tamper controls substitute a later archive, forge an edition bound, inject a future target into a lag, and change a GDP anchor. The complete campaign retains the original controls and adds a forged full-pass claim. Actual rejection receipts will be recorded by the new campaign, rather than inferred from these recipes.
+Nineteen actual rehashed semantic/structural subprocess controls were rejected in both final campaigns. Historical controls substitute a later archive, forge an edition bound, inject a future target into a lag and change a GDP anchor. Another control promotes saved gate flags to a forged full pass. The [public receipt](PREVIEW_EVIDENCE.json) retains actual invocations and intended rejection reasons. The original core also replays all 20,571 trained test predictions, alongside the separate dynamic and survey checks.
 
 `configs/full-scope.json` freezes the implementation's unsupported gates. A saved acceptance record cannot promote them by changing booleans. The full campaign executes independent checks and tamper subprocesses, then preserves a nonzero result with `full_acceptance=false` while required scope remains incomplete. Its verifier command has no option to bypass the domain gates.
 

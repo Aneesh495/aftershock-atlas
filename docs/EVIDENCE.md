@@ -29,4 +29,4 @@ The full campaign runs available semantic checks and actual tamper subprocesses 
 | Actual browser paths work | retained DOM observations and screenshots | `docs/media/browser-checks.json` |
 | Full acceptance remains incomplete | explicit gate statuses and nonzero full profile | `FULL_INCOMPLETE.json`, build status |
 
-The extension stores only safe aggregate survey cells and `SURVEY_INPUTS.json` source identities in a bundle. Its independent verifier reacquires or reads the exact public-use ZIP in ignored local storage. Raw participant records are never copied into evidence. [The public receipt](PREVIEW_EVIDENCE.json) links exact-source diagnostic results, fourteen actual rejection receipts and the separately failed full profile.
+The extension stores only safe aggregate survey cells and `SURVEY_INPUTS.json` source identities in a bundle. Its independent verifier reacquires or reads the exact public-use ZIP in ignored local storage. Raw participant records are never copied into evidence. [The public receipt](PREVIEW_EVIDENCE.json) links exact-source diagnostic results, nineteen actual rejection receipts and the separately failed full profile.
