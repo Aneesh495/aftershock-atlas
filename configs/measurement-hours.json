@@ -1,0 +1,18 @@
+{
+  "oecd_annual_hours": {
+    "acquired_at": "2026-11-20T19:46:53.237464+00:00",
+    "available_at": "2026-11-20T19:46:53.237525+00:00",
+    "bytes": 77215,
+    "citation": "https://www.oecd.org/en/data/indicators/hours-worked.html",
+    "format": "csv",
+    "id": "oecd_annual_hours",
+    "limitations": "Within-country change sensitivity; methods differ across countries; no sector or sex detail",
+    "max_bytes": 40000000,
+    "path": "oecd_annual_hours/56cd7f56d6ddd7ae0a9c0350c1555d8959d75fec5784166131c3b56f1801eeaa.csv",
+    "redistribute": true,
+    "rights": "OECD Data terms; attribution required",
+    "sha256": "56cd7f56d6ddd7ae0a9c0350c1555d8959d75fec5784166131c3b56f1801eeaa",
+    "timing": "Annual 2010 to 2024, current retrospective edition",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.SAE,DSD_HW@DF_AVG_ANN_HRS_WKD,1.0/.HW.H_Y_PS._Z._Z.EMP.A.ACTUAL._T._Z.MEAN._Z._T?startPeriod=2010&endPeriod=2024&format=csvfile"
+  }
+}

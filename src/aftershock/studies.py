@@ -130,14 +130,32 @@ def run_studies() -> dict:
            "below_2019": sum(r["change"] < 0 for r in employment), "2024_sensitivity": bootstrap_mean([r["change"] for r in later])},
            "Employment recovery differs across the matched country estimates. The eligible sample and endpoint year change the summary; these ratios also depend on demographic composition.")
     gdp = endpoint_table("gdp")
-    result(8, gdp, {"percent_change": bootstrap_mean([r["percent_change"] for r in gdp if r["percent_change"] is not None]),
-           "2024_sensitivity": bootstrap_mean([r["percent_change"] for r in endpoint_table("gdp", 2024) if r["percent_change"] is not None]),
-           "hours_available": False},
-           "Constant-price per-person GDP trajectories differ across matched countries. The panel contains no hours series and cannot estimate working hours lost.", "partial_outcome_support")
+    measurement = read_json(directory / "measurement-v4.json")
+    hours = measurement["hours"]
+    learning = measurement["learning"]
+    instruction = measurement["remote_instruction"]
+    result(8, hours["rows"], {
+           "percent_change": bootstrap_mean([r["percent_change"] for r in gdp if r["percent_change"] is not None]),
+           "within_country_hours": hours["summary"],
+           "measurement_protocol": measurement["definition_sha256"],
+           "hours_available": hours["status"] == "acquired",
+           }, "Actual annual hours per employed person fell in the matched OECD country series in 2020. Hours and real GDP per person follow different trajectories. The comparison is within each country and per employed person.", "bounded_analysis")
     schooling = endpoint_table("school")
-    result(9, schooling, {"enrollment_change_pp": bootstrap_mean([r["change"] for r in schooling]),
-           "remote_instruction_available": False, "learning_assessment_available": False},
-           "Gross secondary enrollment changes are observed for a selected subset of countries. Enrollment, remote instruction and learning attainment are distinct outcomes. Missing assessment data prevents a learning-loss estimate.", "partial_outcome_support")
+    learning_rows = [
+        {"system": r["system"], "subject": r["subject"], "caution": r["caution"],
+         "2015_to_2018": r["2015_to_2018"], "2018_to_2022": r["2018_to_2022_released"]["value"],
+         "lower": r["2018_to_2022_released"]["lower"], "upper": r["2018_to_2022_released"]["upper"],
+         "q_value": r["q_value"], "unit": r["unit"], "source_sheet": r["sheet"],
+         "source_row": r["row"], "source_sha256": r["source_sha256"]}
+        for r in learning["rows"]
+    ]
+    result(9, learning_rows, {
+           "enrollment_change_pp": bootstrap_mean([r["change"] for r in schooling]),
+           "assessment_sensitivity": learning["summary"],
+           "adult_instruction": [r for r in instruction["rows"] if r["group"] == "All eligible adults"],
+           "measurement_protocol": measurement["definition_sha256"],
+           "remote_instruction_available": True, "learning_assessment_available": True,
+           }, "PISA score changes vary by system and subject, with both increases and declines. US adults reported several overlapping instruction arrangements. These sources describe distinct populations and permit descriptive comparisons.", "bounded_analysis")
     result(10, survey["phase_changes"], {"states": survey["state_count"], "phases": survey["phases"],
            "suppressed": survey["suppressed"], "independent_weight_recomputation": "week_1_only",
            "weight_point_matches": survey["design_replay"]["point_matches"], "weight_point_comparisons": survey["design_replay"]["point_comparisons"]},

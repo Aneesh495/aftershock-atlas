@@ -50,6 +50,11 @@ def export_atlas(build: bool = True) -> dict:
     sources.update({k: {**v, "status": "acquired"} for k, v in read_json(ROOT / "configs/survey-inputs.json").items()})
     if (ROOT / "configs/history-inputs.json").exists():
         sources.update({k: {**v, "status": "acquired"} for k, v in read_json(ROOT / "configs/history-inputs.json").items()})
+    measurement = ROOT / "data/results/measurement-v4.json"
+    if measurement.exists():
+        data = read_json(measurement)
+        write_json(public / "measurement-v4.json", data)
+        sources.update({k: {**v, "status": "acquired"} for k, v in data["sources"].items()})
     source_cards = [{k: v for k, v in source.items() if k not in {"headers", "path"}} for source in sources.values()]
     write_json(public / "sources.json", source_cards)
     numeric = {c.numeric: c.alpha_3 for c in pycountry.countries}
