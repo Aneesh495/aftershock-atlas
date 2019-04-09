@@ -1,16 +1,18 @@
 import type { Index, State, View } from './types';
 
 const defaults: State = {view:'atlas',metric:'employment',primary:'USA',comparison:'GBR',year:2023,
+  measurementSection:'learning',learningSubject:'mathematics',instructionGroup:'All eligible adults',hoursYear:2020,
   indexed:false,scenario:false,rate:false,study:'S01',subgroup:'total',vintage:'2023',historyMetric:'employment',edition:'201811',revisionEdition:'202312'};
-const views: View[] = ['atlas','studies','coverage','biology','subnational','methods','sources','vintages'];
+const views: View[] = ['atlas','studies','coverage','biology','subnational','methods','sources','vintages','measurement'];
 export function restore(index: Index): State {
   let stored: Partial<State> = {};
   try { stored = JSON.parse(localStorage.getItem('aftershock:v1') ?? '{}'); } catch { /* Ignore corrupt view preferences. */ }
   const state = {...defaults,...stored};
   const query = new URLSearchParams(location.search);
-  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage','historyMetric','edition','revisionEdition'] as const) {
+  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage','historyMetric','edition','revisionEdition','measurementSection','learningSubject','instructionGroup'] as const) {
     const value = query.get(key); if (value) (state as unknown as Record<string,unknown>)[key] = value;
   }
+  if (query.has('hoursYear')) state.hoursYear = Number(query.get('hoursYear'));
   if (query.has('year')) state.year = Number(query.get('year'));
   for (const key of ['indexed','scenario','rate'] as const) if (query.has(key)) state[key] = query.get(key) === '1';
   if (!views.includes(state.view)) state.view = defaults.view;
@@ -23,6 +25,10 @@ export function restore(index: Index): State {
   state.vintage = state.vintage === '2022' ? '2022' : '2023';
   if(!['population','employment','gdp','school','immunization','mortality','life_expectancy'].includes(state.historyMetric))state.historyMetric='employment';
   for(const key of ['edition','revisionEdition'] as const)if(!['201811','201912','202012','202112','202212','202312'].includes(state[key]))state[key]=defaults[key];
+  if (!index.files['measurement-v4.json'] && state.view === 'measurement') state.view = 'atlas';
+  if (!['learning','instruction','hours'].includes(state.measurementSection)) state.measurementSection = 'learning';
+  if (!['mathematics','reading','science'].includes(state.learningSubject)) state.learningSubject = 'mathematics';
+  state.hoursYear = state.hoursYear === 2022 ? 2022 : 2020;
   return state;
 }
 export function persist(state: State): void {
