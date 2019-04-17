@@ -55,7 +55,7 @@ export async function measurementView(
   if (section === 'learning') {
     const subject = state.learningSubject;
     rows = data.learning.rows.filter(r => r.subject === subject).map(assessmentExport);
-    content = `<section class="panel"><h2>Learning assessments</h2>
+    content = `<section class="panel prose measurement-panel"><h2>Learning assessments</h2>
       <label class="filter-label" for="learning-subject">Subject</label>
       <select id="learning-subject">${subjects.map(s => option(s, s, subject)).join('')}</select>
       <p>OECD PISA scores describe assessment-eligible students. Published 2018 to 2022 change errors include scale-linking uncertainty. The earlier difference spans three years.</p>
@@ -73,7 +73,7 @@ export async function measurementView(
       population: r.population, item_missing_lower: r.item_missing_lower, item_missing_upper: r.item_missing_upper,
       source_sha256: r.source_hash,
     }));
-    content = `<section class="panel"><h2>US remote instruction</h2>
+    content = `<section class="panel prose measurement-panel"><h2>US remote instruction</h2>
       <label class="filter-label" for="instruction-group">Adult demographic group</label>
       <select id="instruction-group">${groups.map(g => option(g, g, group)).join('')}</select>
       <p>${safe(data.remote_instruction.population)}. April 23 to May 5, 2020.</p>
@@ -88,7 +88,7 @@ export async function measurementView(
       unit: r.unit, cohort: r.cohort, source_sha256: r.source_sha256, gdp_panel_sha256: data.hours.gdp_panel_sha256,
       region: r.region,
     }));
-    content = `<section class="panel"><h2>Annual hours and GDP</h2>
+    content = `<section class="panel prose measurement-panel"><h2>Annual hours and GDP</h2>
       <label class="filter-label" for="hours-year">Comparison year</label>
       <select id="hours-year">${[2020, 2022].map(y => option(String(y), String(y), String(year))).join('')}</select>
       <p>Each country uses 2019 = 100. Hours describe employed people. GDP describes output per resident.</p>
@@ -98,11 +98,11 @@ export async function measurementView(
   }
   const provenance = { scientific_source: data.source, protocol: data.protocol, definition_sha256: data.definition_sha256 };
   return {
-    html: `<section class="hero"><div class="eyebrow">WORK AND EDUCATION</div>
+    html: `<section class="page-heading measurement-heading"><div><div class="eyebrow">WORK AND EDUCATION</div>
       <h1>Hours worked, instruction and learning</h1>
-      <p>Compare actual annual work hours and real GDP within countries. Explore measured learning and reported instruction in their own populations.</p>
-      <label class="filter-label" for="measurement-section">Measure</label>
-      <select id="measurement-section">${choices}</select>
+      <p>Compare actual annual work hours and real GDP within countries. Explore measured learning and reported instruction in their own populations.</p></div>
+      <div class="measurement-selector"><label class="filter-label" for="measurement-section">Measure</label>
+      <select id="measurement-section">${choices}</select></div>
     </section>${content}`,
     rows: rows.map(r => ({ ...r, ...provenance })),
     after(root) {
