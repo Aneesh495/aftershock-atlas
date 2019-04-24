@@ -20,3 +20,4 @@ evidence/*
 .DS_Store
 
 /data/measurement/
+/data/state-surveillance/
