@@ -16,7 +16,7 @@ import numpy as np
 from .io import ROOT, append_json, digest, now, read_json, source_commit, write_json
 from .panel import connect
 from .resources import doctor, usage
-from .verification import trusted_inputs, verify_bundle
+from .verification import CAMPAIGN_STAGES, REQUIRED_NEGATIVE_CONTROLS, trusted_inputs, verify_bundle
 
 
 def make_manifest(bundle: Path) -> None:
@@ -52,7 +52,7 @@ def gates(bundle: Path | None = None) -> list[dict]:
     if bundle is not None and (bundle / "negative-controls.json").exists():
         controls = read_json(bundle / "negative-controls.json")
         expected_source = read_json(bundle / "START.json")["source"]
-        if controls["source"] == expected_source and controls["rejected"] == len(controls["controls"]) >= 23:
+        if controls["source"] == expected_source and controls["rejected"] == len(controls["controls"]) >= REQUIRED_NEGATIVE_CONTROLS:
             row = next(r for r in rows if r["gate"] == "G16")
             row.update(status="passed", reason=f"{controls['rejected']} source-matched tamper subprocesses rejected")
     return rows
@@ -88,6 +88,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
     write_json(bundle / "SURVEY_INPUTS.json", read_json(ROOT / "configs/survey-inputs.json"))
     assemble_history(bundle)
     assemble_measurement(bundle)
+    assemble_surveillance(bundle)
     source_files = trusted_inputs(source)
     write_json(bundle / "SOURCE_INPUTS.json", {"commit": source, "files": source_files, "protocol_sha256": digest(ROOT / "docs/EXPERIMENT_PLAN.md")})
     sources = read_json(ROOT / "configs/data-inputs.json")
@@ -155,6 +156,22 @@ def assemble_measurement(bundle: Path) -> None:
     directory.mkdir()
     for key, record in input_manifest().items():
         shutil.copyfile(pinned_file(RAW, record), directory / f"{key}.{record['format']}")
+
+
+def assemble_surveillance(bundle: Path) -> None:
+    from .state_surveillance import PINS, RAW, RESULT, source_path
+
+    shutil.copyfile(RESULT, bundle / "state-surveillance.json")
+    directory = bundle / "state-surveillance-raw"
+    for record in read_json(PINS).values():
+        origin = source_path(RAW, record)
+        target = directory / record["path"]
+        target.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            os.link(origin, target)
+        except OSError:
+            usage(record["bytes"])
+            shutil.copyfile(origin, target)
 
 
 def negative_controls(bundle: Path, source: str) -> dict:
@@ -270,6 +287,17 @@ def negative_controls(bundle: Path, source: str) -> dict:
     mutate("instruction-population", measurement,
            json_change(lambda x: x["remote_instruction"]["rows"][0].update(unit="percent of students")),
            "Remote instruction denominator unit changed")
+    surveillance = "state-surveillance.json"
+    mutate("icu-denominator", surveillance, json_change(lambda x: next(
+        r["all_cause_adult_icu_occupancy"] for r in x["states"]["CA"]["hospital"]
+        if r["all_cause_adult_icu_occupancy"]["weekly_percent"] is not None
+    ).update(staffed_bed_days=1)), "Surveillance value changed")
+    mutate("pcr-result-population", surveillance, json_change(lambda x: next(
+        r for r in x["states"]["CA"]["testing"] if r["weekly_positivity_percent"] is not None
+    ).update(determinate_results=1)), "Surveillance value changed")
+    mutate("vaccine-report-date", surveillance, json_change(lambda x: next(
+        r["latest_report"] for r in x["states"]["CA"]["vaccination"] if r["latest_report"]
+    ).update(report_date="2020-01-01")), "Surveillance value changed")
     result = {"controls": receipts, "rejected": len(receipts), "source": source}
     write_json(bundle / "negative-controls.json", result)
     make_manifest(bundle)
@@ -285,7 +313,7 @@ def acceptance(run_id: str, profile: str) -> dict:
     source = source_commit()
     write_json(bundle / "START.json", {"source": source, "profile": profile, "at": now()})
     try:
-        for name in ("panel", "history-panel", "fit", "dynamic", "history-fit", "forecasts", "causal", "measurement-data", "measurement", "studies", "history-atlas", "atlas"):
+        for name in CAMPAIGN_STAGES:
             execute_stage(bundle, name, [sys.executable, "-m", "aftershock.cli", name])
         execute_stage(bundle, "correctness", [sys.executable, "-m", "pytest", "-q"])
         assemble(bundle, source, profile)
