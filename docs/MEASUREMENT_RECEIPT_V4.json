@@ -1,0 +1,221 @@
+{
+  "source": "13e35cdb95bbe256e2ed5a79d3e64b74a8f6c72b",
+  "campaign": "measurement-linux-full-20261120",
+  "github_run": "https://github.com/Aneesh495/aftershock-atlas/actions/runs/44809921182",
+  "artifact_id": 14665576956,
+  "artifacts_policy": "Runner artifact includes aggregate results and manifests. Local independent replay still requires separately restored source bytes.",
+  "manifest_sha256": "77ff94e37dde5e2e67ba55dcd6c74c71f7276232c69276062f48a4ca305cc190",
+  "profile": "full",
+  "verification_status": "source_checks_passed_full_incomplete",
+  "full_acceptance": false,
+  "command_count": 13,
+  "measurement": {
+    "hours_rows": 90,
+    "instruction_aggregates": 110,
+    "learning_rows": 243
+  },
+  "negative_controls": [
+    {
+      "name": "forged-vintage",
+      "exit": 1,
+      "reason": "aftershock: Forged vintage or availability timestamp",
+      "rehashed": true
+    },
+    {
+      "name": "duplicate-population",
+      "exit": 1,
+      "reason": "aftershock: Duplicate measurement population in evidence",
+      "rehashed": true
+    },
+    {
+      "name": "future-label",
+      "exit": 1,
+      "reason": "aftershock: Future feature label or feature chronology violation",
+      "rehashed": true
+    },
+    {
+      "name": "invalid-effect-sign",
+      "exit": 1,
+      "reason": "aftershock: Invalid genetic effect sign or odds ratio",
+      "rehashed": true
+    },
+    {
+      "name": "shifted-placebo",
+      "exit": 1,
+      "reason": "aftershock: Shifted placebo baseline",
+      "rehashed": true
+    },
+    {
+      "name": "shared-sample-reclassification",
+      "exit": 1,
+      "reason": "aftershock: Shared-sample genetics reclassified as independent replication",
+      "rehashed": true
+    },
+    {
+      "name": "survey-category",
+      "exit": 1,
+      "reason": "aftershock: Survey population reclassified",
+      "rehashed": true
+    },
+    {
+      "name": "survey-variance-factor",
+      "exit": 1,
+      "reason": "aftershock: Invalid survey variance factor",
+      "rehashed": true
+    },
+    {
+      "name": "survey-denominator",
+      "exit": 1,
+      "reason": "aftershock: Survey weighted denominator mismatch",
+      "rehashed": true
+    },
+    {
+      "name": "dynamic-parameters",
+      "exit": 1,
+      "reason": "aftershock: Dynamic training likelihood replay mismatch",
+      "rehashed": true
+    },
+    {
+      "name": "later-archive",
+      "exit": 1,
+      "reason": "aftershock: Historical edition follows origin",
+      "rehashed": true
+    },
+    {
+      "name": "forged-archive-bound",
+      "exit": 1,
+      "reason": "aftershock: Forged historical edition bound",
+      "rehashed": true
+    },
+    {
+      "name": "changed-gdp-anchor",
+      "exit": 1,
+      "reason": "aftershock: Historical GDP anchor detached from raw edition",
+      "rehashed": true
+    },
+    {
+      "name": "future-history-feature",
+      "exit": 1,
+      "reason": "aftershock: Historical replay inputs differ from raw archives: x",
+      "rehashed": true
+    },
+    {
+      "name": "forged-full-pass",
+      "exit": 1,
+      "reason": "aftershock: Full scope claims exceed source-supported capabilities",
+      "rehashed": true
+    },
+    {
+      "name": "corruption",
+      "exit": 1,
+      "reason": "aftershock: Artifact checksum or size mismatch: genetics.json",
+      "rehashed": false
+    },
+    {
+      "name": "missing-artifact",
+      "exit": 1,
+      "reason": "aftershock: Unlisted or missing evidence artifact",
+      "rehashed": false
+    },
+    {
+      "name": "source-mismatch",
+      "exit": 1,
+      "reason": "aftershock: Source commit mismatch",
+      "rehashed": true
+    },
+    {
+      "name": "failed-replay",
+      "exit": 1,
+      "reason": "aftershock: Saved model mean replay failed",
+      "rehashed": true
+    },
+    {
+      "name": "hours-unit",
+      "exit": 1,
+      "reason": "aftershock: Hours definition or denominator substituted",
+      "rehashed": true
+    },
+    {
+      "name": "hours-gdp-merge",
+      "exit": 1,
+      "reason": "aftershock: Hours and GDP merge population changed",
+      "rehashed": true
+    },
+    {
+      "name": "assessment-change-error",
+      "exit": 1,
+      "reason": "aftershock: Released assessment value or standard error changed",
+      "rehashed": true
+    },
+    {
+      "name": "instruction-population",
+      "exit": 1,
+      "reason": "aftershock: Remote instruction denominator unit changed",
+      "rehashed": true
+    }
+  ],
+  "incomplete_gates": [
+    {
+      "artifact": "observations.csv",
+      "gate": "G02",
+      "reason": "Official archive-month editions present; original cell release-day and historical territory validation incomplete",
+      "status": "blocked"
+    },
+    {
+      "artifact": "surveys.json",
+      "gate": "G06",
+      "reason": "Week 1 replicate weights and nonresponse sensitivity replayed; later-wave design auditing remains incomplete",
+      "status": "blocked"
+    },
+    {
+      "artifact": "measurement-v4.json",
+      "gate": "G07",
+      "reason": "Verified annual hours, learning and remote instruction use distinct populations; ILO weekly hours and sector checks remain incomplete",
+      "status": "blocked"
+    },
+    {
+      "artifact": "surveys.json",
+      "gate": "G08",
+      "reason": "Provider-released US subgroup estimates retain labels and suppression; independent subgroup denominator audit incomplete",
+      "status": "unverified"
+    },
+    {
+      "artifact": "history-fit.json",
+      "gate": "G10",
+      "reason": "60 original configurations plus 66 archive configurations; release-day proof and pandemic calibration remain incomplete",
+      "status": "blocked"
+    },
+    {
+      "artifact": "studies.json",
+      "gate": "G12",
+      "reason": "12 executed tables, 2 with incomplete outcome or design support",
+      "status": "blocked"
+    },
+    {
+      "artifact": "browser-checks.json",
+      "gate": "G13",
+      "reason": "Atlas implementation exists; interactive source-frozen final walkthrough must be reviewed",
+      "status": "unverified"
+    }
+  ],
+  "hosted_browser": {
+    "deployment_checks": "https://github.com/Aneesh495/aftershock-atlas/actions/runs/44809464235",
+    "ui_source": "13e35cdb95bbe256e2ed5a79d3e64b74a8f6c72b",
+    "dashboard_data_source": "9e5d65c59f427bcc31d1212de7392f9de651569d",
+    "body_fit_pixels": [
+      320,
+      390,
+      1280
+    ],
+    "csv_records_reconciled": {
+      "reading_assessment": 81,
+      "instruction_age_80_and_over": 11,
+      "hours_and_gdp_2022": 45
+    },
+    "checks": [
+      "URL persistence after reload",
+      "suppression hides estimates and denominators",
+      "filter changes remove old CSV link"
+    ]
+  }
+}
