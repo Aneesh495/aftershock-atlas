@@ -9,7 +9,7 @@ import sys
 def main() -> int:
     parser = argparse.ArgumentParser(prog="aftershock")
     parser.add_argument("command", choices=["doctor", "data", "covid-data", "panel", "fit", "forecasts", "causal",
-        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance"])
+        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance", "survey-bridge-data", "survey-bridge"])
     parser.add_argument("--run-id", default="diagnostic")
     parser.add_argument("--profile", choices=["diagnostic", "full"], default="diagnostic")
     parser.add_argument("--evidence")
@@ -29,6 +29,13 @@ def main() -> int:
             if any(v == "blocked" for v in result.values()):
                 print(json.dumps(result, indent=2))
                 return 1
+        elif command == "survey-bridge-data":
+            from .survey_bridge import acquire_bridge
+            result = acquire_bridge()
+        elif command == "survey-bridge":
+            from .survey_bridge import run_bridge
+            data = run_bridge()
+            result = {"source": data["source"], "waves": {k: len(v["rows"]) for k, v in data["waves"].items()}}
         elif command == "surveillance-data":
             from .state_surveillance import acquire_surveillance
             result = acquire_surveillance()
@@ -98,6 +105,9 @@ def main() -> int:
             from .io import read_json, source_commit
             if not RESULT.exists() or read_json(RESULT)["source"] != source_commit():
                 run_measurement()
+            from .survey_bridge import RESULT as BRIDGE_RESULT, run_bridge
+            if not BRIDGE_RESULT.exists() or read_json(BRIDGE_RESULT)["source"] != source_commit():
+                run_bridge()
             result = run_studies()
         elif command == "atlas":
             from .atlas import export_atlas
