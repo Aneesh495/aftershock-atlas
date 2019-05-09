@@ -1,7 +1,7 @@
 import {format,safe} from './data';
 import type { Series } from './types';
 
-export function lineChart(series: Series[], unit: string, selected?: number, baseline?: number, bounds?:[number,number]): string {
+export function lineChart(series: Series[], unit: string, selected?: number, baseline?: number, bounds?:[number,number], dateAxis?: "month"): string {
   const compact=window.innerWidth<650;
   const width=compact?Math.max(300,window.innerWidth-72):900, height=compact?250:300, left=64, right=24, top=20, bottom=42;
   const all = series.flatMap(s => s.points.filter(p => p.y !== null && Number.isFinite(p.y)));
@@ -18,13 +18,14 @@ export function lineChart(series: Series[], unit: string, selected?: number, bas
   }).join('');
   const maxTicks=compact?4:7;
   let ticks = [...new Set(xs)].sort((a,b)=>a-b).filter((_,i,a)=>i%Math.max(1,Math.ceil(a.length/maxTicks))===0);
-  if (xmax > 2100) {
+  if (xmax > 2100 && dateAxis !== "month") {
     ticks=[];
     const firstYear=new Date(xmin).getUTCFullYear(),lastYear=new Date(xmax).getUTCFullYear();
     const stride=Math.max(1,Math.ceil((lastYear-firstYear)/maxTicks));
     for(let year=firstYear;year<=lastYear;year+=stride) ticks.push(Math.max(xmin,Date.UTC(year,0,1)));
   }
-  const labels=ticks.map(v=>`<text x="${x(v)}" y="${height-13}" text-anchor="middle">${v>2100?new Date(v).getUTCFullYear():v}</text>`).join('');
+  const dateLabel = new Intl.DateTimeFormat("en-US", { month: "short", timeZone: "UTC" });
+  const labels=ticks.map(v=>`<text x="${x(v)}" y="${height-13}" text-anchor="middle">${v>2100?(dateAxis === "month" ? dateLabel.format(v) : new Date(v).getUTCFullYear()):v}</text>`).join('');
   const shapes=series.map(s=>{
     const segments: typeof s.points[]=[]; let current: typeof s.points=[];
     for (const p of s.points) {
@@ -35,7 +36,7 @@ export function lineChart(series: Series[], unit: string, selected?: number, bas
     return segments.map(segment=>{
       const line=segment.map((p,i)=>`${i?'L':'M'}${x(p.x).toFixed(2)},${y(p.y!).toFixed(2)}`).join(' ');
       const band=segment.every(p=>p.low!==undefined&&p.high!==undefined) ? `<path d="${segment.map((p,i)=>`${i?'L':'M'}${x(p.x)},${y(p.high!)}`).join(' ')} ${[...segment].reverse().map(p=>`L${x(p.x)},${y(p.low!)}`).join(' ')}Z" fill="${s.color}" opacity=".1"/>` : '';
-      return `${band}<path d="${line}" stroke="${s.color}" stroke-width="2.7" fill="none" ${s.dashed?'stroke-dasharray="7 5"':''}/>${segment.filter(p=>p.x===selected).map(p=>`<circle cx="${x(p.x)}" cy="${y(p.y!)}" r="5" fill="${s.color}" stroke="white" stroke-width="2"><title>${safe(s.name)}: ${format(p.y)} ${safe(unit)}</title></circle>`).join('')}`;
+      return `${band}<path d="${line}" stroke="${s.color}" stroke-width="2.7" fill="none" ${s.dashed?'stroke-dasharray="7 5"':''}/>${segment.filter(p=>segment.length===1||p.x===selected).map(p=>`<circle cx="${x(p.x)}" cy="${y(p.y!)}" r="5" fill="${s.color}" stroke="white" stroke-width="2"><title>${safe(s.name)}: ${format(p.y)} ${safe(unit)}</title></circle>`).join('')}`;
     }).join('');
   }).join('');
   const reference = baseline!==undefined&&baseline>=ymin&&baseline<=ymax ? `<line x1="${left}" x2="${width-right}" y1="${y(baseline)}" y2="${y(baseline)}" stroke="#9b9f96" stroke-dasharray="3 4"/>` : '';

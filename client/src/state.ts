@@ -1,17 +1,19 @@
 import type { Index, State, View } from './types';
 
 const defaults: State = {view:'atlas',metric:'employment',primary:'USA',comparison:'GBR',year:2023,
+  healthDomain:'hospital',reportingState:'CA',reportingYear:2022,hospitalMetric:'admissions',pulseWave:'33',pulseGroup:'national',
   measurementSection:'learning',learningSubject:'mathematics',instructionGroup:'All eligible adults',hoursYear:2020,
   indexed:false,scenario:false,rate:false,study:'S01',subgroup:'total',vintage:'2023',historyMetric:'employment',edition:'201811',revisionEdition:'202312'};
-const views: View[] = ['atlas','studies','coverage','biology','subnational','methods','sources','vintages','measurement'];
+const views: View[] = ['atlas','studies','coverage','biology','subnational','methods','sources','vintages','measurement','health'];
 export function restore(index: Index): State {
   let stored: Partial<State> = {};
   try { stored = JSON.parse(localStorage.getItem('aftershock:v1') ?? '{}'); } catch { /* Ignore corrupt view preferences. */ }
   const state = {...defaults,...stored};
   const query = new URLSearchParams(location.search);
-  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage','historyMetric','edition','revisionEdition','measurementSection','learningSubject','instructionGroup'] as const) {
+  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage','historyMetric','edition','revisionEdition','measurementSection','learningSubject','instructionGroup','healthDomain','reportingState','hospitalMetric','pulseWave','pulseGroup'] as const) {
     const value = query.get(key); if (value) (state as unknown as Record<string,unknown>)[key] = value;
   }
+  if (query.has('reportingYear')) state.reportingYear = Number(query.get('reportingYear'));
   if (query.has('hoursYear')) state.hoursYear = Number(query.get('hoursYear'));
   if (query.has('year')) state.year = Number(query.get('year'));
   for (const key of ['indexed','scenario','rate'] as const) if (query.has(key)) state[key] = query.get(key) === '1';
@@ -29,6 +31,14 @@ export function restore(index: Index): State {
   if (!['learning','instruction','hours'].includes(state.measurementSection)) state.measurementSection = 'learning';
   if (!['mathematics','reading','science'].includes(state.learningSubject)) state.learningSubject = 'mathematics';
   state.hoursYear = state.hoursYear === 2022 ? 2022 : 2020;
+  if (!index.files['state-surveillance.json'] && state.view === 'health') state.view = 'atlas';
+  if (!['hospital','testing','vaccination','survey'].includes(state.healthDomain)) state.healthDomain = 'hospital';
+  if (!index.files['survey-bridge.json'] && state.healthDomain === 'survey') state.healthDomain = 'hospital';
+  if (!/^[A-Z]{2}$/.test(state.reportingState) || !index.files[`state-report-${state.reportingState.toLowerCase()}.json`]) state.reportingState = defaults.reportingState;
+  if (![2020, 2021, 2022, 2023, 2024].includes(state.reportingYear)) state.reportingYear = defaults.reportingYear;
+  if (!['admissions','icu_patients','icu_occupied','icu_covid'].includes(state.hospitalMetric)) state.hospitalMetric = 'admissions';
+  state.pulseWave = state.pulseWave === '34' ? '34' : '33';
+  if (!['national','race_origin','income'].includes(state.pulseGroup)) state.pulseGroup = 'national';
   return state;
 }
 export function persist(state: State): void {

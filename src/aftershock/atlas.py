@@ -7,6 +7,7 @@ import subprocess
 import pycountry
 
 from .contracts import METRICS
+from .health_atlas import export_health
 from .io import ROOT, digest, now, read_json, source_commit, write_json
 from .panel import connect, records
 from .privacy import Disclosure
@@ -55,6 +56,7 @@ def export_atlas(build: bool = True) -> dict:
         data = read_json(measurement)
         write_json(public / "measurement-v4.json", data)
         sources.update({k: {**v, "status": "acquired"} for k, v in data["sources"].items()})
+    sources.update(export_health(public))
     source_cards = [{k: v for k, v in source.items() if k not in {"headers", "path"}} for source in sources.values()]
     write_json(public / "sources.json", source_cards)
     numeric = {c.numeric: c.alpha_3 for c in pycountry.countries}
