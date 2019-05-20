@@ -1,0 +1,18 @@
+{
+  "eurostat_sector_hours": {
+    "acquired_at": "2026-11-20T20:40:45.536182+00:00",
+    "available_at": "2026-11-20T20:40:45.536204+00:00",
+    "bytes": 104927,
+    "citation": "https://ec.europa.eu/eurostat/databrowser/view/lfsq_ewhan2/default/table",
+    "format": "json",
+    "id": "eurostat_sector_hours",
+    "limitations": "Hours in main job among workers present in the reference week, ages 20 to 64. EU-LFS changed in 2021.",
+    "max_bytes": 8000000,
+    "path": "eurostat_sector_hours/73790af2e3ada5ae9a18b08ff9e60ecf8e8b692568883d00743063be7b3f7941.json",
+    "redistribute": true,
+    "rights": "Eurostat statistics reuse with attribution; see copyright notice",
+    "sha256": "73790af2e3ada5ae9a18b08ff9e60ecf8e8b692568883d00743063be7b3f7941",
+    "timing": "Quarterly 2017-Q1 to 2024-Q4; current published vintages",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/lfsq_ewhan2?lang=EN&freq=Q&wstatus=EMP&worktime=TOTAL&age=Y20-64&sex=T&unit=HR&sinceTimePeriod=2017-Q1&untilTimePeriod=2024-Q4&geo=AT&geo=BE&geo=BG&geo=CY&geo=CZ&geo=DE&geo=DK&geo=EE&geo=EL&geo=ES&geo=FI&geo=FR&geo=HR&geo=HU&geo=IE&geo=IT&geo=LT&geo=LU&geo=LV&geo=MT&geo=NL&geo=PL&geo=PT&geo=RO&geo=SE&geo=SI&geo=SK&nace_r2=TOTAL&nace_r2=A&nace_r2=C&nace_r2=F&nace_r2=G&nace_r2=I&nace_r2=J&nace_r2=P&nace_r2=Q"
+  }
+}
