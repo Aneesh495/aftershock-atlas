@@ -8,27 +8,47 @@
   "sources": {
     "cps_basic_202009": {
       "archive_member": "sep20pub.dat",
-      "record_width": 1000
+      "record_widths": [
+        1000
+      ],
+      "record_count": 133448
     },
     "cps_covid_202009": {
       "archive_member": "sep20cpucvd.txt",
-      "record_width": 20
+      "record_widths": [
+        20
+      ],
+      "record_count": 110738
     },
     "cps_basic_202109": {
       "archive_member": "sep21pub.dat",
-      "record_width": 1000
+      "record_widths": [
+        1000
+      ],
+      "record_count": 127872
     },
     "cps_covid_202109": {
       "archive_member": "sep21cpucvd.txt",
-      "record_width": 19
+      "record_widths": [
+        18,
+        19
+      ],
+      "record_count": 103509
     },
     "cps_basic_202209": {
       "archive_member": "sep22pub.dat",
-      "record_width": 1000
+      "record_widths": [
+        1000
+      ],
+      "record_count": 127192
     },
     "cps_covid_202209": {
       "archive_member": "sep22cpucvd.txt",
-      "record_width": 19
+      "record_widths": [
+        18,
+        19
+      ],
+      "record_count": 101277
     }
   },
   "fields": {
