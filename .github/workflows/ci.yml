@@ -39,6 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:
+      actions: read
       pages: write
       id-token: write
     environment:
@@ -52,5 +53,22 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+          name: github-pages-${{ github.run_attempt }}
+      - name: Wait for the uploaded Pages artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          for delay in 1 1 2 3 5 8; do
+            if gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" |
+              jq -e --arg name "github-pages-$GITHUB_RUN_ATTEMPT"                 '.artifacts | any(.name == $name and (.expired | not))' >/dev/null; then
+              exit 0
+            fi
+            sleep "$delay"
+          done
+          echo "::error::Pages artifact metadata did not become visible"
+          exit 1
       - uses: actions/deploy-pages@v4
         id: deployment
+        with:
+          artifact_name: github-pages-${{ github.run_attempt }}
