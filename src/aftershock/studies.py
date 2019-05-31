@@ -112,9 +112,14 @@ def run_studies() -> dict:
     result(3, ages, {"standard_bands": age_raw["bands"], "independently_recomputable": True,
            "source_release": "WHO May 2022", "2023_comparable_bands": False},
            "Common-population age standardization changes the crude mortality contrasts. This is a check on modeled aggregate age composition, not an estimate of racial or individual risk.")
-    result(4, mobility["annual"], {"mobility_countries": mobility["country_count"], "device_denominator": None,
-           "employment_countries": next(r["countries"] for r in read_json(ROOT / "data/panel/manifest.json")["coverage"] if r["metric"] == "employment")},
-           "Within-UK workplace visits declined relative to a short weekday baseline. The opt-in device population cannot identify employment, hours or unequal occupational exposure.", "partial_outcome_support")
+    occupational = read_json(directory / "occupational-work.json")
+    result(4, occupational["comparisons"], {
+           "three_september_snapshots": [2020, 2021, 2022], "measurement_source": occupational["source"],
+           "both_periods_supported": sum(r["change_pp"] is not None for r in occupational["comparisons"]),
+           "mobility_countries": mobility["country_count"], "mobility_device_denominator": None,
+           "national_comparators": [r["telework_comparator"] for r in occupational["periods"].values()],
+           "uk_workplace_mobility": mobility["annual"],
+           }, "Pandemic telework and reported inability to work differ by occupation and industry in three US September snapshots. The UK workplace mobility series describes an opt-in device population. The two populations support separate work and mobility measures.", "bounded_analysis")
     health = [r for r in scenarios if r["metric"] == "immunization" and r["year"] == 2021 and r["observed"] is not None]
     table = [{"region": r["region"], "year": 2021, "observed_estimate": r["observed"], "trend": r["scenario"],
               "lower": r["lower"], "upper": r["upper"], "gap_pp": r["observed"] - r["scenario"],
@@ -134,9 +139,12 @@ def run_studies() -> dict:
     hours = measurement["hours"]
     learning = measurement["learning"]
     instruction = measurement["remote_instruction"]
+    sector_hours = read_json(directory / "sector-hours.json")
     result(8, hours["rows"], {
            "percent_change": bootstrap_mean([r["percent_change"] for r in gdp if r["percent_change"] is not None]),
            "within_country_hours": hours["summary"],
+           "quarterly_sector_comparisons": sector_hours["summary"],
+           "sector_source": sector_hours["source"],
            "measurement_protocol": measurement["definition_sha256"],
            "hours_available": hours["status"] == "acquired",
            }, "Actual annual hours per employed person fell in the matched OECD country series in 2020. Hours and real GDP per person follow different trajectories. The comparison is within each country and per employed person.", "bounded_analysis")

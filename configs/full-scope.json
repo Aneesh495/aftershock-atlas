@@ -2,10 +2,8 @@
   "schema_version": 1,
   "unsupported_gates": {
     "G02": "Original cell publication days and historical territorial equivalence are unverified",
-    "G07": "Annual hours, PISA and adult remote-instruction evidence is available. Weekly ILO hours, sector sensitivity and broader instruction coverage remain incomplete.",
     "G08": "Groups and denominator evidence exists for US race/Hispanic origin and income. Age-standardized subgroup and broader social context remain incomplete.",
     "G10": "Pandemic uncertainty calibration and full historical availability proof remain incomplete",
-    "G12": "The survey bridge supports S10. Occupational exposure evidence remains incomplete in S04.",
     "G13": "Required domain coverage is incomplete in the atlas"
   },
   "interpretation": "Source-frozen capability limits. Evidence cannot promote these gates by changing saved pass flags. Reassess only in a new source revision with actual supporting implementation and evidence."
