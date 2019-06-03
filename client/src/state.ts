@@ -2,6 +2,7 @@ import type { Index, State, View } from './types';
 
 const defaults: State = {view:'atlas',metric:'employment',primary:'USA',comparison:'GBR',year:2023,
   healthDomain:'hospital',reportingState:'CA',reportingYear:2022,hospitalMetric:'admissions',pulseWave:'33',pulseGroup:'national',
+  laborSector:'I',laborCountry:'FR',laborWindow:'2020-Q2',occupationGroup:'occupation',occupationOutcome:'telework',
   measurementSection:'learning',learningSubject:'mathematics',instructionGroup:'All eligible adults',hoursYear:2020,
   indexed:false,scenario:false,rate:false,study:'S01',subgroup:'total',vintage:'2023',historyMetric:'employment',edition:'201811',revisionEdition:'202312'};
 const views: View[] = ['atlas','studies','coverage','biology','subnational','methods','sources','vintages','measurement','health'];
@@ -10,7 +11,7 @@ export function restore(index: Index): State {
   try { stored = JSON.parse(localStorage.getItem('aftershock:v1') ?? '{}'); } catch { /* Ignore corrupt view preferences. */ }
   const state = {...defaults,...stored};
   const query = new URLSearchParams(location.search);
-  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage','historyMetric','edition','revisionEdition','measurementSection','learningSubject','instructionGroup','healthDomain','reportingState','hospitalMetric','pulseWave','pulseGroup'] as const) {
+  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage','historyMetric','edition','revisionEdition','measurementSection','learningSubject','instructionGroup','healthDomain','reportingState','hospitalMetric','pulseWave','pulseGroup','laborSector','laborCountry','laborWindow','occupationGroup','occupationOutcome'] as const) {
     const value = query.get(key); if (value) (state as unknown as Record<string,unknown>)[key] = value;
   }
   if (query.has('reportingYear')) state.reportingYear = Number(query.get('reportingYear'));
@@ -28,7 +29,13 @@ export function restore(index: Index): State {
   if(!['population','employment','gdp','school','immunization','mortality','life_expectancy'].includes(state.historyMetric))state.historyMetric='employment';
   for(const key of ['edition','revisionEdition'] as const)if(!['201811','201912','202012','202112','202212','202312'].includes(state[key]))state[key]=defaults[key];
   if (!index.files['measurement-v4.json'] && state.view === 'measurement') state.view = 'atlas';
-  if (!['learning','instruction','hours'].includes(state.measurementSection)) state.measurementSection = 'learning';
+  const workSections = ['learning', 'instruction', 'hours'];
+  if (index.files['sector-hours.json']) workSections.push('sector');
+  if (index.files['occupational-work.json']) workSections.push('occupation');
+  if (!workSections.includes(state.measurementSection)) state.measurementSection = 'learning';
+  state.laborWindow = state.laborWindow === '2023-Q2' ? '2023-Q2' : '2020-Q2';
+  if (!['occupation', 'industry', 'national'].includes(state.occupationGroup)) state.occupationGroup = 'occupation';
+  state.occupationOutcome = state.occupationOutcome === 'unable_to_work' ? 'unable_to_work' : 'telework';
   if (!['mathematics','reading','science'].includes(state.learningSubject)) state.learningSubject = 'mathematics';
   state.hoursYear = state.hoursYear === 2022 ? 2022 : 2020;
   if (!index.files['state-surveillance.json'] && state.view === 'health') state.view = 'atlas';

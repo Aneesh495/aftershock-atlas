@@ -54,6 +54,12 @@ async function render(restoreFocus?:string,moveFocus=false):Promise<void> {
     const active=b.dataset.view===state.view;b.classList.toggle('active',active);
     if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
   });
+  const activeNav = app.querySelector<HTMLElement>('.nav-item[aria-current="page"]');
+  if (activeNav && activeNav.parentElement!.scrollWidth > activeNav.parentElement!.clientWidth) {
+    const nav = activeNav.parentElement!;
+    const control = activeNav.getBoundingClientRect(), frame = nav.getBoundingClientRect();
+    nav.scrollLeft += Math.max(0, control.right - frame.right) + Math.min(0, control.left - frame.left);
+  }
   document.querySelector('#current-view')!.textContent=navigation.find(n=>n.id===state.view)!.label;
   try {
     let result:Rendered;
