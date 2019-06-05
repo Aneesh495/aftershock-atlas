@@ -1,0 +1,262 @@
+{
+  "source": "8808b6fb129899a7bb6445607c866570d8d4c903",
+  "campaign": "state-survey-linux-full-20261120",
+  "github_run": "https://github.com/Aneesh495/aftershock-atlas/actions/runs/44812961925",
+  "artifact_id": 14668417633,
+  "runner_artifact": "Aggregate results, logs, saved models and manifests. Source restoration is separate.",
+  "manifest_sha256": "6fa168d985a8236e1a63060147aa22e2b79cddf7d5e993547e1670a2d3dda711",
+  "profile": "full",
+  "verification_status": "source_checks_passed_full_incomplete",
+  "full_acceptance": false,
+  "command_count": 17,
+  "state_surveillance": {
+    "state_week_rows": 29376,
+    "states": 51,
+    "summary": {
+      "hospital": {
+        "weeks": 11526,
+        "with_reports": 11144,
+        "with_seven_report_dates": 11034
+      },
+      "testing": {
+        "weeks": 11373,
+        "with_reports": 10838,
+        "with_seven_report_dates": 10751
+      },
+      "vaccination": {
+        "weeks": 6477,
+        "with_reports": 6426,
+        "with_seven_report_dates": 3978
+      }
+    }
+  },
+  "survey_bridge": {
+    "cell_checks": 66,
+    "provider_comparisons": 36,
+    "provider_point_matches": 32,
+    "waves": 2
+  },
+  "negative_controls": [
+    {
+      "name": "forged-vintage",
+      "exit": 1,
+      "reason": "aftershock: Forged vintage or availability timestamp",
+      "rehashed": true
+    },
+    {
+      "name": "duplicate-population",
+      "exit": 1,
+      "reason": "aftershock: Duplicate measurement population in evidence",
+      "rehashed": true
+    },
+    {
+      "name": "future-label",
+      "exit": 1,
+      "reason": "aftershock: Future feature label or feature chronology violation",
+      "rehashed": true
+    },
+    {
+      "name": "invalid-effect-sign",
+      "exit": 1,
+      "reason": "aftershock: Invalid genetic effect sign or odds ratio",
+      "rehashed": true
+    },
+    {
+      "name": "shifted-placebo",
+      "exit": 1,
+      "reason": "aftershock: Shifted placebo baseline",
+      "rehashed": true
+    },
+    {
+      "name": "shared-sample-reclassification",
+      "exit": 1,
+      "reason": "aftershock: Shared-sample genetics reclassified as independent replication",
+      "rehashed": true
+    },
+    {
+      "name": "survey-category",
+      "exit": 1,
+      "reason": "aftershock: Survey population reclassified",
+      "rehashed": true
+    },
+    {
+      "name": "survey-variance-factor",
+      "exit": 1,
+      "reason": "aftershock: Invalid survey variance factor",
+      "rehashed": true
+    },
+    {
+      "name": "survey-denominator",
+      "exit": 1,
+      "reason": "aftershock: Survey weighted denominator mismatch",
+      "rehashed": true
+    },
+    {
+      "name": "dynamic-parameters",
+      "exit": 1,
+      "reason": "aftershock: Dynamic training likelihood replay mismatch",
+      "rehashed": true
+    },
+    {
+      "name": "later-archive",
+      "exit": 1,
+      "reason": "aftershock: Historical edition follows origin",
+      "rehashed": true
+    },
+    {
+      "name": "forged-archive-bound",
+      "exit": 1,
+      "reason": "aftershock: Forged historical edition bound",
+      "rehashed": true
+    },
+    {
+      "name": "changed-gdp-anchor",
+      "exit": 1,
+      "reason": "aftershock: Historical GDP anchor detached from raw edition",
+      "rehashed": true
+    },
+    {
+      "name": "future-history-feature",
+      "exit": 1,
+      "reason": "aftershock: Historical replay inputs differ from raw archives: x",
+      "rehashed": true
+    },
+    {
+      "name": "forged-full-pass",
+      "exit": 1,
+      "reason": "aftershock: Full scope claims exceed source-supported capabilities",
+      "rehashed": true
+    },
+    {
+      "name": "corruption",
+      "exit": 1,
+      "reason": "aftershock: Artifact checksum or size mismatch: genetics.json",
+      "rehashed": false
+    },
+    {
+      "name": "missing-artifact",
+      "exit": 1,
+      "reason": "aftershock: Unlisted or missing evidence artifact",
+      "rehashed": false
+    },
+    {
+      "name": "source-mismatch",
+      "exit": 1,
+      "reason": "aftershock: Source commit mismatch",
+      "rehashed": true
+    },
+    {
+      "name": "failed-replay",
+      "exit": 1,
+      "reason": "aftershock: Saved model mean replay failed",
+      "rehashed": true
+    },
+    {
+      "name": "hours-unit",
+      "exit": 1,
+      "reason": "aftershock: Hours definition or denominator substituted",
+      "rehashed": true
+    },
+    {
+      "name": "hours-gdp-merge",
+      "exit": 1,
+      "reason": "aftershock: Hours and GDP merge population changed",
+      "rehashed": true
+    },
+    {
+      "name": "assessment-change-error",
+      "exit": 1,
+      "reason": "aftershock: Released assessment value or standard error changed",
+      "rehashed": true
+    },
+    {
+      "name": "instruction-population",
+      "exit": 1,
+      "reason": "aftershock: Remote instruction denominator unit changed",
+      "rehashed": true
+    },
+    {
+      "name": "icu-denominator",
+      "exit": 1,
+      "reason": "aftershock: Surveillance value changed: CA.hospital.2020-07-20.all_cause_adult_icu_occupancy.staffed_bed_days",
+      "rehashed": true
+    },
+    {
+      "name": "pcr-result-population",
+      "exit": 1,
+      "reason": "aftershock: Surveillance value changed: CA.testing.2020-03-02.determinate_results",
+      "rehashed": true
+    },
+    {
+      "name": "vaccine-report-date",
+      "exit": 1,
+      "reason": "aftershock: Surveillance value changed: CA.vaccination.2020-12-14.latest_report.report_date",
+      "rehashed": true
+    },
+    {
+      "name": "survey-bridge-recall",
+      "exit": 1,
+      "reason": "aftershock: Survey bridge recall or response-rate contract changed",
+      "rehashed": true
+    },
+    {
+      "name": "survey-bridge-weight",
+      "exit": 1,
+      "reason": "aftershock: Survey bridge value changed: 33.national.United States.Symptoms of Anxiety Disorder.denominator",
+      "rehashed": true
+    }
+  ],
+  "incomplete_gates": [
+    {
+      "artifact": "observations.csv",
+      "gate": "G02",
+      "reason": "Official archive-month editions present; original cell release-day and historical territory validation incomplete",
+      "status": "blocked"
+    },
+    {
+      "artifact": "measurement-v4.json",
+      "gate": "G07",
+      "reason": "Verified annual hours, learning and remote instruction use distinct populations; ILO weekly hours and sector checks remain incomplete",
+      "status": "blocked"
+    },
+    {
+      "artifact": "surveys.json",
+      "gate": "G08",
+      "reason": "US race and income denominators replayed separately by wave; age-standardized subgroup and broader social context incomplete",
+      "status": "unverified"
+    },
+    {
+      "artifact": "history-fit.json",
+      "gate": "G10",
+      "reason": "60 original configurations plus 66 archive configurations; release-day proof and pandemic calibration remain incomplete",
+      "status": "blocked"
+    },
+    {
+      "artifact": "studies.json",
+      "gate": "G12",
+      "reason": "12 executed tables, 1 with incomplete outcome or design support",
+      "status": "blocked"
+    },
+    {
+      "artifact": "browser-checks.json",
+      "gate": "G13",
+      "reason": "Atlas implementation exists; interactive source-frozen final walkthrough must be reviewed",
+      "status": "unverified"
+    }
+  ],
+  "browser": {
+    "deployment_checks": "https://github.com/Aneesh495/aftershock-atlas/actions/runs/44813344045/attempts/2",
+    "body_fit_pixels": [
+      320,
+      390
+    ],
+    "csv_rows_reconciled": {
+      "CA_2022_icu": 52,
+      "NY_2022_pcr": 52,
+      "NY_2023_vaccination": 19,
+      "pulse_34_race_and_origin": 15
+    },
+    "persisted": true,
+    "browser_errors_observed": 0
+  }
+}
