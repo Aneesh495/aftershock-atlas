@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "series": "ONS ABMI quarterly UK GDP at market prices",
+  "unit": "Millions of pounds sterling, chained volume measures with vintage-specific reference year. Growth is quarter on preceding quarter in percent.",
+  "availability_scope": "End-of-day UK release chronology within the captured first-estimate and quarterly national accounts schedule. Archive capture can postdate the publication. Separate monthly GDP, historical unobserved editions and intraday corrections are outside this scope.",
+  "sheet": "2018 - ",
+  "header_row": 4,
+  "first_reference_quarter": "2018Q1",
+  "expected_quarters": [
+    "2021Q3",
+    "2021Q4",
+    "2022Q1",
+    "2022Q2",
+    "2022Q3",
+    "2022Q4",
+    "2023Q1",
+    "2023Q2",
+    "2023Q3",
+    "2023Q4",
+    "2024Q1",
+    "2024Q2",
+    "2024Q3",
+    "2024Q4",
+    "2025Q1",
+    "2025Q2",
+    "2025Q3",
+    "2025Q4"
+  ],
+  "threshold_pp": 0.25
+}
