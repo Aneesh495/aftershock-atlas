@@ -17,7 +17,7 @@ concurrency:
 jobs:
   research:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 23
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
@@ -41,4 +41,14 @@ jobs:
             evidence/*/*.jsonl
             evidence/*/logs
             evidence/*/models
+          retention-days: 7
+      - if: always() && hashFiles('evidence/*/VERIFICATION.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: verified-chronology-atlas-parts
+          path: |
+            client/public/data/ct-crosswalk.json
+            client/public/data/uk-vintages.json
+            client/public/data/social-context.json
+            client/public/data/index.json
           retention-days: 7

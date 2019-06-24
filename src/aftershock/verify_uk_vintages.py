@@ -4,6 +4,7 @@ from __future__ import annotations
 import re
 from datetime import date, datetime, timedelta
 from html.parser import HTMLParser
+from pathlib import Path
 from zipfile import ZipFile
 
 from .io import ROOT, contained, digest, read_json
@@ -31,8 +32,8 @@ class Publication(HTMLParser):
             self.tokens.append(item)
 
 
-def restore(pin: dict):
-    path = contained(ROOT / "data/chronology/raw", pin["path"])
+def restore(raw: Path, pin: dict):
+    path = contained(raw, pin["path"])
     require(path.stat().st_size == pin["bytes"] and digest(path) == pin["sha256"], "ONS raw release or catalogue differs")
     return path
 
@@ -82,7 +83,8 @@ def within_edition(book: dict, observed: dict, config: dict, pin: dict) -> float
     return rows[-1][-1]
 
 
-def verify_uk(data: dict, source: str) -> dict:
+def verify_uk(data: dict, source: str, raw: Path | None = None) -> dict:
+    raw = raw or ROOT / "data/chronology/raw"
     definition = ROOT / "configs/uk-vintages-v7.json"
     pins = ROOT / "configs/uk-vintages-inputs.json"
     config, manifest = read_json(definition), read_json(pins)
@@ -95,12 +97,12 @@ def verify_uk(data: dict, source: str) -> dict:
     require({(row["quarter"], row["kind"]) for row in (*manifest["editions"], *manifest["unavailable"])}
             == {(quarter, kind) for quarter in config["expected_quarters"] for kind in ("first", "qna")},
             "ONS expected quarterly release inventory differs")
-    catalogue = Publication(restore(manifest["catalogue"]).read_text(encoding="utf-8"))
+    catalogue = Publication(restore(raw, manifest["catalogue"]).read_text(encoding="utf-8"))
     by_day, by_quarter = {}, {}
     cells = 0
     for row, recorded in zip(sorted(manifest["editions"], key=lambda r: r["release_day"]), data["editions"], strict=True):
         book, bulletin = row["workbook"], row["bulletin"]
-        published = Publication(restore(bulletin).read_text(encoding="utf-8"))
+        published = Publication(restore(raw, bulletin).read_text(encoding="utf-8"))
         idx = published.tokens.index("Release date:")
         day = datetime.strptime(published.tokens[idx + 1], "%d %B %Y").date()
         expected_day = date.fromisoformat(row["release_day"])
@@ -121,7 +123,7 @@ def verify_uk(data: dict, source: str) -> dict:
         expected_release.update(release_id=book["id"], workbook_sha256=book["sha256"], workbook_url=book["url"],
                                 capture_at=book["acquired_at"], bulletin_sha256=bulletin["sha256"], bulletin_url=bulletin["url"])
         require({k: recorded[k] for k in expected_release} == expected_release, "ONS release evidence detached from raw editions")
-        with ZipFile(restore(book)) as contents:
+        with ZipFile(restore(raw, book)) as contents:
             workbook = spreadsheet_cells(contents, {config["sheet"]})[config["sheet"]]
         growth = within_edition(workbook, recorded, config, row)
         cells += len(recorded["observations"])

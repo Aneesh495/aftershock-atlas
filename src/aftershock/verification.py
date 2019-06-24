@@ -23,9 +23,10 @@ CAMPAIGN_STAGES = (
     "measurement-data", "measurement", "surveillance-data", "surveillance",
     "survey-bridge-data", "survey-bridge",
     "sector-hours-data", "sector-hours", "occupation-data", "occupation",
+    "chronology-data", "ct-crosswalk", "uk-vintages", "social-context-data", "social-context",
     "studies", "history-atlas", "atlas",
 )
-REQUIRED_NEGATIVE_CONTROLS = 32
+REQUIRED_NEGATIVE_CONTROLS = 37
 
 
 def require(condition: bool, reason: str) -> None:
@@ -397,9 +398,19 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
             "Occupational study table differs from CPS replay")
     require(next(s for s in studies if s["id"] == "S08")["summary"]["quarterly_sector_comparisons"]
             == sector_results["summary"], "Sector study summary differs from Eurostat replay")
+    from .verify_ct_crosswalk import verify_ct
+    from .verify_uk_vintages import verify_uk
+    from .verify_social_context import verify_context
+
+    chronology_raw = bundle / "chronology-raw"
+    geography = verify_ct(read_json(bundle / "ct-crosswalk.json"), expected_source, chronology_raw)
+    releases = verify_uk(read_json(bundle / "uk-vintages.json"), expected_source, chronology_raw)
+    context = verify_context(read_json(bundle / "social-context.json"), expected_source, chronology_raw)
+    require(context["national_benchmark_agreements"] == context["waves"], "Social context national benchmarks did not reconcile")
     if acceptance["profile"] == "full" and require_domain_gates:
         require(complete, "Full profile has incomplete domain gates")
     status = "passed" if acceptance["profile"] == "diagnostic" or complete else "source_checks_passed_full_incomplete"
     return {"status": status, "profile": acceptance["profile"], "source": expected_source,
             "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain, "extension": extension, "historical": historical,
-            "measurement": measurement, "state_surveillance": surveillance, "survey_bridge": bridge_replay, "sector_hours": sector_replay, "occupation": occupation_replay, "full_acceptance": acceptance["profile"] == "full" and complete}
+            "measurement": measurement, "state_surveillance": surveillance, "survey_bridge": bridge_replay, "sector_hours": sector_replay, "occupation": occupation_replay, "geography": geography, "uk_releases": releases, "social_context": context,
+            "full_acceptance": acceptance["profile"] == "full" and complete}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "age_year": 2021,
+  "age_bands": [
+    {"label": "25–44", "lower": 25, "upper": 44, "standard_components": {"25–34": 135573, "35–44": 162613}},
+    {"label": "45–64", "lower": 45, "upper": 64, "standard_components": {"45–54": 134834, "55–64": 87247}},
+    {"label": "65+", "lower": 65, "upper": 88, "standard_components": {"65–74": 66037, "75–84": 44842, "85 and older": 15508}}
+  ],
+  "reference_groups": {
+    "race_origin": "Non-Hispanic White, single race",
+    "tenure": "Owner occupied",
+    "income": "$50,000 and above"
+  },
+  "tenure": {"Owner occupied":[1,2],"Rented":[3],"Occupied without rent":[4]},
+  "income": {"Under $50,000":[1,2,3],"$50,000 and above":[4,5,6,7,8]},
+  "metrics": {
+    "food_insufficiency": "Adults reporting that their household sometimes or often did not have enough food in the previous seven days",
+    "mental_health_screen": "Adults screening positive for anxiety or depression symptoms using the wave's recall period"
+  },
+  "food_benchmark_pp": 0.1,
+  "practical_difference_pp": 5.0,
+  "comparison_scope": "Separate national cross-sections with source-defined groups. The mental health recall period and household income reference year change between waves. These are descriptive comparisons within each wave.",
+  "nonresponse_scope": "Item bounds apply within each age band among respondents. Household unit response rates remain separate. Replicate intervals do not measure selection bias.",
+  "standard_source": "NCHS United States year 2000 projected standard million, scaled to the population aged 25 and older",
+  "age_sensitivity": "Age at end of 2021 from birth year. The sensitivity removes ages 25, 45 and 65, which can be below their group threshold on interview day."
+}
