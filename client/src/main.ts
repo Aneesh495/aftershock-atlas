@@ -2,6 +2,7 @@ import './style.css';
 import {measurementView} from './measurement-view';
 import {healthView} from './health-view';
 import {historyView} from './history-view';
+import {chronologyView} from './chronology-view';
 import {atlasView,type Rendered} from './atlas-view';
 import {biologyView,coverageView,methodsView,sourcesView,studiesView,subnationalView} from './research-views';
 import {clearPreparedExport,download,format,read,safe} from './data';
@@ -13,16 +14,16 @@ const navigation:{id:View;label:string;icon:string}[]=[
   {id:'subnational',label:'Subnational studies',icon:'◫'},{id:'biology',label:'Biological evidence',icon:'⌘'},
   {id:'coverage',label:'Coverage inventory',icon:'▦'},{id:'methods',label:'Methods & models',icon:'⌁'},
   {id:'vintages',label:'Historical editions',icon:'◷'},{id:'measurement',label:'Work and education',icon:'▥'},
-  {id:'health',label:'US public health',icon:'⊕'},{id:'sources',label:'Source library',icon:'↗'}];
+  {id:'chronology',label:'Release dates and boundaries',icon:'◈'},{id:'health',label:'US public health',icon:'⊕'},{id:'sources',label:'Source library',icon:'↗'}];
 let index:Index,state:State,controller:AbortController|undefined,exportRows:Record<string,unknown>[]=[];
 let revision=0;
 const app=document.querySelector<HTMLDivElement>('#app')!;
 
 function shell():void {
-  app.innerHTML=`<aside class="sidebar"><a class="brand" href="?view=atlas" aria-label="Aftershock Atlas home"><span class="brand-mark">a<span>+</span></span><span>aftershock<strong>ATLAS</strong></span></a><div class="nav-caption">RESEARCH WORKSPACE</div><nav aria-label="Main navigation">${navigation.filter(n=>(n.id!=='measurement'||index.files['measurement-v4.json'])&&(n.id!=='health'||index.files['state-surveillance.json'])).map(n=>`<button data-view="${n.id}" class="nav-item" aria-label="${n.label}" title="${n.label}"><span aria-hidden="true">${n.icon}</span><span>${n.label}</span></button>`).join('')}</nav><div class="sidebar-bottom"><div class="project-note"><span class="mini-mark">↳</span><p>A record of change.<br>A study of what remains.</p></div><a href="https://github.com/Aneesh495/aftershock-atlas" target="_blank" rel="noreferrer">Source & reproducibility <span>↗</span></a><div class="edition-note">NON-PERSONAL RESEARCH DEMO<br>FULL ACCEPTANCE INCOMPLETE</div></div></aside><div class="main-shell"><header class="topbar"><div class="breadcrumb">Aftershock Atlas <span>/</span> <strong id="current-view">Explore</strong></div><div class="topbar-actions"><span class="snapshot"><i></i>Frozen research snapshot</span><button id="export" class="export-button" aria-label="Export currently selected data as CSV">↓ <span>Export data</span></button></div></header><main id="workspace" tabindex="-1"><div class="loading">Loading research workspace…</div></main><footer><span>AFTERSHOCK ATLAS <span class="footer-sep">/</span> Population-level research</span><span>Sources have limits. Conclusions should too.</span></footer><div id="announcements" role="status" aria-live="polite" class="sr-only"></div></div>`;
+  app.innerHTML=`<aside class="sidebar"><a class="brand" href="?view=atlas" aria-label="Aftershock Atlas home"><span class="brand-mark">a<span>+</span></span><span>aftershock<strong>ATLAS</strong></span></a><div class="nav-caption">RESEARCH WORKSPACE</div><nav aria-label="Main navigation">${navigation.filter(n=>(n.id!=='measurement'||index.files['measurement-v4.json'])&&(n.id!=='health'||index.files['state-surveillance.json'])&&(n.id!=='chronology'||index.files['uk-vintages.json']||index.files['ct-crosswalk.json'])).map(n=>`<button data-view="${n.id}" class="nav-item" aria-label="${n.label}" title="${n.label}"><span aria-hidden="true">${n.icon}</span><span>${n.label}</span></button>`).join('')}</nav><div class="sidebar-bottom"><div class="project-note"><span class="mini-mark">↳</span><p>A record of change.<br>A study of what remains.</p></div><a href="https://github.com/Aneesh495/aftershock-atlas" target="_blank" rel="noreferrer">Source & reproducibility <span>↗</span></a><div class="edition-note">NON-PERSONAL RESEARCH DEMO<br>FULL ACCEPTANCE INCOMPLETE</div></div></aside><div class="main-shell"><header class="topbar"><div class="breadcrumb">Aftershock Atlas <span>/</span> <strong id="current-view">Explore</strong></div><div class="topbar-actions"><span class="snapshot"><i></i>Frozen research snapshot</span><button id="export" class="export-button" aria-label="Export currently selected data as CSV">↓ <span>Export data</span></button></div></header><main id="workspace" tabindex="-1"><div class="loading">Loading research workspace…</div></main><footer><span>AFTERSHOCK ATLAS <span class="footer-sep">/</span> Population-level research</span><span>Sources have limits. Conclusions should too.</span></footer><div id="announcements" role="status" aria-live="polite" class="sr-only"></div></div>`;
   document.querySelector('#export')!.addEventListener('click',()=>{
-    const context=state.view==='health'?(state.healthDomain==='survey'?`pulse-${state.pulseWave}-${state.pulseGroup}`:`${state.healthDomain}-${state.reportingState}`):state.view==='vintages'?`${state.historyMetric}-${state.edition}-${state.revisionEdition}`:
-      state.view==='measurement'?state.measurementSection:state.view==='studies'?state.study:state.view==='biology'?'host-genetics':state.view==='subnational'?'survey-groups':state.metric;
+    const context=state.view==='health'?(state.healthDomain==='survey'?`pulse-${state.pulseWave}-${state.pulseGroup}`:state.healthDomain==='context'?`context-${state.pulseWave}-${state.contextGroup}-${state.contextOutcome}`:`${state.healthDomain}-${state.reportingState}`):state.view==='vintages'?`${state.historyMetric}-${state.edition}-${state.revisionEdition}`:
+      state.view==='chronology'?state.chronologySection:state.view==='measurement'?state.measurementSection:state.view==='studies'?state.study:state.view==='biology'?'host-genetics':state.view==='subnational'?'survey-groups':state.metric;
     download(exportRows,`aftershock-${state.view}-${context}`);
     document.querySelector('#announcements')!.textContent=`Prepared ${exportRows.length} source-bound rows. Use the Save CSV link.`;
   });
@@ -69,6 +70,7 @@ async function render(restoreFocus?:string,moveFocus=false):Promise<void> {
     else if(state.view==='biology')result=await biologyView(signal);
     else if(state.view==='subnational')result=await subnationalView(state,signal,update);
     else if(state.view==='vintages')result=await historyView(index,state,signal,update);
+    else if(state.view==='chronology')result=await chronologyView(index,state,signal,update);
     else if(state.view==='health')result=await healthView(index,state,signal,update);
     else if(state.view==='measurement')result=await measurementView(index,state,signal,update);
     else if(state.view==='sources')result=await sourcesView(signal);

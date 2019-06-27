@@ -20,11 +20,12 @@ export interface Study {
   intervals: string; alternatives: string[]; practical: string; support: string; status: string;
   conclusion: string; table: Record<string,unknown>[]; summary: Record<string,unknown>;
 }
-export type View = 'atlas' | 'studies' | 'coverage' | 'biology' | 'subnational' | 'methods' | 'sources' | 'vintages' | 'measurement' | 'health';
-export type HealthDomain = 'hospital' | 'testing' | 'vaccination' | 'survey';
+export type View = 'atlas' | 'studies' | 'coverage' | 'biology' | 'subnational' | 'methods' | 'sources' | 'vintages' | 'measurement' | 'health' | 'chronology';
+export type HealthDomain = 'hospital' | 'testing' | 'vaccination' | 'survey' | 'context';
 export interface State {
   healthDomain: HealthDomain; reportingState: string; reportingYear: number; hospitalMetric: string;
-  pulseWave: string; pulseGroup: string;
+  pulseWave: string; pulseGroup: string; contextGroup: string; contextOutcome: string; contextSensitivity: boolean;
+  chronologySection: string; gdpQuarter: string; ctCounty: string;
   laborSector: string; laborCountry: string; laborWindow: string; occupationGroup: string; occupationOutcome: string;
   measurementSection: string; learningSubject: string; instructionGroup: string; hoursYear: number;
   view: View; metric: string; primary: string; comparison: string; year: number;

@@ -1,10 +1,11 @@
 import { lineChart } from './charts';
+import { socialContext } from './social-context-view';
 import { format, read, safe, table } from './data';
 import type { Rendered } from './atlas-view';
 import type { HealthDomain, Index, State } from './types';
 
 type PublicRow = Record<string, unknown>;
-type SeriesDomain = Exclude<HealthDomain, 'survey'>;
+type SeriesDomain = Exclude<HealthDomain, 'survey' | 'context'>;
 type Report = PublicRow & { week_start: string; reports: number };
 interface StateReports {
   code: string;
@@ -52,6 +53,7 @@ const titles: Record<HealthDomain, string> = {
   testing: 'PCR testing',
   vaccination: 'Primary series vaccination',
   survey: 'Household Pulse symptoms',
+  context: 'Age-adjusted survey context',
 };
 const hospitalOptions = {
   admissions: { label: 'Confirmed adult admissions', unit: 'Admissions per full week',
@@ -99,8 +101,8 @@ function measure(
   } };
 }
 
-function header(state: State, hasBridge: boolean): string {
-  const choices = Object.entries(titles).filter(([key]) => hasBridge || key !== 'survey');
+function header(state: State, hasBridge: boolean, hasContext: boolean): string {
+  const choices = Object.entries(titles).filter(([key]) => (hasBridge || key !== 'survey') && (hasContext || key !== 'context'));
   return `<section class="page-heading measurement-heading"><div><div class="eyebrow">US PUBLIC HEALTH</div>
     <h1>What the reports measure</h1>
     <p>Explore archived hospital utilization, reported PCR results, vaccination, and survey estimates with their own dates and populations.</p></div>
@@ -197,12 +199,14 @@ export async function healthView(
   index: Index, state: State, signal: AbortSignal, update: (patch: Partial<State>) => void,
 ): Promise<Rendered> {
   const hasBridge = Boolean(index.files['survey-bridge.json']);
-  const domain = state.healthDomain === 'survey' && !hasBridge ? 'hospital' : state.healthDomain;
+  const hasContext = Boolean(index.files['social-context.json']);
+  const unavailable = (state.healthDomain === 'survey' && !hasBridge) || (state.healthDomain === 'context' && !hasContext);
+  const domain = unavailable ? 'hospital' : state.healthDomain;
   const result = domain === 'survey'
     ? displayBridge(await read<Bridge>('survey-bridge', signal), state)
-    : await displaySurveillance(state, domain, signal);
+    : domain === 'context' ? await socialContext(state, signal) : await displaySurveillance(state, domain, signal);
   return {
-    html: header({ ...state, healthDomain: domain }, hasBridge) + result.html,
+    html: header({ ...state, healthDomain: domain }, hasBridge, hasContext) + result.html,
     rows: result.rows,
     after(root) {
       const events: [string, (value: string) => Partial<State>][] = [
@@ -212,6 +216,9 @@ export async function healthView(
         ['hospital-metric', hospitalMetric => ({ hospitalMetric })],
         ['pulse-wave', pulseWave => ({ pulseWave })],
         ['pulse-group', pulseGroup => ({ pulseGroup })],
+        ['context-group', contextGroup => ({ contextGroup })],
+        ['context-outcome', contextOutcome => ({ contextOutcome })],
+        ['context-sensitivity', value => ({ contextSensitivity: value === '1' })],
       ];
       for (const [id, patch] of events) {
         const input = root.querySelector<HTMLSelectElement>(`#${id}`);
