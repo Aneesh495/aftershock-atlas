@@ -40,7 +40,7 @@ def gates(bundle: Path | None = None) -> list[dict]:
         ("G07", "passed", "Annual and quarterly actual hours, flag-aware sector contrasts, PISA and adult-reported instruction under separate definitions", "sector-hours.json"),
         ("G08", "passed", "US race and Hispanic origin, tenure and household income. Direct adult age standardization, 80 person replicates, item-response bounds and independent suppression checks", "social-context.json"),
         ("G09", "passed", "Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit", "genetics.json"),
-        ("G10", "blocked", f"{fit['completed_configurations']} original configurations plus 66 archive configurations; release-day proof and pandemic calibration remain incomplete", "history-fit.json"),
+        ("G10", "blocked", f"{fit['completed_configurations']} original configurations plus 66 archive configurations; UK GDP exact release-day forecasts add a separate calibration test. Pandemic calibration across multiple countries and outcomes remains incomplete", "uk-forecast.json"),
         ("G11", "passed", "Real candidate group-time analyses, pretrends, pseudo-onsets and unsupported cells", "causal.json"),
         ("G12", "passed" if studies["partial_support"] == 0 else "blocked",
          f"{studies['count']} executed tables, {studies['partial_support']} with incomplete outcome or design support", "studies.json"),
@@ -193,7 +193,7 @@ def assemble_chronology(bundle: Path) -> None:
     from .social_context import PINS
     from .uk_vintages import RAW
 
-    for name in ("ct-crosswalk", "uk-vintages", "social-context"):
+    for name in ("ct-crosswalk", "uk-vintages", "social-context", "uk-forecast"):
         shutil.copyfile(ROOT / "data/results" / f"{name}.json", bundle / f"{name}.json")
     for pin in (*chronology_pins(), *read_json(PINS).values()):
         if not pin["redistribute"]:
@@ -363,6 +363,12 @@ def negative_controls(bundle: Path, source: str) -> dict:
     mutate("social-context-suppression-leak", "social-context.json", json_change(
         lambda x: next(r["primary"] for r in x["waves"]["33"]["rows"] if r["primary"]["suppressed"]).update(complete_adults=9)),
         "Social context")
+    mutate("uk-forecast-origin", "uk-forecast.json", json_change(
+        lambda x: x["origins"][0].update(origin=x["origins"][0]["first_release"])),
+        "GDP forecast origins and lags")
+    mutate("uk-forecast-coverage", "uk-forecast.json", json_change(
+        lambda x: x["scores"]["ridge_100"].update(covered=0)),
+        "GDP held-out coverage and interval score")
     result = {"controls": receipts, "rejected": len(receipts), "source": source}
     write_json(bundle / "negative-controls.json", result)
     make_manifest(bundle)
