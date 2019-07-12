@@ -362,7 +362,7 @@ def negative_controls(bundle: Path, source: str) -> dict:
         "ONS as-of replay selects a future or incomplete release")
     mutate("social-context-suppression-leak", "social-context.json", json_change(
         lambda x: next(r["primary"] for r in x["waves"]["33"]["rows"] if r["primary"]["suppressed"]).update(complete_adults=9)),
-        "Social context")
+        "Social context suppressed cell exposed a protected estimate or denominator")
     mutate("uk-forecast-origin", "uk-forecast.json", json_change(
         lambda x: x["origins"][0].update(origin=x["origins"][0]["first_release"])),
         "GDP forecast origins and lags")
