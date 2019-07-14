@@ -21,6 +21,14 @@ interface GDP {
   source: string; series: string; availability_scope: string; definition_sha256: string;
   editions: Release[]; revisions: Revision[]; as_of: Origin[];
 }
+interface Forecast {
+  source: string; target: string; scope: string; fit_release: string; config_sha256: string;
+  vintages_sha256: string; development: {selected_baseline: string; selected_ridge: string};
+  scores: Record<string, {n: number; covered: number; coverage_lower: number; coverage_upper: number;
+    mae_pp: number; interval_width_pp: number; mean_interval_score: number; practical_coverage_met: boolean}>;
+  predictions: {quarter: string; model: string; origin: string; first_release: string; forecast_pct: number;
+    lower: number; upper: number; first_growth_pct: number; qna_growth_pct: number; covered: boolean}[];
+}
 interface Geography {
   source: string; inputs_sha256: string; population_day: string; notice_date: string;
   tiger_boundary_date: string; tiger_release_date: string; resident_population: number;
@@ -94,16 +102,49 @@ function displayConnecticut(data: Geography, state: State): Rendered {
     </section>`};
 }
 
+function displayForecast(data: Forecast): Rendered {
+  const name = (model: string) => ({
+    zero: 'Zero growth', persistence: 'Persistence', rolling_mean: 'Four-quarter mean',
+    seasonal_naive: 'Same quarter a year ago',
+  }[model] ?? `Ridge, penalty ${model.replace('ridge_', '')}`);
+  const selected = data.development.selected_ridge;
+  const fitted = data.predictions.filter(r => r.model === selected);
+  const chart = lineChart([
+    {name:'First estimate', color:'#346359', points:fitted.map(r => ({x:quarterDate(r.quarter), y:r.first_growth_pct}))},
+    {name:name(selected), color:'#ab632c', dashed:true, points:fitted.map(r => ({
+      x:quarterDate(r.quarter), y:r.forecast_pct, low:r.lower, high:r.upper,
+    }))},
+  ], 'Quarter-on-quarter growth (%)', undefined, 0);
+  const scores = Object.entries(data.scores).map(([model,row]) => ({
+    model: name(model), validation_selected: [selected,data.development.selected_baseline].includes(model),
+    observed_coverage: `${row.covered} of ${row.n}`, mean_absolute_error_pp: row.mae_pp,
+    interval_width_pp: row.interval_width_pp, mean_interval_score: row.mean_interval_score,
+    coverage_lower_pct: 100 * row.coverage_lower, coverage_upper_pct: 100 * row.coverage_upper,
+  }));
+  const rows = data.predictions.map(row => ({
+    ...row, source: data.source, vintage_manifest_sha256: data.vintages_sha256, definition_sha256: data.config_sha256,
+  }));
+  return {rows, html:`<section class="panel prose measurement-panel"><h2>UK GDP forecast calibration</h2>
+    <p>${safe(data.target)}. Models forecast the first estimate using the prior quarter's national accounts release.</p>
+    ${chart}${table(scores)}
+    <p>${safe(data.scope)} All models use the same nine calibration quarters and eight test quarters.</p>
+    <details><summary>First estimate and fitted interval by quarter</summary>${table(rows.filter(r=>r.model===selected),8)}</details>
+    <p><a href="https://github.com/Aneesh495/aftershock-atlas/blob/main/docs/FORECAST_CALIBRATION_PLAN_V9.md" target="_blank" rel="noreferrer">Forecast protocol ↗</a></p>
+    </section>`};
+}
+
 export async function chronologyView(
   index: Index, state: State, signal: AbortSignal, update: (patch: Partial<State>) => void,
 ): Promise<Rendered> {
   const sections: [string, string][] = [];
   if (index.files['uk-vintages.json']) sections.push(['gdp', 'UK GDP revisions']);
+  if (index.files['uk-forecast.json']) sections.push(['calibration', 'UK GDP forecast calibration']);
   if (index.files['ct-crosswalk.json']) sections.push(['ct', 'Connecticut planning regions']);
   const section = sections.some(([id]) => id === state.chronologySection) ? state.chronologySection : sections[0][0];
   const content = section === 'gdp'
     ? displayGDP(await read<GDP>('uk-vintages', signal), state)
-    : displayConnecticut(await read<Geography>('ct-crosswalk', signal), state);
+    : section === 'calibration' ? displayForecast(await read<Forecast>('uk-forecast', signal))
+      : displayConnecticut(await read<Geography>('ct-crosswalk', signal), state);
   return {rows: content.rows, html: `<section class="page-heading measurement-heading"><div>
     <h1>Release dates and boundaries</h1>
     <p>Inspect what changed between releases and how resident populations map to new boundaries.</p></div>
