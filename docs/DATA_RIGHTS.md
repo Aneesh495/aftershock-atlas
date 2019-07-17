@@ -34,3 +34,5 @@ The intended use is research on retrospective aggregate trajectories. It is unsu
 ## Dependencies
 
 NumPy supplies array primitives, SciPy supplies numerical distributions and special functions, Arrow supplies columnar serialization, DuckDB supplies queries, openpyxl supplies workbook reading, and pycountry supplies reference identifiers. The forecasting network, gradients, optimizer, count IRLS, state filter, harmonization, study logic and verifier are authored in this repository. The client uses TypeScript, Vite, d3-geo projection primitives and topojson-client geometry decoding. Locked dependency versions are in `uv.lock` and `client/package-lock.json`.
+
+The frozen OECD hours SDMX structure is unchanged and attributed to OECD. It preserves the earlier metadata bytes used in V4. [OECD terms](https://www.oecd.org/en/about/terms-conditions.html) · [original data flow definition](https://www.oecd.org/en/data/indicators/hours-worked.html) · [exact metadata mirror](https://github.com/Aneesh495/aftershock-atlas/releases/tag/v0.3.0-sources)
