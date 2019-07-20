@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "reference": {
+    "url": "https://unstats.un.org/unsd/methodology/m49/",
+    "captured_date": "2026-11-20",
+    "sha256": "4d5cabcb10ad9ef184553b5e64c0a34ba8deeb20dab2e02cd0be3599b93bb01d",
+    "bytes": 2051368,
+    "scope": "UN Statistics Division M49 change notes. The registry records the statistical coding transition, not series-level geographic coverage."
+  },
+  "transitions": [
+    {"name":"Serbia and Montenegro","effective":"2006-06-03","predecessor":"891","successors":{"MNE":"499","SRB":"688"}},
+    {"name":"Netherlands Antilles","effective":"2010-10-10","predecessor":"530","successors":{"CUW":"531","SXM":"534","BES":"535"}},
+    {"name":"Sudan before partition","effective":"2011-07-09","predecessor":"736","successors":{"SSD":"728","SDN":"729"}}
+  ],
+  "first_year": 2000,
+  "last_year": 2024,
+  "evidence_limit": "A modern code on an older observation cannot establish a stable geographic series. A date does not establish reporting coverage, and regional weights cannot be inferred."
+}

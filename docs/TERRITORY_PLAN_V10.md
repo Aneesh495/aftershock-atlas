@@ -1,0 +1,9 @@
+# Geography break audit
+
+Flag known territory changes before interpreting long runs of values stored under current codes. Audit Serbia and Montenegro (2006), the former Netherlands Antilles (2010), and the split of Sudan (2011), with dates and statistical identifiers from the UN Statistics Division's M49 change notes. Current UN codes and ISO labels identify a modern region. They do not prove that a provider's observation before the change uses the same boundaries.
+
+For the seven successor economies, index the published WDI population, employment, real GDP per capita, secondary enrolment, immunization, crude mortality and life expectancy rows in each of six archive editions plus the current frozen source. Compare pre-change, change-year and post-change reference years. Preserve blanks and future-reference values. Treat an old nonblank value attributed to a current country as an observation whose historical geographic basis needs source documentation. Do not merge predecessor counts with successor labels, transfer event counts by population, or sum shares and rates across successor geographies.
+
+Retain all raw values in the frozen source files. In the public audit report include cell counts and date ranges. A comparison requiring stable administrative boundaries cannot rely on the predecessor or the transition year without explicit territorial evidence for the metric. Report absent reporting units separately from represented units with missing measurements. The matched seven-economy inventory is a documented stress case for the registry. It does not establish coverage of all international boundary changes.
+
+[UN M49 change notes](https://unstats.un.org/unsd/methodology/m49/) · [World Bank archive API](https://datahelpdesk.worldbank.org/knowledgebase/articles/1886686-advanced-data-api-queries)
