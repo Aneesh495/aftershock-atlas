@@ -30,9 +30,13 @@ def gates(bundle: Path | None = None) -> list[dict]:
     fit = read_json(ROOT / "data/results/fit.json")
     studies = read_json(ROOT / "data/results/studies.json")
     coverage = {r["metric"]: r for r in panel["coverage"]}
+    mortality = read_json(ROOT / "data/results/mortality-calibration.json")
+    selected_mortality = mortality["validation"]["selected_ridge"]
+    calibration = [row for row in mortality["scores"] if row["model"] == selected_mortality and row["group"] in {"all", "held_out"}]
+    mortality_supported = len(calibration) == 2 and all(row["practical_coverage_met"] for row in calibration)
     definitions = [
         ("G01", "passed", "Pinned core, history, work and education, state surveillance and survey inputs; separate rights and coverage", "DATASETS.json"),
-        ("G02", "blocked", "UK GDP release-day and Connecticut territorial replay verified. Original release days and geography changes across global panels remain incomplete", "uk-vintages.json"),
+        ("G02", "blocked", "UK release days, Connecticut resident geography and three UN territorial transitions verified. Global original release days and full territory coverage remain incomplete", "territory-audit.json"),
         ("G03", "passed", "Independent source-parser, matched annual denominators and direct age-standardization replay", "age-replay.json"),
         ("G04", "passed", f"{coverage['covid_deaths']['countries']} surveillance countries; real multiyear health and economic panel", "observations.csv"),
         ("G05", "passed", "WHO 2022 and 2023 modeled excess releases, input support and changed age bands retained", "excess.json"),
@@ -40,7 +44,8 @@ def gates(bundle: Path | None = None) -> list[dict]:
         ("G07", "passed", "Annual and quarterly actual hours, flag-aware sector contrasts, PISA and adult-reported instruction under separate definitions", "sector-hours.json"),
         ("G08", "passed", "US race and Hispanic origin, tenure and household income. Direct adult age standardization, 80 person replicates, item-response bounds and independent suppression checks", "social-context.json"),
         ("G09", "passed", "Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit", "genetics.json"),
-        ("G10", "blocked", f"{fit['completed_configurations']} original configurations plus 66 archive configurations; UK GDP exact release-day forecasts add a separate calibration test. Pandemic calibration across multiple countries and outcomes remains incomplete", "uk-forecast.json"),
+        ("G10", "passed" if mortality_supported else "failed",
+         f"{fit['completed_configurations']} original configurations plus 66 historical configurations. Separate dated UK GDP and geographically held-out mortality intervals. Earlier exploratory undercoverage retained", "mortality-calibration.json"),
         ("G11", "passed", "Real candidate group-time analyses, pretrends, pseudo-onsets and unsupported cells", "causal.json"),
         ("G12", "passed" if studies["partial_support"] == 0 else "blocked",
          f"{studies['count']} executed tables, {studies['partial_support']} with incomplete outcome or design support", "studies.json"),
@@ -193,7 +198,7 @@ def assemble_chronology(bundle: Path) -> None:
     from .social_context import PINS
     from .uk_vintages import RAW
 
-    for name in ("ct-crosswalk", "uk-vintages", "social-context", "uk-forecast"):
+    for name in ("ct-crosswalk", "uk-vintages", "social-context", "uk-forecast", "territory-audit", "mortality-calibration"):
         shutil.copyfile(ROOT / "data/results" / f"{name}.json", bundle / f"{name}.json")
     for pin in (*chronology_pins(), *read_json(PINS).values()):
         if not pin["redistribute"]:
@@ -369,6 +374,15 @@ def negative_controls(bundle: Path, source: str) -> dict:
     mutate("uk-forecast-coverage", "uk-forecast.json", json_change(
         lambda x: x["scores"]["ridge_100"].update(covered=0)),
         "GDP held-out coverage and interval score")
+    mutate("territorial-population-reclassification", "territory-audit.json", json_change(
+        lambda x: next(row for row in x["rows"] if row["territory_basis_unverified"] > 0).update(territory_basis_unverified=0)),
+        "Territory support or predecessor comparability altered")
+    mutate("mortality-calibration-country-leakage", "mortality-calibration.json", json_change(
+        lambda x: x["cohorts"]["calibration"].append(x["cohorts"]["held_out"][0])),
+        "Mortality geographic holdout or completeness changed")
+    mutate("mortality-interval-coverage", "mortality-calibration.json", json_change(
+        lambda x: x["predictions"][0].update(standardized_upper=0)),
+        "mortality evaluation prediction or coverage")
     result = {"controls": receipts, "rejected": len(receipts), "source": source}
     write_json(bundle / "negative-controls.json", result)
     make_manifest(bundle)
@@ -397,6 +411,7 @@ def acceptance(run_id: str, profile: str) -> dict:
         write_json(bundle / "REQUIREMENTS.json", requirements)
         acceptance_record = read_json(bundle / "ACCEPTANCE.json")
         acceptance_record["gates"] = current_gates
+        acceptance_record["full_acceptance"] = profile == "full" and all(g["status"] == "passed" for g in current_gates)
         write_json(bundle / "ACCEPTANCE.json", acceptance_record)
         make_manifest(bundle)
         verified = verify_bundle(bundle, source, require_domain_gates=False)

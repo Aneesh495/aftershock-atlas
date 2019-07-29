@@ -15,6 +15,7 @@ from zipfile import ZipFile
 REPO = "Aneesh495/aftershock-atlas"
 ROOT = Path(__file__).resolve().parents[1]
 PARTS = ("ct-crosswalk", "uk-vintages", "social-context", "uk-forecast")
+EXTENDED = ("territory-audit", "mortality-calibration")
 
 
 def api(route: str) -> bytes:
@@ -98,14 +99,18 @@ def publish(run: int, expected: str, check_only: bool) -> dict:
             incomplete = incomplete["gates"]
     directory = ROOT / "client/public/data"
     old_index = json.loads((directory / "index.json").read_bytes())
+    parts = PARTS + EXTENDED if {"territory_audit", "mortality_calibration"} <= receipt.keys() else PARTS
+    checks = 42 if parts != PARTS else 39
+    if controls["rejected"] < checks:
+        raise ValueError("Research control inventory does not support the public partition set")
     files = {}
     with archive_content(published, 2_000_000) as atlas:
-        if {f"{name}.json" for name in PARTS} | {"index.json"} != set(atlas.namelist()):
+        if {f"{name}.json" for name in parts} | {"index.json"} != set(atlas.namelist()):
             raise ValueError("Runner public partition names differ from the declared subset")
         new_index, _ = raw_json(atlas, "index.json")
         if new_index["source_commit"] != expected or new_index["panel_sha256"] != old_index["panel_sha256"]:
             raise ValueError("The extension snapshot changes the shared panel or scientific source")
-        for part in PARTS:
+        for part in parts:
             name = part + ".json"
             data, payload = raw_json(atlas, name)
             if data["source"] != expected or identity(payload) != new_index["files"][name] or (

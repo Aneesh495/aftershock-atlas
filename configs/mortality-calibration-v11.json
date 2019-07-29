@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "countries": [
+    "Austria",
+    "Belgium",
+    "Bulgaria",
+    "Croatia",
+    "Czechia",
+    "Denmark",
+    "Estonia",
+    "Finland",
+    "France",
+    "Germany",
+    "Greece",
+    "Hungary",
+    "Italy",
+    "Latvia",
+    "Lithuania",
+    "Netherlands",
+    "Norway",
+    "Poland",
+    "Portugal",
+    "Slovakia",
+    "Slovenia",
+    "Spain",
+    "Switzerland"
+  ],
+  "origins": {
+    "calibration": "2022-01-01",
+    "evaluation": "2024-01-01"
+  },
+  "train_years": [
+    2016,
+    2017,
+    2018
+  ],
+  "scale_year": 2015,
+  "validation_year": 2019,
+  "calibration_year": 2022,
+  "evaluation_year": 2024,
+  "ridge_penalties": [
+    0.1,
+    1,
+    10
+  ],
+  "coverage_level": 0.9,
+  "practical_coverage_range": [
+    0.8,
+    0.99
+  ],
+  "bootstrap_seed": 27122,
+  "bootstrap_draws": 999,
+  "source_rights": "World Mortality Dataset repository MIT. Upstream HMD and national terms apply. Raw input fetched from pinned original commits and not redistributed.",
+  "source_citation": "https://doi.org/10.7554/eLife.69336",
+  "sources": {
+    "features": {
+      "commit": "1fb0ad2cc8c20a9bf5fba49cef5a631c1c9a4abb",
+      "provider_snapshot_at": "2021-07-30T13:31:38Z",
+      "url": "https://raw.githubusercontent.com/akarlinsky/world_mortality/1fb0ad2cc8c20a9bf5fba49cef5a631c1c9a4abb/world_mortality.csv",
+      "sha256": "d06cd7bb8d5084d8e10f09223f82a066bbedd357e1984c54277569bfa2517444",
+      "bytes": 582092
+    },
+    "calibration": {
+      "commit": "cf848eff1041ac0ea12d190f46c84011872fc6f4",
+      "provider_snapshot_at": "2023-08-31T12:03:45Z",
+      "url": "https://raw.githubusercontent.com/akarlinsky/world_mortality/cf848eff1041ac0ea12d190f46c84011872fc6f4/world_mortality.csv",
+      "sha256": "9f5d44c5deb6f30454c6838b86bbf71b702384f9e426f28e96e09fb3c7ade6b8",
+      "bytes": 960305
+    },
+    "evaluation": {
+      "commit": "187902f67eb5b176cc4b29a2cc4960ef2668a67c",
+      "provider_snapshot_at": "2025-05-09T15:03:21Z",
+      "url": "https://raw.githubusercontent.com/akarlinsky/world_mortality/187902f67eb5b176cc4b29a2cc4960ef2668a67c/world_mortality.csv",
+      "sha256": "02f436cceb39c1ad78afcd3f0dd8b4cb6fc08419349de745e1bc2c9d4a06ac76",
+      "bytes": 1109549
+    },
+    "revision": {
+      "commit": "4376b6dd47d94549329ac37e6aeeb94c418e0ba1",
+      "provider_snapshot_at": "2026-09-12T12:25:47Z",
+      "url": "https://raw.githubusercontent.com/akarlinsky/world_mortality/4376b6dd47d94549329ac37e6aeeb94c418e0ba1/world_mortality.csv",
+      "sha256": "0e64cb7b8c2effb77994c0d23beddcae04725b6745f51b605b595a13768a582c",
+      "bytes": 1132695
+    }
+  }
+}

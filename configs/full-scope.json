@@ -1,8 +1,7 @@
 {
   "schema_version": 1,
   "unsupported_gates": {
-    "G02": "UK GDP and Connecticut are verified. Original cell publication days and historical territorial coverage remain incomplete across the global panels.",
-    "G10": "UK GDP release-time calibration is evaluated separately. Global pandemic-era coverage failure and full availability proof remain incomplete.",
+    "G02": "UK GDP, Connecticut and the bounded UN territory audit are verified. Original cell publication days and historical territorial coverage remain incomplete across the global panels.",
     "G13": "Required domain coverage is incomplete in the atlas"
   },
   "interpretation": "Source-frozen capability limits. Evidence cannot promote these gates by changing saved pass flags. Reassess only in a new source revision with actual supporting implementation and evidence."

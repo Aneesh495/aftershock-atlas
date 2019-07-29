@@ -63,7 +63,7 @@ def export_atlas(build: bool = True) -> dict:
             write_json(public / f"{name}.json", read_json(artifact))
             sources.update({key: {**value, "status": "acquired"}
                             for key, value in read_json(ROOT / f"configs/{pin}.json").items()})
-    for name in ("ct-crosswalk", "uk-vintages", "social-context", "uk-forecast"):
+    for name in ("ct-crosswalk", "uk-vintages", "social-context", "uk-forecast", "territory-audit", "mortality-calibration"):
         artifact = ROOT / f"data/results/{name}.json"
         if artifact.exists():
             data = read_json(artifact)
