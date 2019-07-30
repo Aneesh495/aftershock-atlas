@@ -3,7 +3,7 @@ import type { Index, State, View } from './types';
 const defaults: State = {view:'atlas',metric:'employment',primary:'USA',comparison:'GBR',year:2023,
   healthDomain:'hospital',reportingState:'CA',reportingYear:2022,hospitalMetric:'admissions',pulseWave:'33',pulseGroup:'national',
   contextGroup:'tenure',contextOutcome:'food_insufficiency',contextSensitivity:false,
-  chronologySection:'gdp',gdpQuarter:'2022Q2',ctCounty:'09001',
+  chronologySection:'gdp',gdpQuarter:'2022Q2',ctCounty:'09001',transitionRegion:'SDN',territoryEdition:'current',mortalityForecastCountry:'Italy',
   laborSector:'I',laborCountry:'FR',laborWindow:'2020-Q2',occupationGroup:'occupation',occupationOutcome:'telework',
   measurementSection:'learning',learningSubject:'mathematics',instructionGroup:'All eligible adults',hoursYear:2020,
   indexed:false,scenario:false,rate:false,study:'S01',subgroup:'total',vintage:'2023',historyMetric:'employment',edition:'201811',revisionEdition:'202312'};
@@ -13,7 +13,7 @@ export function restore(index: Index): State {
   try { stored = JSON.parse(localStorage.getItem('aftershock:v1') ?? '{}'); } catch { /* Ignore corrupt view preferences. */ }
   const state = {...defaults,...stored};
   const query = new URLSearchParams(location.search);
-  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage','historyMetric','edition','revisionEdition','measurementSection','learningSubject','instructionGroup','healthDomain','reportingState','hospitalMetric','pulseWave','pulseGroup','laborSector','laborCountry','laborWindow','occupationGroup','occupationOutcome','chronologySection','gdpQuarter','ctCounty','contextGroup','contextOutcome'] as const) {
+  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage','historyMetric','edition','revisionEdition','measurementSection','learningSubject','instructionGroup','healthDomain','reportingState','hospitalMetric','pulseWave','pulseGroup','laborSector','laborCountry','laborWindow','occupationGroup','occupationOutcome','chronologySection','gdpQuarter','ctCounty','contextGroup','contextOutcome','transitionRegion','territoryEdition','mortalityForecastCountry'] as const) {
     const value = query.get(key); if (value) (state as unknown as Record<string,unknown>)[key] = value;
   }
   if (query.has('reportingYear')) state.reportingYear = Number(query.get('reportingYear'));

@@ -1,4 +1,5 @@
 import { lineChart } from './charts';
+import { mortalityCalibration, territoryAudit } from './territory-and-mortality-view';
 import { format, read, safe, table } from './data';
 import type { Rendered } from './atlas-view';
 import type { Index, State } from './types';
@@ -140,18 +141,23 @@ export async function chronologyView(
   if (index.files['uk-vintages.json']) sections.push(['gdp', 'UK GDP revisions']);
   if (index.files['uk-forecast.json']) sections.push(['calibration', 'UK GDP forecast calibration']);
   if (index.files['ct-crosswalk.json']) sections.push(['ct', 'Connecticut planning regions']);
+  if (index.files['territory-audit.json']) sections.push(['territory','International territory changes']);
+  if (index.files['mortality-calibration.json']) sections.push(['mortality','Weekly mortality forecasts']);
   const section = sections.some(([id]) => id === state.chronologySection) ? state.chronologySection : sections[0][0];
   const content = section === 'gdp'
     ? displayGDP(await read<GDP>('uk-vintages', signal), state)
     : section === 'calibration' ? displayForecast(await read<Forecast>('uk-forecast', signal))
-      : displayConnecticut(await read<Geography>('ct-crosswalk', signal), state);
+      : section === 'territory' ? await territoryAudit(state,signal)
+        : section === 'mortality' ? await mortalityCalibration(state,signal)
+          : displayConnecticut(await read<Geography>('ct-crosswalk', signal), state);
   return {rows: content.rows, html: `<section class="page-heading measurement-heading"><div>
     <h1>Release dates and boundaries</h1>
     <p>Inspect what changed between releases and how resident populations map to new boundaries.</p></div>
     <div class="measurement-selector">${select('Series', 'chronology-section', sections, section)}</div>
     </section>${content.html}`, after(root) {
-    const inputs: [string, 'chronologySection' | 'gdpQuarter' | 'ctCounty'][] = [
+    const inputs: [string, 'chronologySection' | 'gdpQuarter' | 'ctCounty' | 'mortalityForecastCountry' | 'transitionRegion' | 'territoryEdition'][] = [
       ['chronology-section','chronologySection'], ['gdp-quarter','gdpQuarter'], ['ct-county','ctCounty'],
+      ['transition-region','transitionRegion'], ['territory-edition','territoryEdition'], ['mortality-forecast-country','mortalityForecastCountry'],
     ];
     for (const [id, key] of inputs) {
       const input = root.querySelector<HTMLSelectElement>(`#${id}`);
