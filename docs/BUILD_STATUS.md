@@ -2,7 +2,7 @@
 
 Status: working research preview. Full acceptance is incomplete.
 
-Executable source: `1bd53f80841fe08c1bfd3a2fafb9c8d53b042cb0`. The source was pushed, cloned from GitHub into a clean isolated checkout, and executed with frozen input bytes. No model checkpoints were copied into the fresh checkout before its first fit.
+Archived V3 executable source: `1bd53f80841fe08c1bfd3a2fafb9c8d53b042cb0`. The source was pushed, cloned from GitHub into a clean isolated checkout, and executed with frozen input bytes. No model checkpoints were copied into the fresh checkout before its first fit.
 
 Diagnostic `history-final-clean-20261112` passed. It independently checked 209,894 core measurement records, 68,570 core prediction scores, 12,370 core score groups and all 20,571 eligible trained core network predictions. The historical exercise separately reconstructed 227,850 archived cells, 27,342 revision comparisons, 7,812 endpoint-sensitivity cells, 4,001 feature rows and all 42,097 historical predictions across 66 configurations. The 6,857 dynamic predictions and 24 Census design cells retain their separate exploratory protocol. Thirty-six correctness and integration tests passed. Nineteen actual subprocess tamper cases were rejected for their intended reasons.
 
@@ -35,11 +35,11 @@ make verify EVIDENCE=evidence/history-final-clean-20261112 EXPECTED_SOURCE=1bd53
 
 The strict public verifier returns nonzero for `history-final-full-20261112`. Available source checks still executed before that final domain-gate rejection. Use the explicit executable source after report-only commits. The verifier checks runtime files against the trusted Git source, parses frozen bytes and never replaces absent work.
 
-## Remaining work
+## V3 release and limitations
 
 The [v0.2.0-preview release](https://github.com/Aneesh495/aftershock-atlas/releases/tag/v0.2.0-preview) is published. Its four original assets were downloaded or restored and byte-verified. The remote historical snapshot restored all 43 partitions. The public Pages walkthrough checked the frozen executable identity through downloaded CSVs, the full integrated path and 390 px / 1280 px layouts. [Publication receipts](RELEASE_RECEIPT_V3.json) and [offline thesis](paper/README.md) preserve this narrower verified outcome. These publication checks do not promote an incomplete scientific gate.
 
-Complete original cell publication-day and territorial validation, later-wave survey design/nonresponse and subgroup denominator auditing, hours and learning measurement, pandemic uncertainty calibration and the four partially supported studies. The atlas has bounded verified user paths, but missing required domains prevent full G13 acceptance. Historical mortality and life-expectancy cohorts only support 2022, and their nominal 90 percent learned intervals cover only about one quarter and one fifth of targets. These failures remain visible in the [historical report](HISTORICAL_RESULTS.md) and model tables.
+At V3, original cell publication days, territorial validation, later-wave survey design, subgroup denominators, hours, learning measurement, uncertainty calibration and four study tables remained incomplete. The atlas has bounded verified user paths, but missing required domains prevent full G13 acceptance. Historical mortality and life-expectancy cohorts only support 2022, and their nominal 90 percent learned intervals cover only about one quarter and one fifth of targets. These failures remain visible in the [historical report](HISTORICAL_RESULTS.md) and model tables.
 
 The [requirement and artifact map](COVERAGE_GAPS.md) also records absent tests, hospital/ICU, COVID vaccine-rollout, sector and remote-instruction measurements. The original v0.1.0-preview and v0.1.1-preview sources and evidence remain preserved. No diagnostic, model-count increase or presentation change closes these scientific requirements.
 
@@ -51,4 +51,11 @@ The [work and education report](MEASUREMENT_RESULTS_V4.md) records actual annual
 
 The public health replay at `8808b6fb129899a7bb6445607c866570d8d4c903` completed 17 commands and independently verified 29,376 state-weeks and 66 survey cells. It rejected 28 tampered bundles and exited 1 on remaining gates. G06 has passing evidence from the two later survey waves. Live exports matched 138 rows, and tested 320 and 390 pixel layouts had no page overflow. [Public health report](SURVEILLANCE_RESULTS_V5.md) and [exact replay receipt](SURVEILLANCE_RECEIPT_V5.json).
 
-The current published scientific data at `2fc48f28d71f63ce225bff24f94cbff0714d5513` add occupational disruptions and flag-aware quarterly actual hours. Independent local replay checked every occupation cell and Eurostat cube/contrast cell. All 12 bounded study tables are populated. The full Linux campaign is separately tracked. [Labor report](LABOR_RESULTS_V6.md) and [Linux campaign](https://github.com/Aneesh495/aftershock-atlas/actions/runs/44816168837).
+V6 scientific data at `2fc48f28d71f63ce225bff24f94cbff0714d5513` add occupational disruptions and flag-aware quarterly actual hours. The clean Linux replay checked every occupation and Eurostat cell, completed 21 commands and rejected 32 tampered bundles. All 12 bounded studies have results. Four domain gates remained. The public browser exported 27 sector and 13 occupation records, checked against the frozen data. [Labor report](LABOR_RESULTS_V6.md) and [Linux campaign](https://github.com/Aneesh495/aftershock-atlas/actions/runs/44816168837).
+
+
+## Revision and calibration extensions
+
+The [chronology and context report](CHRONOLOGY_AND_CONTEXT_RESULTS.md) records 36 UK GDP releases and a resident-conserving Connecticut crosswalk. It also reports weighted age-standardized food and mental health comparisons in two 2021 survey waves. The [UK forecast report](UK_FORECAST_RESULTS_V9.md) gives test intervals and errors for seven models on eight first-published quarters. The [territory audit](TERRITORY_RESULTS_V10.md) traces three international statistical changes across seven economic and health indicators. The [mortality forecast report](MORTALITY_CALIBRATION_RESULTS_V11.md) gives out-of-year and geographically held-out interval and point accuracy across 22 countries.
+
+The exact-source Linux campaigns run separately from the engineering site deployment. The global WDI release archive provides conservative edition bounds. The provider's release notes and archive dimensions do not expose day-level first-publication histories for each country, metric and reference year. The territorial audit establishes three bounded code changes and flags historical comparisons requiring separate series-level population evidence. This remains an open scientific requirement. [WDI archives](https://datatopics.worldbank.org/world-development-indicators/wdi-archives.html) · [WDI release notes](https://datatopics.worldbank.org/world-development-indicators/release-note-toc.html).

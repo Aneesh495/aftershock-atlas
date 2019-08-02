@@ -35,7 +35,9 @@ An original NumPy temporal network is trained from random initialization for thr
 
 The [historical extension](docs/HISTORICAL_RESULTS.md) adds six official WDI archive editions, 66 separate configurations and origin-specific features. It retains missing years, changing estimates and a large learned GDP loss. Historical GDP uses a within-edition 2010=100 index. The atlas compares editions and exports exact source identities; it rejects changed data bytes before displaying them.
 
-**This is a working research preview. Full acceptance is incomplete.** Original publication-day proof, complete geography crosswalks, complete survey design auditing, hours and learning outcomes, and several domain requirements remain open. See [build status](docs/BUILD_STATUS.md). The runnable profile is not a substitute for those gates.
+Later pipelines add [hours, PISA and adult-reported schooling](docs/MEASUREMENT_RESULTS_V4.md), [state hospital, PCR and vaccine reporting](docs/SURVEILLANCE_RESULTS_V5.md), and [occupational disruptions and quarterly European sector hours](docs/LABOR_RESULTS_V6.md). Separate studies trace [UK GDP release dates, Connecticut boundary changes and age-standardized US survey context](docs/CHRONOLOGY_AND_CONTEXT_RESULTS.md). The [UK GDP forecast](docs/UK_FORECAST_RESULTS_V9.md) and [weekly mortality forecast](docs/MORTALITY_CALIBRATION_RESULTS_V11.md) evaluate later holdouts under their own information sets. The [international territory audit](docs/TERRITORY_RESULTS_V10.md) shows which country-years require separate documentation before joining observations.
+
+**This is a working research preview. Full acceptance is incomplete.** Exact publication days and territorial comparability remain unresolved for much of the global WDI panel. Independent checks retain these gaps alongside measured results. See [build status](docs/BUILD_STATUS.md).
 
 ## Verification
 
