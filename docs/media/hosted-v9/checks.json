@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "served_url": "https://aneesh495.github.io/aftershock-atlas/",
+  "pages_source": "bac72de3e8e07d9b08adff134ab6ba53bf1b465c",
+  "pages_run": "https://github.com/Aneesh495/aftershock-atlas/actions/runs/44826149286",
+  "attachment_origin": "Actual Chrome in-app browser downloads. Older stable labor and employment data verified from their own source on prior browser navigation.",
+  "data_index_sha256": "0b238959ebc68ef17a963c3b3ebc7d9b055ac5adae3460b4dbca447875b1f9e9",
+  "extension_scientific_source": "3f241904cb23fb36b8cfdac7c315347cde383d8e",
+  "core_checks": {
+    "countries": [
+      "USA",
+      "GBR"
+    ],
+    "periods": [
+      2019,
+      2020,
+      2023
+    ],
+    "scenario_off_rows": 52,
+    "scenario_on_rows": 64,
+    "projected_rows": 12,
+    "causal_study": "S06",
+    "causal_late_cohort_supported": false,
+    "subnational_selection": [
+      "California",
+      "Florida"
+    ],
+    "subnational_basis": "weighted survey percent",
+    "biological_groups": [
+      "host associations with shared sample",
+      "separate archived weighted viral lineages"
+    ]
+  },
+  "extension_checks": {
+    "quarter_sign_change": "2022Q2",
+    "county": "Hartford County",
+    "selected_survey_wave": 33,
+    "age_sensitivity": true,
+    "mobile_scroll_widths": [
+      [
+        320,
+        320
+      ],
+      [
+        390,
+        390
+      ],
+      [
+        1280,
+        1280
+      ]
+    ],
+    "persisted_selection": true,
+    "console_errors": 0
+  },
+  "exports": {
+    "employment_observed": {
+      "path": "docs/media/hosted-v9/employment_observed.csv",
+      "rows": 52,
+      "sha256": "4d488bf132a3aacec1cfb282893caf2a497cdb2da88d0454b77bcfda997578a3"
+    },
+    "mortality_trajectory": {
+      "path": "docs/media/hosted-v9/mortality_trajectory.csv",
+      "rows": 64,
+      "sha256": "0cb02ea3f236138b281c20424ccce84797c660d8d6aa84b44d0c2193d45acedc"
+    },
+    "labor_sector": {
+      "path": "docs/media/hosted-v9/labor_sector.csv",
+      "rows": 27,
+      "sha256": "8620bde9e73c22456fd424a7ce893181635ddec5a49897657a4b1558bb5b89e8"
+    },
+    "labor_occupation": {
+      "path": "docs/media/hosted-v9/labor_occupation.csv",
+      "rows": 13,
+      "sha256": "57a18e0ac11811f5532802e471a7a1df85f33e602c791077cb87facb3a132ef3"
+    },
+    "uk_gdp_revisions": {
+      "path": "docs/media/hosted-v9/uk_gdp_revisions.csv",
+      "rows": 18,
+      "sha256": "42ac05d27d8d3ad1262db2efd9b1b661f6a5a8404a740502560a899c8ef87e9d"
+    },
+    "ct_crosswalk": {
+      "path": "docs/media/hosted-v9/ct_crosswalk.csv",
+      "rows": 3,
+      "sha256": "27dad03154b7862b3996b144e33379fdd9aab3f3f09f7714cd834b00599a5ed8"
+    },
+    "uk_gdp_forecast": {
+      "path": "docs/media/hosted-v9/uk_gdp_forecast.csv",
+      "rows": 56,
+      "sha256": "d2191709eb5ba6f5136d656c775d26bcbbb2d7829ec36cf4359a0438bb585595"
+    },
+    "survey_context": {
+      "path": "docs/media/hosted-v9/survey_context.csv",
+      "rows": 3,
+      "sha256": "51b1a7d6378aba52adbe6d890ee08500d0f89341d1c347ed119109a033023750"
+    }
+  }
+}
