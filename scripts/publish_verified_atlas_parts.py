@@ -49,15 +49,34 @@ def raw_json(z: ZipFile, name: str, limit: int = 3_000_000) -> tuple[dict, bytes
     return json.loads(payload), payload
 
 
-def artifact_sources() -> dict[str, dict]:
+def artifact_sources(extended: bool) -> dict[str, dict]:
     def config(name: str):
         return json.loads((ROOT / "configs" / name).read_bytes())
     geography = config("ct-crosswalk-inputs.json")
     context = config("social-context-inputs.json")
     editions = config("uk-vintages-inputs.json")
     versions = [editions["catalogue"], *(row[part] for row in editions["editions"] for part in ("workbook", "bulletin"))]
-    return {entry["id"]: {**{k: v for k, v in entry.items() if k not in {"headers", "path"}}, "status": "acquired"}
-            for entry in (*geography.values(), *context.values(), *versions)}
+    collected = {entry["id"]: {**{k: v for k, v in entry.items() if k not in {"headers", "path"}}, "status": "acquired"}
+                 for entry in (*geography.values(), *context.values(), *versions)}
+    if extended:
+        m49 = config("territory-audit-v10.json")["reference"]
+        collected["un_m49_change_notes"] = {
+            "id": "un_m49_change_notes", "citation": m49["url"], "url": m49["url"],
+            "rights": "UN Statistics Division, M49 reference. Only audited statistical code facts are published.",
+            "timing": "Dated statistical code changes", "limitations": m49["scope"], "acquired_at": m49["captured_date"],
+            "sha256": m49["sha256"], "bytes": m49["bytes"], "status": "acquired",
+        }
+        mortality = config("mortality-calibration-v11.json")
+        for role, pin in mortality["sources"].items():
+            key = "wmd_" + role
+            collected[key] = {
+                "id": key, "citation": mortality["source_citation"], "url": pin["url"],
+                "rights": mortality["source_rights"], "timing": role.capitalize() + " archive " + pin["provider_snapshot_at"],
+                "limitations": "Weekly all-cause counts. Frozen publisher Git history determines availability bounds.",
+                "acquired_at": None, "sha256": pin["sha256"], "bytes": pin["bytes"], "status": "acquired",
+            }
+    return collected
+
 
 
 def dumps(payload) -> bytes:
@@ -119,7 +138,7 @@ def publish(run: int, expected: str, check_only: bool) -> dict:
                 raise ValueError(f"Published partition detached from research data: {name}")
             files[name] = payload
     source_library = {s["id"]: s for s in json.loads((directory / "sources.json").read_bytes())}
-    source_library.update(artifact_sources())
+    source_library.update(artifact_sources(parts != PARTS))
     files["sources.json"] = dumps(list(source_library.values()))
     receipt_data = {
         "source": expected, "runner": f"https://github.com/{REPO}/actions/runs/{run}",

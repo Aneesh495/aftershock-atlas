@@ -19,7 +19,7 @@ interface Mortality {
   cohorts: {held_out:string[]; test:string[]; missing_outcomes:Record<string,string[]>};
   validation: {selected_ridge:string; selected_baseline:string};
   scores: {model:string;group:string;coverage:number;coverage_cluster_lower:number;coverage_cluster_upper:number;
-    weeks:number;countries:number;revision_coverage:number;practical_coverage_met:boolean;
+    weeks:number;countries:number;revision_coverage:number|null;practical_coverage_met:boolean;
     mean_absolute_error_normalized:number;mean_interval_score_normalized:number;mean_width_normalized:number}[];
   scales: Record<string,number>;
   predictions: {region:string;week:number;model:string;standardized_forecast:number;standardized_lower:number;
@@ -86,14 +86,13 @@ export async function mortalityCalibration(state: State, signal: AbortSignal): P
     model:modelLabel(r.model),group:r.group.replaceAll('_',' '),countries:r.countries,weeks:r.weeks,
     coverage_pct:100*r.coverage,cluster_lower_pct:100*r.coverage_cluster_lower,cluster_upper_pct:100*r.coverage_cluster_upper,
     normalized_mae:r.mean_absolute_error_normalized, normalized_interval_score:r.mean_interval_score_normalized,
-    revised_coverage_pct:100*r.revision_coverage,
+    revised_coverage_pct:r.revision_coverage===null?null:100*r.revision_coverage,
   }));
-  const isoWeeks = (week:number) => Date.UTC(2024,0,1+(week-1)*7);
   const plot = lineChart([
-    {name:'Registered all-cause deaths',color:'#346359',points:rows.filter(r=>r.model===modelLabel(selected[0])).map(r=>({x:isoWeeks(r.week),y:r.deaths}))},
+    {name:'Registered all-cause deaths',color:'#346359',points:rows.filter(r=>r.model===modelLabel(selected[0])).map(r=>({x:r.week,y:r.deaths}))},
     ...selected.map((m,i)=>({name:modelLabel(m),color:i===0?'#6b7797':'#ab632c',dashed:true,
-      points:rows.filter(r=>r.model===modelLabel(m)).map(r=>({x:isoWeeks(r.week),y:r.forecast_deaths,low:r.lower,high:r.upper}))})),
-  ],'Deaths per source week',undefined,undefined,undefined,'month');
+      points:rows.filter(r=>r.model===modelLabel(m)).map(r=>({x:r.week,y:r.forecast_deaths,low:r.lower,high:r.upper}))})),
+  ],'Deaths per source week');
   return {rows,html:`<section class="panel prose measurement-panel"><h2>Weekly mortality forecast calibration</h2>
     ${choice('mortality-forecast-country','Test country',data.cohorts.test.map(r=>[r,r]),region)}
     <p>Origin ${safe(data.origins.evaluation)}. ${data.cohorts.held_out.includes(region) ? 'This country was held out from model fitting, validation and calibration.' : 'This country contributed its earlier data to fitting and calibration.'}
