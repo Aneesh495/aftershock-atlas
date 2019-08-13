@@ -1,0 +1,285 @@
+{
+  "archive_docs": "https://datatopics.worldbank.org/world-development-indicators/wdi-archives.html",
+  "conclusion": "Reference year and edition month are observed. The audited WDI response schema does not provide a first publication timestamp for any returned observation.",
+  "dimensions_excluding_registered_version_row_count": {
+    "Country, Series, Time": 821688
+  },
+  "manifest_sha256": "be93781f176ecbdc886748e505a758609014fdc64d837c80616fd9abcf8a825c",
+  "original_cell_timestamps": 0,
+  "partition_count": 42,
+  "partitions": [
+    {
+      "edition": "201811",
+      "metric": "employment",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201811",
+      "metric": "gdp",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201811",
+      "metric": "immunization",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201811",
+      "metric": "life_expectancy",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201811",
+      "metric": "mortality",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201811",
+      "metric": "population",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201811",
+      "metric": "school",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201912",
+      "metric": "employment",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201912",
+      "metric": "gdp",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201912",
+      "metric": "immunization",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201912",
+      "metric": "life_expectancy",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201912",
+      "metric": "mortality",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201912",
+      "metric": "population",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "201912",
+      "metric": "school",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202012",
+      "metric": "employment",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202012",
+      "metric": "gdp",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202012",
+      "metric": "immunization",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202012",
+      "metric": "life_expectancy",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202012",
+      "metric": "mortality",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202012",
+      "metric": "population",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202012",
+      "metric": "school",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202112",
+      "metric": "employment",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202112",
+      "metric": "gdp",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202112",
+      "metric": "immunization",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202112",
+      "metric": "life_expectancy",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202112",
+      "metric": "mortality",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202112",
+      "metric": "population",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202112",
+      "metric": "school",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202212",
+      "metric": "employment",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202212",
+      "metric": "gdp",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202212",
+      "metric": "immunization",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202212",
+      "metric": "life_expectancy",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202212",
+      "metric": "mortality",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202212",
+      "metric": "population",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202212",
+      "metric": "school",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202312",
+      "metric": "employment",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202312",
+      "metric": "gdp",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202312",
+      "metric": "immunization",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202312",
+      "metric": "life_expectancy",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202312",
+      "metric": "mortality",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202312",
+      "metric": "population",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    },
+    {
+      "edition": "202312",
+      "metric": "school",
+      "original_cell_timestamps": 0,
+      "rows": 19564
+    }
+  ],
+  "record_fields_row_count": {
+    "value": 821688,
+    "variable": 821688
+  },
+  "row_count": 821688,
+  "row_counts_by_edition": {
+    "201811": 136948,
+    "201912": 136948,
+    "202012": 136948,
+    "202112": 136948,
+    "202212": 136948,
+    "202312": 136948
+  },
+  "top_level_fields_partition_count": {
+    "lastupdated": 42,
+    "page": 42,
+    "pages": 42,
+    "per_page": 42,
+    "source": 42,
+    "total": 42
+  }
+}
