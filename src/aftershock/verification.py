@@ -26,7 +26,7 @@ CAMPAIGN_STAGES = (
     "chronology-data", "ct-crosswalk", "uk-vintages", "uk-forecast", "social-context-data", "social-context",
     "territory-audit", "mortality-calibration", "studies", "history-atlas", "atlas",
 )
-REQUIRED_NEGATIVE_CONTROLS = 42
+REQUIRED_NEGATIVE_CONTROLS = 43
 
 
 def require(condition: bool, reason: str) -> None:
@@ -51,8 +51,11 @@ def trusted_inputs(expected: str) -> dict:
     require(len(expected) == 40 and all(c in "0123456789abcdef" for c in expected), "Expected full source commit is required")
     subprocess.run(["git", "cat-file", "-e", expected + "^{commit}"], cwd=ROOT, check=True, capture_output=True)
     names = subprocess.check_output(["git", "ls-tree", "-r", "--name-only", expected], cwd=ROOT, text=True).splitlines()
-    selected = [p for p in names if p.startswith(("src/", "configs/", "client/src/", "tests/", "scripts/", ".github/")) or p in
-                {"pyproject.toml", "uv.lock", "client/package-lock.json", "client/package.json", "client/index.html", "Makefile", "docs/EXPERIMENT_PLAN.md", "docs/EXTENSION_PLAN_V2.md", "docs/HISTORICAL_PLAN_V3.md", "docs/MEASUREMENT_PLAN_V4.md", "docs/SURVEILLANCE_PLAN_V5.md", "docs/LABOR_PLAN_V6.md"}]
+    selected = [p for p in names if p.startswith(("src/", "configs/", "client/src/", "tests/", "scripts/", ".github/", "docs/media/hosted-v9/")) or p in
+                {"pyproject.toml", "uv.lock", "client/package-lock.json", "client/package.json", "client/index.html", "Makefile", "docs/EXPERIMENT_PLAN.md", "docs/EXTENSION_PLAN_V2.md", "docs/HISTORICAL_PLAN_V3.md", "docs/MEASUREMENT_PLAN_V4.md", "docs/SURVEILLANCE_PLAN_V5.md", "docs/LABOR_PLAN_V6.md",
+                 "docs/CHRONOLOGY_PLAN_V7.md", "docs/SOCIAL_CONTEXT_PLAN_V8.md", "docs/FORECAST_CALIBRATION_PLAN_V9.md",
+                 "docs/TERRITORY_PLAN_V10.md", "docs/MORTALITY_CALIBRATION_PLAN_V11.md",
+                 "docs/CHRONOLOGY_AND_CALIBRATION_RECEIPT_V9.json"}]
     result = {}
     for name in selected:
         content = subprocess.check_output(["git", "show", f"{expected}:{name}"], cwd=ROOT)
@@ -353,6 +356,9 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
         require((ROOT / name).is_file() and digest(ROOT / name) == checksum, "Verifier runtime source mismatch: " + name)
     acceptance = read_json(bundle / "ACCEPTANCE.json")
     complete = verify_declared_scope(acceptance)
+    from .verify_browser_walkthrough import verify_walkthrough
+    browser_walkthrough = verify_walkthrough(bundle / "browser-v9")
+
     commands = [json.loads(line) for line in (bundle / "COMMANDS.jsonl").read_text().splitlines()]
     require(tuple(r["stage"] for r in commands) == (*CAMPAIGN_STAGES, "correctness")
             and all(r["exit"] == 0 for r in commands), "Required command missing or failed")
@@ -422,5 +428,5 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
     status = "passed" if acceptance["profile"] == "diagnostic" or complete else "source_checks_passed_full_incomplete"
     return {"status": status, "profile": acceptance["profile"], "source": expected_source,
             "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain, "extension": extension, "historical": historical,
-            "measurement": measurement, "state_surveillance": surveillance, "survey_bridge": bridge_replay, "sector_hours": sector_replay, "occupation": occupation_replay, "geography": geography, "uk_releases": releases, "social_context": context, "uk_forecast": uk_forecast, "territory_audit": territorial, "mortality_calibration": mortality,
+            "measurement": measurement, "state_surveillance": surveillance, "survey_bridge": bridge_replay, "sector_hours": sector_replay, "occupation": occupation_replay, "geography": geography, "uk_releases": releases, "social_context": context, "uk_forecast": uk_forecast, "territory_audit": territorial, "mortality_calibration": mortality, "browser_walkthrough": browser_walkthrough,
             "full_acceptance": acceptance["profile"] == "full" and complete}

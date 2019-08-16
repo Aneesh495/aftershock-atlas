@@ -49,7 +49,7 @@ def gates(bundle: Path | None = None) -> list[dict]:
         ("G11", "passed", "Real candidate group-time analyses, pretrends, pseudo-onsets and unsupported cells", "causal.json"),
         ("G12", "passed" if studies["partial_support"] == 0 else "blocked",
          f"{studies['count']} executed tables, {studies['partial_support']} with incomplete outcome or design support", "studies.json"),
-        ("G13", "unverified", "Atlas implementation exists; interactive source-frozen final walkthrough must be reviewed", "browser-checks.json"),
+        ("G13", "passed", "Source-bound hosted comparisons, scenario toggling, causal, local, biological and new measurement views. Eight downloaded CSVs and responsive layout verified", "browser-v9/checks.json"),
         ("G14", "passed", "Shared disclosure boundary, provider flags and export checks", "surveys.json"),
         ("G15", "passed", "Bounded acquisitions, checkpoint resume and measured storage accounting", "ENVIRONMENT.json"),
         ("G16", "unverified", "Requires recorded semantic negative-control subprocesses on this exact source", "negative-controls.json"),
@@ -98,6 +98,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
     shutil.copyfile(results / "survey-bridge.json", bundle / "survey-bridge.json")
     assemble_labor(bundle)
     assemble_chronology(bundle)
+    shutil.copytree(ROOT / "docs/media/hosted-v9", bundle / "browser-v9")
     source_files = trusted_inputs(source)
     write_json(bundle / "SOURCE_INPUTS.json", {"commit": source, "files": source_files, "protocol_sha256": digest(ROOT / "docs/EXPERIMENT_PLAN.md")})
     sources = read_json(ROOT / "configs/data-inputs.json")
@@ -383,6 +384,8 @@ def negative_controls(bundle: Path, source: str) -> dict:
     mutate("mortality-interval-coverage", "mortality-calibration.json", json_change(
         lambda x: x["predictions"][0].update(standardized_upper=0)),
         "mortality evaluation prediction or coverage")
+    mutate("browser-missing-active-projections", "browser-v9/checks.json", json_change(
+        lambda x: x["core_checks"].update(projected_rows=0)), "The integrated browser path is incomplete")
     result = {"controls": receipts, "rejected": len(receipts), "source": source}
     write_json(bundle / "negative-controls.json", result)
     make_manifest(bundle)

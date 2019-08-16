@@ -41,6 +41,7 @@ jobs:
             evidence/*/*.jsonl
             evidence/*/logs
             evidence/*/models
+            evidence/*/browser-v9
           retention-days: 7
       - if: always() && hashFiles('evidence/*/VERIFICATION.json') != ''
         uses: actions/upload-artifact@v4
