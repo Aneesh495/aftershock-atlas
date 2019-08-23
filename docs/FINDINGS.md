@@ -1,6 +1,6 @@
 # Findings and limitations
 
-These are executed preview results, not complete acceptance. Inputs are the November 11, 2026 acquisition and two released WHO excess mortality vintages. The frozen primary forecast protocol is version 1.
+The first sections record the original preview. Its inputs include the November 11, 2026 acquisition and two released WHO excess mortality vintages. Later sections report independently frozen results.
 
 ## Forecast results
 
@@ -31,9 +31,9 @@ Twelve study tables execute. Eight have bounded analysis support and four have i
 
 The California and Florida count-model intervals cover only 43.3% and 35.7% of the held-out 2020-2022 observations against a nominal 90% target. Those failures argue against treating a pre-period seasonal count model as a reliable pandemic counterfactual.
 
-## What is still required
+## Requirements still open in the original preview
 
-See [build status](BUILD_STATUS.md). In particular, complete historical as-of and geography validation, independent survey design auditing, lawful richer subgroup denominators, hours and learning outcomes, the complete full-profile scientific campaign remain incomplete. A working atlas and a diagnostic verifier pass do not close those requirements.
+The initial release lacked complete geography and timing validation, independent multiwave survey estimates and hours and learning outcomes. The [build status](BUILD_STATUS.md) identifies which of those gaps newer campaigns address.
 
 ## Source-frozen replay
 
@@ -46,3 +46,12 @@ The [version 2 report](EXTENSION_RESULTS.md) adds actual 80-replicate survey rep
 ## Official historical editions
 
 The [version 3 report](HISTORICAL_RESULTS.md) uses six official archives with origin-specific inputs and no current-value fallback. It contains 66 separate configurations and 42,097 predictions. Only routine DTP meets the practical CRPS criterion; the learned GDP score is 41.27 percent worse than its validation-selected baseline. Every learned family undercovers nominal intervals. Mortality and life expectancy have eligible archived features only for 2022. A changed horizon, GDP index and training window prevent attributing the differences from version 1 solely to vintage. The final clean diagnostic passed nineteen actual tamper controls; the full profile executed those checks and still returned nonzero on incomplete scope.
+
+
+## Later source-frozen results
+
+The [state surveillance report](SURVEILLANCE_RESULTS_V5.md) and the [labor report](LABOR_RESULTS_V6.md) add state ICU, testing and vaccine evidence, US occupational snapshots and actual weekly sector hours. The study tables keep cause, denominator, cohort and exposure distinctions visible.
+
+The [chronology and survey context report](CHRONOLOGY_AND_CONTEXT_RESULTS.md) identifies a sign change across UK GDP revisions, conserves Connecticut's resident population through a boundary change and reports age-standardized food and symptom outcomes. The [territory audit](TERRITORY_RESULTS_V10.md) flags international historical counts that lack comparable territory metadata. The [WDI publication audit](WDI_PUBLICATION_FIELD_AUDIT.json) found no original first-publication day in any of 821,688 raw archived records.
+
+The [UK GDP forecast report](UK_FORECAST_RESULTS_V9.md) adds eight first-release test targets using exact publication dates. The [mortality report](MORTALITY_CALIBRATION_RESULTS_V11.md) adds a cross-country 2024 holdout with two observation vintages. Its pooled ridge is better calibrated in the registered geography holdout, while the seasonal mean makes more accurate point forecasts. None of these results changes the earlier errors, which remain attached to their own test cohorts.
