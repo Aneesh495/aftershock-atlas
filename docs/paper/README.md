@@ -9,3 +9,16 @@ pdftoppm -r 100 -png docs/paper/aftershock-thesis.pdf .agent-local/paper-qa/page
 ```
 
 Use an accounted project temporary path for rendering in a bounded research campaign. Inspect every rendered page before distributing the PDF. The scientific executable remains 1bd53f80841fe08c1bfd3a2fafb9c8d53b042cb0. The publication source names the documented snapshot; it does not claim that the PDF authoring utility was part of that scientific runtime.
+
+
+## November 20 evidence update
+
+The [updated thesis](v11/aftershock-thesis-v11.pdf) preserves the November 12 paper and adds the newer work, survey, geography and forecast results. The [publication manifest](v11/ARTIFACT.json) records both scientific source identities. The [layout and figure check](v11/QA.json) covers all 12 pages and the 18 historical coverage values.
+
+```sh
+python docs/paper/build_thesis.py \
+  --output docs/paper/v11/aftershock-thesis-v11.pdf \
+  --publication-source eaf144b0ea47babd2a170ae1ece671d3b3f84d78 \
+  --addendum docs/THESIS_ADDENDUM.md \
+  --extension-receipt docs/CHRONOLOGY_AND_CALIBRATION_RECEIPT.json
+```

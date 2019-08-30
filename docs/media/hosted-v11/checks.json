@@ -1,0 +1,39 @@
+{
+  "pages_source": "eaf144b0ea47babd2a170ae1ece671d3b3f84d78",
+  "pages_run": "https://github.com/Aneesh495/aftershock-atlas/actions/runs/44828900320",
+  "scientific_source": "9c95b49e92cbcc7c6eba90e5aa9d3bbc166ade4a",
+  "source_manifest_sha256": "0b98c5bd68a2790753d453c676f05056fd46663ad30a234b0b2c9d77fdb2aed4",
+  "files": {
+    "territory": {
+      "rows": 21,
+      "sha256": "f9a7bf7f778397464cfb9e1b44107f2b055c07849c5aeefe262978881a7a1aa2",
+      "file": "territory.csv"
+    },
+    "mortality_forecast": {
+      "rows": 104,
+      "sha256": "c71592fa8d7c5435bf402386ffd3809a97e18849547c2ca990e0a70641326d13",
+      "file": "mortality_forecast.csv"
+    }
+  },
+  "viewport_and_document_widths": [
+    [
+      320,
+      320
+    ],
+    [
+      390,
+      390
+    ],
+    [
+      1280,
+      1280
+    ]
+  ],
+  "held_out_country": "Netherlands",
+  "context_retained_after_reload": true,
+  "verified_source_cards": [
+    "un_m49_change_notes",
+    "wmd_evaluation"
+  ],
+  "console_errors": 0
+}
