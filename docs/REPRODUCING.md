@@ -43,3 +43,16 @@ No paid compute or unattended scheduler is used. CPU diagnostics are separate fr
 ## Static preview archive
 
 Extract `aftershock-atlas-preview.tar.gz`, enter the extracted `aftershock-atlas` folder and run `python3 -m http.server 8765 --directory dist`. This archive contains the static atlas, paper and source cards. Clone the repository for the Python research commands.
+
+For [v0.3.0-preview](https://github.com/Aneesh495/aftershock-atlas/releases/tag/v0.3.0-preview), extract `aftershock-atlas-static-v0.3.0.zip` and run `python3 -m http.server 8765` from the directory containing `index.html`. Open http://127.0.0.1:8765. The browser entry files match the published Pages build.
+
+The release evidence ZIP contains aggregate outputs, the model checkpoints included in the hosted artifact, logs and browser downloads. Full independent replay needs the pinned upstream input bytes and derived panel files as well. To reconstruct them, use a clean checkout of the recorded combined experiment source and a fresh campaign ID.
+
+```sh
+git checkout 75823a923b6bc11b0f1242aa06ba83a1a41c4ed4
+make bootstrap data
+make acceptance RUN_ID=my-combined-replay PROFILE=full
+make verify EVIDENCE=evidence/my-combined-replay EXPECTED_SOURCE=75823a923b6bc11b0f1242aa06ba83a1a41c4ed4
+```
+
+The full campaign and strict verifier report G02 as incomplete after the available independent checks. The [combined receipt](COMBINED_ACCEPTANCE_RECEIPT_V12.json) records the original hosted run and its exact retained artifacts.
