@@ -54,9 +54,9 @@ class Features:
 
 def annual_cube() -> tuple[list[str], np.ndarray]:
     with connect() as db:
-        rows = records(db, """SELECT region,metric,CAST(substr(event_start,1,4) AS INTEGER) year,value
+        rows = records(db, """SELECT region,metric,CAST(substr(event_start,1,4) AS INTEGER) AS "year",value
             FROM observations WHERE frequency='annual' AND \"group\"='total' AND value IS NOT NULL
-            AND length(region)=3 ORDER BY region,year,metric""")
+            AND length(region)=3 ORDER BY region,"year",metric""")
     regions = sorted({r["region"] for r in rows})
     lookup = {r: i for i, r in enumerate(regions)}
     cube = np.full((len(regions), 26, len(OUTCOMES)), np.nan)
@@ -83,7 +83,9 @@ def make_features() -> Features:
                 continue
             keys.append({"region": region, "target_year": year, "feature_last_year": year - 1,
                          "held_out_region": held_out(region)})
-            raw.append(window.flatten()); bases.append(base); targets.append(target)
+            raw.append(window.flatten())
+            bases.append(base)
+            targets.append(target)
     raw, base, target = np.array(raw), np.array(bases), np.array(targets)
     mask = np.isfinite(target)
     train = np.array([k["target_year"] <= 2015 and not k["held_out_region"] for k in keys])

@@ -3,7 +3,14 @@ name = "aftershock-atlas"
 version = "0.1.0"
 description = "A source-bound atlas of pandemic-era trajectories"
 requires-python = ">=3.13,<3.14"
-dependencies = ["numpy==2.3.4", "scipy==1.16.3", "duckdb==1.4.1", "pyarrow==22.0.0", "pycountry==24.6.1"]
+dependencies = [
+    "numpy==2.3.4",
+    "scipy==1.16.3",
+    "duckdb==1.4.1",
+    "pyarrow==22.0.0",
+    "pycountry==24.6.1",
+    "openpyxl==3.1.5",
+]
 [project.scripts]
 aftershock = "aftershock.cli:main"
 [build-system]
