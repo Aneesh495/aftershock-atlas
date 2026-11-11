@@ -46,13 +46,13 @@ def age_comparison() -> tuple[list[dict], dict]:
     rows = read_workbook(ROOT / "data/raw" / source["path"])["Country by year, sex and age"]
     chosen = [r for r in rows if r["iso3"] in {"USA", "GBR"}]
     bands = sorted({r["age"] for r in chosen})
-    standard = np.array([sum(r["Nx"] for r in chosen if r["year"] == 2020 and r["age"] == band) for band in bands], float)
+    standard = np.array([sum(r["nx"] for r in chosen if r["year"] == 2020 and r["age"] == band) for band in bands], float)
     weights = standard / standard.sum()
     table, raw = [], []
     for region in ("USA", "GBR"):
         for year in (2020, 2021):
             counts = [sum(r["acm.mean"] for r in chosen if r["iso3"] == region and r["year"] == year and r["age"] == band) for band in bands]
-            population = [sum(r["Nx"] for r in chosen if r["iso3"] == region and r["year"] == year and r["age"] == band) for band in bands]
+            population = [sum(r["nx"] for r in chosen if r["iso3"] == region and r["year"] == year and r["age"] == band) for band in bands]
             if any(p <= 0 for p in population):
                 raise ValueError("Age denominator missing")
             rate = age_standardized(counts, population, weights.tolist())
