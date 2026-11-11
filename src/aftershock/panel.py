@@ -196,7 +196,7 @@ def build_panel() -> dict:
             duplicate = db.execute("SELECT region,metric,event_start,\"group\",vintage,count(*) n FROM observations GROUP BY ALL HAVING n>1 LIMIT 1").fetchone()
             if duplicate:
                 raise ValueError(f"Duplicate measurement population: {duplicate}")
-            coverage = records(db, """SELECT metric, kind, unit, frequency, count(*) rows, count(value) nonmissing,
+            coverage = records(db, """SELECT metric, kind, unit, frequency, count(*) row_count, count(value) nonmissing,
                 count(DISTINCT region) regions, min(event_start) first, max(event_end) last,
                 sum(CASE WHEN value<0 THEN 1 ELSE 0 END) negative_corrections,
                 count(DISTINCT CASE WHEN length(region)=3 AND value IS NOT NULL THEN region END) countries
