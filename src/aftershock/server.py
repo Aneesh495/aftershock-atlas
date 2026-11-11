@@ -11,6 +11,7 @@ from urllib.parse import parse_qs, urlparse
 
 from .io import ROOT, canonical, read_json
 from .privacy import Disclosure
+from .contracts import METRICS
 
 ALLOWED = {"employment", "gdp", "school", "mortality", "population", "immunization", "life_expectancy", "surveillance"}
 
@@ -33,6 +34,10 @@ class AtlasHandler(SimpleHTTPRequestHandler):
                     raise ValueError("Invalid calendar interval")
                 data = read_json(ROOT / f"client/public/data/{metric}.json")
                 result = [Disclosure().apply(r) for r in data if (not regions or r["region"] in regions) and start <= r["yr"] <= end]
+                panel_id = read_json(ROOT / "client/public/data/index.json")["panel_sha256"]
+                for row in result:
+                    definition = METRICS[row.get("metric", metric)]
+                    row.update(unit=definition.unit, kind=definition.kind, source_panel=panel_id)
                 if url.path == "/api/export":
                     stream = io.StringIO()
                     if result:

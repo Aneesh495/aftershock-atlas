@@ -91,9 +91,13 @@ def fit_models() -> dict:
     f = make_features()
     identity = {"panel": digest(ROOT / "data/panel/observations.parquet"),
                 "protocol": digest(ROOT / "docs/EXPERIMENT_PLAN.md"), "schema": "temporal-delta-v1"}
-    output, training = [], []
+    output, training, validation_scores = [], [], []
     for name, (mean, sd) in baseline_predictions(f).items():
         output.extend(prediction_records(f, name, mean, sd))
+        for j, metric in enumerate(OUTCOMES):
+            selected = f.validation & f.mask[:, j]
+            validation_scores.append({"model": name, "metric": metric,
+                                      **proper_scores(f.target[selected, j], mean[selected, j], sd[selected, j])})
     for seed in SEEDS:
         model = TemporalNetwork(f.x.shape[1], len(OUTCOMES), seed)
         initial_mean, initial_sd = model.forward(f.x)
@@ -112,6 +116,8 @@ def fit_models() -> dict:
               "prediction_rows": len(output), "completed_configurations": len([r for r in scores if r["group"] == "all"]),
               "training_seeds": list(SEEDS), "train_rows": int(f.train.sum()), "validation_rows": int(f.validation.sum()),
               "test_rows": int(f.test.sum()), "training": training, "scores": scores,
+              "baseline_validation_scores": validation_scores,
+              "selected_baselines": {metric: min((r for r in validation_scores if r["metric"] == metric), key=lambda r: r["crps"])["model"] for metric in OUTCOMES},
               "availability": "final-vintage retrospective; historical available-at-time forecasting unverified"}
     write_json(ROOT / "data/results/predictions.json", output)
     write_json(ROOT / "data/results/fit.json", result)
