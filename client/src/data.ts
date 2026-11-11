@@ -50,6 +50,12 @@ export function table(rows: Record<string, unknown>[], limit = 80): string {
   return `<div class="table-scroll"><table><thead><tr>${columns.map(c => `<th scope="col">${safe(c.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${rows.slice(0,limit).map(r => `<tr>${columns.map(c => `<td>${safe(typeof r[c] === 'number' ? format(r[c],3) : r[c] ?? 'Unavailable')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${rows.length > limit ? `<p class="micro">Showing ${limit} of ${rows.length} rows. Export includes all eligible rows.</p>` : ''}`;
 }
 
+let preparedUrl:string|undefined;
+export function clearPreparedExport():void {
+  if(preparedUrl)URL.revokeObjectURL(preparedUrl);
+  preparedUrl=undefined;
+  document.getElementById('prepared-export')?.remove();
+}
 export function download(rows: Record<string,unknown>[], name: string): void {
   if (!rows.length) return;
   const columns = [...new Set(rows.flatMap(r => Object.keys(r)))];
@@ -59,8 +65,10 @@ export function download(rows: Record<string,unknown>[], name: string): void {
     return `"${text.replaceAll('"','""')}"`;
   };
   const csv = [columns.map(quote).join(','), ...rows.map(r => columns.map(c => quote(r[c])).join(','))].join('\r\n');
+  clearPreparedExport();
   const url = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'}));
+  preparedUrl=url;
   const anchor = document.createElement('a');
-  anchor.href = url; anchor.download = `${name}.csv`; anchor.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  anchor.id='prepared-export';anchor.className='download-toast';anchor.textContent=`Save CSV (${rows.length} rows)`;
+  anchor.href = url; anchor.download = `${name}.csv`;document.body.append(anchor);
 }
