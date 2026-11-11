@@ -79,6 +79,13 @@ def sources() -> list[Source]:
                              "json", 6_000_000, "World Bank CC BY 4.0 with additional terms; upstream attribution",
                              f"https://data.worldbank.org/indicator/{code}", "annual reference period; current acquired vintage only",
                              "Annual release and revision dates unavailable per cell. Final-vintage retrospective evaluation only."))
+    for year in (2020, 2021, 2022):
+        result.append(Source(f"mobility_gb_{year}",
+                             f"https://www.gstatic.com/covid19/mobility/{year}_GB_Region_Mobility_Report.csv",
+                             "csv", 30_000_000, "Google Community Mobility terms; cite Google LLC; raw not redistributed",
+                             "https://www.google.com/covid19/mobility/data_documentation.html",
+                             "daily changes relative to median weekday in 2020-01-03 through 2020-02-06",
+                             "Opt-in Location History sample; within-geography use; changes in methodology and composition; series ends 2022-10-15.", False))
     return result
 
 
