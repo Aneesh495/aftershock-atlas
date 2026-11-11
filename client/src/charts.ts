@@ -1,7 +1,7 @@
 import {format,safe} from './data';
 import type { Series } from './types';
 
-export function lineChart(series: Series[], unit: string, selected?: number, baseline?: number): string {
+export function lineChart(series: Series[], unit: string, selected?: number, baseline?: number, bounds?:[number,number]): string {
   const compact=window.innerWidth<650;
   const width=compact?Math.max(300,window.innerWidth-72):900, height=compact?250:300, left=64, right=24, top=20, bottom=42;
   const all = series.flatMap(s => s.points.filter(p => p.y !== null && Number.isFinite(p.y)));
@@ -9,7 +9,7 @@ export function lineChart(series: Series[], unit: string, selected?: number, bas
   const xs = all.map(p=>p.x), ys = all.flatMap(p=>[p.y!,p.low ?? p.y!,p.high ?? p.y!]);
   const xmin=Math.min(...xs), xmax=Math.max(...xs), ymin0=Math.min(...ys), ymax0=Math.max(...ys);
   const padding=Math.max((ymax0-ymin0)*.12,Math.abs(ymax0)*.02,.01);
-  const ymin=ymin0-padding,ymax=ymax0+padding;
+  const ymin=Math.max(bounds?.[0]??-Infinity,ymin0-padding),ymax=Math.min(bounds?.[1]??Infinity,ymax0+padding);
   const x=(v:number)=>left+(v-xmin)/(xmax-xmin||1)*(width-left-right);
   const y=(v:number)=>height-bottom-(v-ymin)/(ymax-ymin)*(height-top-bottom);
   const grid = Array.from({length:5},(_,i)=>{
@@ -17,14 +17,14 @@ export function lineChart(series: Series[], unit: string, selected?: number, bas
     return `<line x1="${left}" x2="${width-right}" y1="${y(value)}" y2="${y(value)}" stroke="#e1e6df"/><text x="${left-12}" y="${y(value)+4}" text-anchor="end">${format(value,Math.abs(value)<10?2:0)}</text>`;
   }).join('');
   const maxTicks=compact?4:7;
-  let ticks = [...new Set(xs)].filter((_,i,a)=>i%Math.max(1,Math.ceil(a.length/maxTicks))===0);
+  let ticks = [...new Set(xs)].sort((a,b)=>a-b).filter((_,i,a)=>i%Math.max(1,Math.ceil(a.length/maxTicks))===0);
   if (xmax > 2100) {
     ticks=[];
     const firstYear=new Date(xmin).getUTCFullYear(),lastYear=new Date(xmax).getUTCFullYear();
     const stride=Math.max(1,Math.ceil((lastYear-firstYear)/maxTicks));
     for(let year=firstYear;year<=lastYear;year+=stride) ticks.push(Math.max(xmin,Date.UTC(year,0,1)));
   }
-  const labels=ticks.map(v=>`<text x="${x(v)}" y="${height-13}" text-anchor="middle">${v>2100?new Date(v).getFullYear():v}</text>`).join('');
+  const labels=ticks.map(v=>`<text x="${x(v)}" y="${height-13}" text-anchor="middle">${v>2100?new Date(v).getUTCFullYear():v}</text>`).join('');
   const shapes=series.map(s=>{
     const segments: typeof s.points[]=[]; let current: typeof s.points=[];
     for (const p of s.points) {
@@ -39,6 +39,6 @@ export function lineChart(series: Series[], unit: string, selected?: number, bas
     }).join('');
   }).join('');
   const reference = baseline!==undefined&&baseline>=ymin&&baseline<=ymax ? `<line x1="${left}" x2="${width-right}" y1="${y(baseline)}" y2="${y(baseline)}" stroke="#9b9f96" stroke-dasharray="3 4"/>` : '';
-  const onset = xmin<=2020&&xmax>=2020 ? `<rect x="${x(2020)}" y="${top}" width="${Math.max(0,x(Math.min(2022,xmax))-x(2020))}" height="${height-top-bottom}" fill="#d9ddd3" opacity=".2"/><text x="${x(2020)+7}" y="${top+12}" class="era-label">2020-2022 comparison window</text>` : '';
+  const onset = xmin<=2020&&xmax>=2020 ? `<rect x="${x(2020)}" y="${top}" width="${Math.max(0,x(Math.min(2022,xmax))-x(2020))}" height="${height-top-bottom}" fill="#d9ddd3" opacity=".2"/><text x="${x(2020)+7}" y="${top+12}" class="era-label">${compact?'2020-22':'2020-2022 comparison window'}</text>` : '';
   return `<div class="chart-legend">${series.map(s=>`<span><i style="background:${s.color}"></i>${safe(s.name)}</span>`).join('')}<span class="unit">${safe(unit)}</span></div><svg class="line-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Trajectory comparison in ${safe(unit)}">${onset}${grid}${labels}${reference}${shapes}</svg>`;
 }

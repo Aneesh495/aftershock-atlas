@@ -41,6 +41,8 @@ async function render(restoreFocus?:string,moveFocus=false):Promise<void> {
   controller?.abort();controller=new AbortController();const signal=controller.signal,version=++revision;
   const root=document.querySelector<HTMLElement>('#workspace')!;
   root.setAttribute('aria-busy','true');
+  exportRows=[];
+  document.querySelector<HTMLButtonElement>('#export')!.disabled=true;
   app.querySelectorAll<HTMLElement>('.nav-item').forEach(b=>{
     const active=b.dataset.view===state.view;b.classList.toggle('active',active);
     if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
@@ -68,6 +70,7 @@ async function render(restoreFocus?:string,moveFocus=false):Promise<void> {
   } catch(error) {
     if(signal.aborted)return;
     root.setAttribute('aria-busy','false');
+    document.querySelector('#announcements')!.textContent=`Data unavailable. ${error instanceof Error?error.message:String(error)}. Retry this view.`;
     root.innerHTML=`<section class="panel error-state"><div class="eyebrow">DATA COULD NOT BE LOADED</div><h1>This view is unavailable.</h1><p>${safe(error instanceof Error?error.message:error)}</p><button id="retry" class="export-button">Retry this view</button><p class="micro">Successful data remains cached in this browser session. An unavailable source is never filled with example values.</p></section>`;
     root.querySelector('#retry')!.addEventListener('click',()=>void render());
   }
@@ -78,3 +81,6 @@ async function start():Promise<void> {
   catch(error){app.innerHTML=`<main class="startup-error"><h1>Aftershock Atlas</h1><p>The source manifest could not be loaded.</p><pre>${safe(error instanceof Error?error.message:error)}</pre><button onclick="location.reload()">Retry</button></main>`;}
 }
 void start();
+window.matchMedia('(max-width: 649px)').addEventListener('change',()=>{
+  if(state)void render((document.activeElement as HTMLElement)?.id);
+});
