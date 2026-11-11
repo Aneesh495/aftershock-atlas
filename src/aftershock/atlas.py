@@ -42,7 +42,6 @@ def export_atlas(build: bool = True) -> dict:
             value["rows"] = [Disclosure().apply(row) for row in value["rows"]]
         write_json(public / f"{name}.json", value)
     lineages = read_json(ROOT / "data/results/lineages.json")
-    lineages["rows"] = [r for r in lineages["rows"] if r["value"] is not None]
     write_json(public / "lineages.json", lineages)
     fit = read_json(ROOT / "data/results/fit.json")
     write_json(public / "scores.json", {k: v for k, v in fit.items() if k != "training"})

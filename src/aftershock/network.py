@@ -118,6 +118,8 @@ def train(model: TemporalNetwork, x, y, mask, weights, validation: tuple, direct
         model.save(directory / "initial.npz", {"identity": identity})
     vx, vy, vm = validation
     for epoch in range(model.epoch, epochs):
+        if stale >= patience:
+            break
         order = model.rng.permutation(len(x))
         losses, norms = [], []
         for start in range(0, len(x), 256):

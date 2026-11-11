@@ -17,7 +17,7 @@ export function restore(index: Index): State {
   const annual = Object.values(index.metrics).filter(m => m.frequency === 'annual').map(m => m.id);
   if (![...annual,'covid_cases','covid_deaths'].includes(state.metric)) state.metric = defaults.metric;
   for (const key of ['primary','comparison'] as const) if (!index.country_registry.some(r => r.id === state[key])) state[key] = defaults[key];
-  state.year = Math.min(2025,Math.max(2000,Math.round(Number(state.year) || defaults.year)));
+  state.year = Math.min(2026,Math.max(2000,Math.round(Number(state.year) || defaults.year)));
   if (!/^S(0[1-9]|1[0-2])$/.test(state.study)) state.study = 'S01';
   for (const key of ['indexed','scenario','rate'] as const) state[key] = state[key] === true;
   state.vintage = state.vintage === '2022' ? '2022' : '2023';

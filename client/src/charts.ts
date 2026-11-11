@@ -16,11 +16,19 @@ export function lineChart(series: Series[], unit: string, selected?: number, bas
     return `<line x1="${left}" x2="${width-right}" y1="${y(value)}" y2="${y(value)}" stroke="#e1e6df"/><text x="${left-12}" y="${y(value)+4}" text-anchor="end">${format(value,Math.abs(value)<10?2:0)}</text>`;
   }).join('');
   let ticks = [...new Set(xs)].filter((_,i,a)=>i%Math.max(1,Math.ceil(a.length/7))===0);
-  if (xmax > 2100) ticks = [xmin,...ticks.filter(v=>v>xmin&&v<xmax),xmax].slice(0,8);
+  if (xmax > 2100) {
+    ticks=[];
+    const firstYear=new Date(xmin).getUTCFullYear(),lastYear=new Date(xmax).getUTCFullYear();
+    const stride=Math.max(1,Math.ceil((lastYear-firstYear)/7));
+    for(let year=firstYear;year<=lastYear;year+=stride) ticks.push(Math.max(xmin,Date.UTC(year,0,1)));
+  }
   const labels=ticks.map(v=>`<text x="${x(v)}" y="${height-13}" text-anchor="middle">${v>2100?new Date(v).getFullYear():v}</text>`).join('');
   const shapes=series.map(s=>{
     const segments: typeof s.points[]=[]; let current: typeof s.points=[];
-    for (const p of s.points) { if(p.y===null) {if(current.length)segments.push(current);current=[];} else current.push(p); }
+    for (const p of s.points) {
+      if(p.breakBefore&&current.length){segments.push(current);current=[];}
+      if(p.y===null) {if(current.length)segments.push(current);current=[];} else current.push(p);
+    }
     if(current.length)segments.push(current);
     return segments.map(segment=>{
       const line=segment.map((p,i)=>`${i?'L':'M'}${x(p.x).toFixed(2)},${y(p.y!).toFixed(2)}`).join(' ');
