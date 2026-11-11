@@ -1,0 +1,19 @@
+[project]
+name = "aftershock-atlas"
+version = "0.1.0"
+description = "A source-bound atlas of pandemic-era trajectories"
+requires-python = ">=3.13,<3.14"
+dependencies = ["numpy==2.3.4", "scipy==1.16.3", "duckdb==1.4.1", "pyarrow==22.0.0", "pycountry==24.6.1"]
+[project.scripts]
+aftershock = "aftershock.cli:main"
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+[dependency-groups]
+dev = ["pytest==8.4.2", "ruff==0.14.3"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+[tool.ruff]
+line-length = 110
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

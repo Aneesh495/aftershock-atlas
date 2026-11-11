@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+.agent-local/
+.pytest_cache/
+.ruff_cache/
+node_modules/
+client/dist/
+dist/
+data/raw/
+data/panel/
+data/models/
+data/results/
+evidence/*
+!evidence/README.md
+*.egg-info/
+.DS_Store
