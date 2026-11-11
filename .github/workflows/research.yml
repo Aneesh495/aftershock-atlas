@@ -1,0 +1,44 @@
+name: Frozen research campaign
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: New noncolliding evidence identity
+        required: true
+      profile:
+        type: choice
+        options: [diagnostic, full]
+        default: diagnostic
+permissions:
+  contents: read
+concurrency:
+  group: research-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.9.8'
+          enable-cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: make bootstrap data
+      - run: make acceptance RUN_ID="$CAMPAIGN_ID" PROFILE="$CAMPAIGN_PROFILE"
+        env:
+          CAMPAIGN_ID: ${{ inputs.run_id }}
+          CAMPAIGN_PROFILE: ${{ inputs.profile }}
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-results-and-manifests
+          path: |
+            evidence/*/*.json
+            evidence/*/*.jsonl
+            evidence/*/logs
+            evidence/*/models
+          retention-days: 7

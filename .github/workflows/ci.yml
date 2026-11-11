@@ -1,0 +1,56 @@
+name: Engineering checks and atlas
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: atlas-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  correctness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.9.8'
+          enable-cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: sudo apt-get update -qq && sudo apt-get install -y graphviz
+      - run: make bootstrap
+      - run: make test build docs stress
+      - run: uv build --out-dir .agent-local/packages
+        env:
+          UV_CACHE_DIR: .agent-local/uv-cache
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-atlas
+          path: dist
+          retention-days: 7
+  pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: correctness
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: public-atlas
+          path: dist
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - uses: actions/deploy-pages@v4
+        id: deployment

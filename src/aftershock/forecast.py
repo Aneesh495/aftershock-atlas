@@ -106,7 +106,7 @@ def compare_learned(scores: list[dict], chosen: dict[str, str]) -> list[dict]:
         lower, upper = np.quantile(sampled, [.025, .975])
         output.append({"metric": metric, "validation_selected_baseline": chosen[metric], "countries": len(countries),
                        "relative_crps_improvement": difference, "cluster_lower": float(lower), "cluster_upper": float(upper),
-                       "bootstrap_replicates": 999, "practical_5pct_and_positive_interval": difference >= .05 and lower > 0,
+                       "bootstrap_replicates": 999, "practical_5pct_and_positive_interval": bool(difference >= .05 and lower > 0),
                        "comparison": "mean of three seed scores; country-cluster resampling; fixed validation baseline"})
     return output
 

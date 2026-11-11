@@ -27,7 +27,7 @@ def trusted_inputs(expected: str) -> dict:
     require(len(expected) == 40 and all(c in "0123456789abcdef" for c in expected), "Expected full source commit is required")
     subprocess.run(["git", "cat-file", "-e", expected + "^{commit}"], cwd=ROOT, check=True, capture_output=True)
     names = subprocess.check_output(["git", "ls-tree", "-r", "--name-only", expected], cwd=ROOT, text=True).splitlines()
-    selected = [p for p in names if p.startswith(("src/", "configs/", "client/src/")) or p in
+    selected = [p for p in names if p.startswith(("src/", "configs/", "client/src/", "tests/", "scripts/", ".github/")) or p in
                 {"pyproject.toml", "uv.lock", "client/package-lock.json", "client/package.json", "client/index.html", "Makefile", "docs/EXPERIMENT_PLAN.md"}]
     result = {}
     for name in selected:
