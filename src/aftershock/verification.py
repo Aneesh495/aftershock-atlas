@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import gzip
 import json
 import math
 import subprocess
@@ -149,7 +150,18 @@ def verify_forecasts(bundle: Path, annual: dict) -> dict:
                       "interval_score_90": float(np.mean(upper - lower + 20 * np.maximum(lower - actual, 0) + 20 * np.maximum(actual - upper, 0)))}
         for key, value in recomputed.items():
             require(math.isclose(value, record[key], rel_tol=1e-9, abs_tol=1e-9), "Independent proper score mismatch: " + key)
-    return {"prediction_records": len(predictions), "configurations": len({(r["model"], r["metric"]) for r in predictions}), "score_groups": len(groups)}
+    joint_countries = []
+    for region in {k[0] for k in annual}:
+        supported = True
+        for metric in ("employment", "gdp", "mortality"):
+            supported &= sum((region, metric, year) in annual for year in range(2010, 2020)) >= 8
+            supported &= all((region, metric, year) in annual for year in (2020, 2021))
+            supported &= any((region, metric, year) in annual for year in (2023, 2024))
+        if supported:
+            joint_countries.append(region)
+    require(len(joint_countries) >= 15, "Insufficient real joint pre/during/post panel")
+    return {"prediction_records": len(predictions), "configurations": len({(r["model"], r["metric"]) for r in predictions}),
+            "score_groups": len(groups), "joint_multiyear_economies": len(joint_countries)}
 
 
 def verify_model_replay(bundle: Path, annual: dict) -> dict:
@@ -203,8 +215,27 @@ def verify_model_replay(bundle: Path, annual: dict) -> dict:
 
 
 def verify_domain_semantics(bundle: Path) -> dict:
+    import io
+    import openpyxl
     age = read_json(bundle / "age-replay.json")
     studies = read_json(bundle / "studies.json")
+    datasets = read_json(bundle / "DATASETS.json")["sources"]
+    with ZipFile(bundle / datasets["excess_2022"]["bundle_path"]) as archive:
+        name = next(n for n in archive.namelist() if n.endswith("EstimatesByCountry.xlsx"))
+        workbook = openpyxl.load_workbook(io.BytesIO(archive.read(name)), read_only=True, data_only=True)
+        actual_age = defaultdict(lambda: {"population": 0, "count": 0})
+        for row in workbook["Country by year, sex and age"].iter_rows(values_only=True):
+            if row[1] in {"USA", "GBR"} and row[2] in {2020, 2021}:
+                group = actual_age[row[1], row[2], row[4]]
+                group["population"] += row[5]
+                group["count"] += row[8]
+        workbook.close()
+    for row in age["raw"]:
+        source_row = actual_age[row["region"], row["year"], row["age"]]
+        require(row["population"] == source_row["population"] and row["count"] == source_row["count"], "Age count or denominator detached from WHO release")
+        pooled_band = sum(r["population"] for k, r in actual_age.items() if k[1] == 2020 and k[2] == row["age"])
+        pooled_total = sum(r["population"] for k, r in actual_age.items() if k[1] == 2020)
+        require(math.isclose(row["standard_weight"], pooled_band / pooled_total, rel_tol=1e-12), "Forged age standard population weight")
     s3 = next(s for s in studies["studies"] if s["id"] == "S03")
     for summary in s3["table"]:
         rows = [r for r in age["raw"] if r["region"] == summary["region"] and r["year"] == summary["year"]]
@@ -212,10 +243,18 @@ def verify_domain_semantics(bundle: Path) -> dict:
         rate = sum(r["count"] / r["population"] * r["standard_weight"] for r in rows) * 100000
         require(math.isclose(rate, summary["standardized_per_100k"], rel_tol=1e-12), "Independent age standardized rate mismatch")
     genes = read_json(bundle / "genetics.json")
+    host_raw = {}
+    for source_id in ("hgi_a2", "hgi_b2"):
+        with gzip.open(bundle / datasets[source_id]["bundle_path"], "rt") as stream:
+            host_raw[source_id] = {(r["#CHR"], int(r["POS"]), r["REF"], r["ALT"]): r for r in csv.DictReader(stream, delimiter="\t")}
     for row in genes["representatives"]:
         require(row["build"] == "GRCh38" and row["reference"] != row["effect_allele"], "Invalid genetic reference or effect allele")
         require(math.isclose(math.exp(row["a2_beta"]), row["a2_odds_ratio"], rel_tol=1e-12), "Invalid genetic effect sign or odds ratio")
         require(row["same_direction"] == (row["a2_beta"] * row["b2_beta_aligned"] > 0), "Genetic direction classification mismatch")
+        raw_key = row["chromosome"], row["position"], row["reference"], row["effect_allele"]
+        require(raw_key in host_raw["hgi_a2"] and raw_key in host_raw["hgi_b2"], "Genetic variant detached from released summary statistics")
+        require(float(host_raw["hgi_a2"][raw_key]["all_inv_var_meta_beta"]) == row["a2_beta"], "Genetic effect sign detached from released effect allele")
+        require(float(host_raw["hgi_b2"][raw_key]["all_inv_var_meta_beta"]) == row["b2_beta_aligned"], "Aligned effect detached from released summary statistic")
     require(genes["independent_replication"] is False, "Shared-sample genetics reclassified as independent replication")
     causal = read_json(bundle / "causal.json")
     require(causal["identification"] == "not_established", "Unsupported causal identification claim")
@@ -248,7 +287,8 @@ def verify_bundle(path: str | Path, expected_source: str) -> dict:
         require((ROOT / name).is_file() and digest(ROOT / name) == checksum, "Verifier runtime source mismatch: " + name)
     datasets = read_json(bundle / "DATASETS.json")
     for source_id, data in datasets["sources"].items():
-        require(data["sha256"] == read_json(ROOT / "configs/data-inputs.json")[source_id]["sha256"], "Dataset differs from trusted acquisition manifest")
+        trusted_data = read_json(ROOT / "configs/data-inputs.json")[source_id]
+        require({k: v for k, v in data.items() if k != "bundle_path"} == trusted_data, "Dataset metadata differs from trusted acquisition manifest")
     observations = verify_observations(bundle, datasets)
     annual = observations.pop("annual")
     forecasts = verify_forecasts(bundle, annual)

@@ -71,7 +71,8 @@ def prediction_records(f, name: str, mean: np.ndarray, sd: np.ndarray, training:
 def summarize_predictions(rows: list[dict]) -> list[dict]:
     groups: dict[tuple, list[dict]] = {}
     for r in rows:
-        for group in ("all", "held_out_country" if r["held_out_region"] else "retained_country"):
+        for group in ("all", "held_out_country" if r["held_out_region"] else "retained_country",
+                      "country:" + r["region"], "year:" + str(r["target_year"])):
             groups.setdefault((r["model"], r["metric"], group), []).append(r)
     results = []
     for (model, metric, group), records in sorted(groups.items()):
@@ -82,6 +83,32 @@ def summarize_predictions(rows: list[dict]) -> list[dict]:
                         "countries": len({r["region"] for r in records}), "first_test_year": min(r["target_year"] for r in records),
                         "last_test_year": max(r["target_year"] for r in records), "score_unit": records[0]["score_unit"]})
     return results
+
+
+def compare_learned(scores: list[dict], chosen: dict[str, str]) -> list[dict]:
+    output = []
+    rng = np.random.default_rng(11)
+    for metric in OUTCOMES:
+        rows = [r for r in scores if r["metric"] == metric and r["group"].startswith("country:")]
+        lookup = {(r["group"], r["model"]): r for r in rows}
+        countries = sorted({r["group"] for r in rows})
+        base, learned, count = [], [], []
+        for country in countries:
+            b = lookup[country, chosen[metric]]
+            networks = [lookup[country, f"network_{seed}"] for seed in SEEDS]
+            base.append(b["crps"])
+            learned.append(float(np.mean([r["crps"] for r in networks])))
+            count.append(b["n"])
+        base, learned, count = np.array(base), np.array(learned), np.array(count)
+        difference = float(np.sum((base - learned) * count) / np.sum(base * count))
+        resamples = rng.integers(0, len(countries), (999, len(countries)))
+        sampled = np.sum((base[resamples] - learned[resamples]) * count[resamples], axis=1) / np.sum(base[resamples] * count[resamples], axis=1)
+        lower, upper = np.quantile(sampled, [.025, .975])
+        output.append({"metric": metric, "validation_selected_baseline": chosen[metric], "countries": len(countries),
+                       "relative_crps_improvement": difference, "cluster_lower": float(lower), "cluster_upper": float(upper),
+                       "bootstrap_replicates": 999, "practical_5pct_and_positive_interval": difference >= .05 and lower > 0,
+                       "comparison": "mean of three seed scores; country-cluster resampling; fixed validation baseline"})
+    return output
 
 
 def fit_models() -> dict:
@@ -111,13 +138,14 @@ def fit_models() -> dict:
         output.extend(prediction_records(f, f"network_{seed}", mean * f.yscale + f.ymean, sd * f.yscale, trained))
         print(f"seed {seed}: {trained['completed_epochs']} epochs, parameter movement {trained['parameter_l2_change']:.4f}", flush=True)
     scores = summarize_predictions(output)
+    selected_baselines = {metric: min((r for r in validation_scores if r["metric"] == metric), key=lambda r: r["crps"])["model"] for metric in OUTCOMES}
     source = source_commit()
     result = {"created_at": now(), "source": source, "identity": identity,
               "prediction_rows": len(output), "completed_configurations": len([r for r in scores if r["group"] == "all"]),
               "training_seeds": list(SEEDS), "train_rows": int(f.train.sum()), "validation_rows": int(f.validation.sum()),
               "test_rows": int(f.test.sum()), "training": training, "scores": scores,
               "baseline_validation_scores": validation_scores,
-              "selected_baselines": {metric: min((r for r in validation_scores if r["metric"] == metric), key=lambda r: r["crps"])["model"] for metric in OUTCOMES},
+              "selected_baselines": selected_baselines, "learned_comparisons": compare_learned(scores, selected_baselines),
               "availability": "final-vintage retrospective; historical available-at-time forecasting unverified"}
     write_json(ROOT / "data/results/predictions.json", output)
     write_json(ROOT / "data/results/fit.json", result)
@@ -126,7 +154,7 @@ def fit_models() -> dict:
         np.savez_compressed(stream, x=f.x, target=f.target, base=f.base, mask=f.mask, test=f.test,
                             yscale=f.yscale, ymean=f.ymean)
     write_json(directory / "replay-keys.json", f.keys)
-    return {k: v for k, v in result.items() if k not in {"training", "scores"}}
+    return {k: v for k, v in result.items() if k not in {"training", "scores", "baseline_validation_scores"}}
 
 
 def no_shock_forecasts() -> dict:

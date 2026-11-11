@@ -96,7 +96,7 @@ def policy_rows(source: dict, path: Path) -> Iterator[Observation]:
 def cdc_rows(source: dict, path: Path) -> Iterator[Observation]:
     prior = source["id"] == "cdc_pre"
     for row in csv_rows(path, cap=49999):
-        region = us_region(row["jurisdiction_of_occurrence"])
+        region = us_region(row["jurisdiction_of_occurrence"], occurrence_series=True)
         if not region:
             continue
         end = row["weekendingdate" if prior else "week_ending_date"][:10]

@@ -82,7 +82,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
     write_json(bundle / "SOURCE_INPUTS.json", {"commit": source, "files": source_files, "protocol_sha256": digest(ROOT / "docs/EXPERIMENT_PLAN.md")})
     sources = read_json(ROOT / "configs/data-inputs.json")
     for key, record in sources.items():
-        if key == "who" or key == "regions" or key.startswith("wb_"):
+        if record["status"] == "acquired":
             origin = ROOT / "data/raw" / record["path"]
             destination = bundle / "raw" / (key + "." + record["format"])
             destination.parent.mkdir(parents=True, exist_ok=True)

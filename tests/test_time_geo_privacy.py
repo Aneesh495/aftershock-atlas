@@ -20,6 +20,8 @@ def test_partition_population_conservation():
     with pytest.raises(ValueError, match="conserve"):
         crosswalk({"old": 100}, alloc[:1])
     assert us_region("New York") != us_region("New York City")
+    assert us_region("New York") == "US-NY"
+    assert us_region("New York", occurrence_series=True) == "US-NY-EXC-NYC"
 
 
 def test_vintage_does_not_look_ahead():

@@ -15,12 +15,12 @@ def iso3(code: str) -> str | None:
     return obj.alpha_3 if obj else None
 
 
-def us_region(name: str) -> str | None:
+def us_region(name: str, occurrence_series: bool = False) -> str | None:
     if name == "United States":
         return "USA"
     if name in ("New York City", "New York City, NY"):
         return "US-NYC"
-    if name in ("New York", "New York (excluding New York City)"):
+    if name == "New York (excluding New York City)" or (name == "New York" and occurrence_series):
         return "US-NY-EXC-NYC"
     for region in pycountry.subdivisions.get(country_code="US"):
         if region.name == name:
