@@ -66,9 +66,9 @@ def sources() -> list[Source]:
         Source("survey", "https://data.cdc.gov/resource/8pt5-q6wp.csv?" + urlencode({"$limit": 100000}),
                "csv", 35_000_000, "Public Domain U.S. Government", "https://data.cdc.gov/d/8pt5-q6wp",
                "Household Pulse waves 2020-2024; published aggregate estimates", "Not a matched longitudinal sample; no pre-2020 equivalent; nonresponse and phase changes."),
-        Source("lineage", "https://data.cdc.gov/resource/jr58-6ysp.csv?" + urlencode({"$limit": 200000, "$where": "usa_or_hhsregion='USA' AND modeltype='weighted'"}),
+        Source("lineage", "https://data.cdc.gov/resource/jr58-6ysp.csv?" + urlencode({"$limit": 200000, "$where": "usa_or_hhsregion='USA' AND modeltype='weighted' AND creation_date='2025-06-20 00:00:00'"}),
                "csv", 50_000_000, "Public Domain U.S. Government", "https://data.cdc.gov/d/jr58-6ysp",
-               "CDC national weighted estimates with publication dates", "Sequencing selection bias; different publications and intervals must not be summed."),
+               "CDC national weighted estimates; frozen 2025-06-20 publication", "Sequencing selection bias; archived weighted series ends earlier than current nowcasts."),
     ])
     indicators = {"population": "SP.POP.TOTL", "employment": "SL.EMP.TOTL.SP.ZS",
                   "gdp": "NY.GDP.PCAP.KD", "school": "SE.SEC.ENRR", "immunization": "SH.IMM.IDPT",
