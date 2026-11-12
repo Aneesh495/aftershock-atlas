@@ -20,10 +20,10 @@ export interface Study {
   intervals: string; alternatives: string[]; practical: string; support: string; status: string;
   conclusion: string; table: Record<string,unknown>[]; summary: Record<string,unknown>;
 }
-export type View = 'atlas' | 'studies' | 'coverage' | 'biology' | 'subnational' | 'methods' | 'sources';
+export type View = 'atlas' | 'studies' | 'coverage' | 'biology' | 'subnational' | 'methods' | 'sources' | 'vintages';
 export interface State {
   view: View; metric: string; primary: string; comparison: string; year: number;
-  indexed: boolean; scenario: boolean; rate: boolean; study: string; subgroup: string; vintage: string;
+  indexed: boolean; scenario: boolean; rate: boolean; study: string; subgroup: string; vintage: string; historyMetric:string; edition:string; revisionEdition:string;
 }
 export interface Series { name: string; color: string; points: { x: number; y: number | null; low?: number; high?: number; breakBefore?: boolean }[]; dashed?: boolean }
 export interface SurveyRow {

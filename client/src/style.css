@@ -8,3 +8,5 @@
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media print{.sidebar,.topbar,.control-bar,.context-row,footer{display:none}.main-shell{margin:0}main{padding:0}.panel{break-inside:avoid;box-shadow:none}.source-grid{grid-template-columns:1fr 1fr}.page-heading h1{font-size:32px}.study-layout{display:block}.study-list{display:none}.table-scroll{overflow:visible}details{display:none}}
 .download-toast{position:fixed;right:22px;bottom:22px;background:#225b4c;color:#fff;border:1px solid #487d65;border-radius:5px;box-shadow:0 4px 20px #233b3326;padding:15px 21px;font-size:12px;z-index:90;text-decoration:none}.download-toast:hover{background:#174637}
+
+.history-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:26px}.history-controls label{display:flex;flex-direction:column;gap:7px;font-size:12px;color:var(--muted)}.history-controls select{width:100%;min-width:0;max-width:100%}

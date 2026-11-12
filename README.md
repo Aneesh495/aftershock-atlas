@@ -13,11 +13,14 @@ make bootstrap
 make doctor
 make data
 make panel
+make history-panel
 make fit
 make dynamic
+make history-fit
 make forecasts
 make causal
 make studies
+make history-atlas
 make atlas
 make demo
 ```
@@ -30,7 +33,9 @@ The acquired panel contains 851,150 typed records. WHO surveillance has 240 repo
 
 An original NumPy temporal network is trained from random initialization for three seeds alongside four classical baselines and untrained controls. Sixty version 1 outcome/model configurations have held-out predictions. A separately registered exploratory hierarchical dynamic model adds six configurations and retains losses on three families. A lawful Census public-use replay verifies 80 replicate weights for 74,413 week 1 records; 22 of 24 published-cell comparisons meet the registered tolerance. See [extension results](docs/EXTENSION_RESULTS.md). Some learned point scores improve; interval calibration degrades substantially across the pandemic period. See [findings](docs/FINDINGS.md) and [the thesis](docs/THESIS.md).
 
-**This is a working research preview. Full acceptance is incomplete.** Historical as-of forecasting, complete geography crosswalks, complete survey design auditing, hours and learning outcomes, and several domain requirements remain open. See [build status](docs/BUILD_STATUS.md). The runnable profile is not a substitute for those gates.
+The [historical extension](docs/HISTORICAL_RESULTS.md) adds six official WDI archive editions, 66 separate configurations and origin-specific features. It retains missing years, changing estimates and a large learned GDP loss. Historical GDP uses a within-edition 2010=100 index. The atlas compares editions and exports exact source identities; it rejects changed data bytes before displaying them.
+
+**This is a working research preview. Full acceptance is incomplete.** Original publication-day proof, complete geography crosswalks, complete survey design auditing, hours and learning outcomes, and several domain requirements remain open. See [build status](docs/BUILD_STATUS.md). The runnable profile is not a substitute for those gates.
 
 ## Verification
 
@@ -43,7 +48,7 @@ make acceptance RUN_ID=my-diagnostic PROFILE=diagnostic
 make verify EVIDENCE=evidence/my-diagnostic
 ```
 
-The independent verifier reads frozen upstream bytes, checks every included measurement, recomputes scores, reconstructs chronological features and replays saved parameters. Fourteen subprocess negative-control recipes exercise rehashed semantic mutations, corruption, missing artifacts, source mismatch and failed replay. Full campaigns use `PROFILE=full` and return nonzero while any mandatory domain gate is incomplete.
+The independent verifier reads frozen upstream bytes, checks every included measurement, recomputes scores, reconstructs chronological features and replays saved parameters. The current campaign defines 19 subprocess negative-control recipes, including altered archive editions, future features, GDP anchors and forged full-pass flags. Actual receipts distinguish executed controls from recipes. Full campaigns use `PROFILE=full`, execute available source checks and return nonzero while any mandatory domain gate is incomplete.
 
 ## Mechanisms and research
 

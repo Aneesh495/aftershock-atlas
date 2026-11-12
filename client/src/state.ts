@@ -1,14 +1,14 @@
 import type { Index, State, View } from './types';
 
 const defaults: State = {view:'atlas',metric:'employment',primary:'USA',comparison:'GBR',year:2023,
-  indexed:false,scenario:false,rate:false,study:'S01',subgroup:'total',vintage:'2023'};
-const views: View[] = ['atlas','studies','coverage','biology','subnational','methods','sources'];
+  indexed:false,scenario:false,rate:false,study:'S01',subgroup:'total',vintage:'2023',historyMetric:'employment',edition:'201811',revisionEdition:'202312'};
+const views: View[] = ['atlas','studies','coverage','biology','subnational','methods','sources','vintages'];
 export function restore(index: Index): State {
   let stored: Partial<State> = {};
   try { stored = JSON.parse(localStorage.getItem('aftershock:v1') ?? '{}'); } catch { /* Ignore corrupt view preferences. */ }
   const state = {...defaults,...stored};
   const query = new URLSearchParams(location.search);
-  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage'] as const) {
+  for (const key of ['view','metric','primary','comparison','study','subgroup','vintage','historyMetric','edition','revisionEdition'] as const) {
     const value = query.get(key); if (value) (state as unknown as Record<string,unknown>)[key] = value;
   }
   if (query.has('year')) state.year = Number(query.get('year'));
@@ -21,6 +21,8 @@ export function restore(index: Index): State {
   if (!/^S(0[1-9]|1[0-2])$/.test(state.study)) state.study = 'S01';
   for (const key of ['indexed','scenario','rate'] as const) state[key] = state[key] === true;
   state.vintage = state.vintage === '2022' ? '2022' : '2023';
+  if(!['population','employment','gdp','school','immunization','mortality','life_expectancy'].includes(state.historyMetric))state.historyMetric='employment';
+  for(const key of ['edition','revisionEdition'] as const)if(!['201811','201912','202012','202112','202212','202312'].includes(state[key]))state[key]=defaults[key];
   return state;
 }
 export function persist(state: State): void {

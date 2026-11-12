@@ -1,0 +1,23 @@
+digraph HistoricalOrigin {
+  graph [rankdir=LR, bgcolor="white", pad=0.25, fontname="Helvetica", label="Historical forecast | separate edition, reference year and target truth", labelloc=t];
+  node [shape=box, style="rounded,filled", fillcolor="#edf4ef", color="#2f6557", fontname="Helvetica"];
+  edge [color="#526b60", fontname="Helvetica", fontsize=10];
+  raw [label="43 pinned provider partitions\nEdition catalogue + 6 x 7 series"];
+  observed [label="Typed edition cells\nFuture-reference values withheld\nGDP: own 2010 anchor"];
+  initial [label="Initial 201811 edition\nTrain 2005-2014, validate 2015-2017\nRetained countries only"];
+  origin [label="Target year Y\nDesignated edition at end of Y-1\nFeatures Y-5 through Y-2"];
+  models [label="Frozen parameters and calibration\n2-year endpoint horizon\n3 fresh seeds + 5 baselines"];
+  truth [label="Current frozen target at Y\nSeparate GDP 2010 anchor\nTest labels only", fillcolor="#fff1df"];
+  scores [label="Per-family proper scores\nCountry and year support\n999 country-cluster replicates"];
+  verifier [label="Independent raw parser\nRebuild features and anchors\nReplay all saved predictions", fillcolor="#e5edf8"];
+  raw -> observed;
+  observed -> initial;
+  observed -> origin;
+  initial -> models [label="fit and calibrate"];
+  origin -> models [label="predict; missing stays missing"];
+  models -> scores;
+  truth -> scores;
+  raw -> verifier [style=dashed];
+  models -> verifier [style=dashed];
+  truth -> verifier [style=dashed];
+}

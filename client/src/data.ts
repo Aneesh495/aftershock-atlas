@@ -1,13 +1,45 @@
 import type { Index, Point, State } from './types';
 
 const cache = new Map<string, unknown>();
+let identities:Record<string,string>|undefined;
+const MAX_DATA_BYTES=32_000_000;
 export async function read<T>(name: string, signal?: AbortSignal): Promise<T> {
   if (!/^[a-z0-9_-]+$/.test(name)) throw new Error('Invalid data identity');
   if (cache.has(name)) return cache.get(name) as T;
-  const response = await fetch(new URL(`data/${name}.json`, document.baseURI), { signal });
+  const expected=identities?.[`${name}.json`];
+  if(name!=='index'&&!expected)throw new Error(`No declared data identity for ${name}. Reload for the current snapshot.`);
+  const url=new URL(`data/${name}.json`,document.baseURI);
+  if(expected)url.searchParams.set('sha256',expected);
+  const response = await fetch(url, {signal,cache:name==='index'?'no-cache':'default'});
   if (!response.ok) throw new Error(`Cannot load ${name}: HTTP ${response.status}`);
-  const body: unknown = await response.json();
+  const declared=Number(response.headers.get('content-length'));
+  if(declared>MAX_DATA_BYTES)throw new Error(`Data partition ${name} exceeds the browser limit`);
+  if(!response.body)throw new Error(`No response body for ${name}`);
+  const reader=response.body.getReader(),chunks:Uint8Array[]=[];
+  let size=0;
+  try {
+    while(true){
+      const {done,value}=await reader.read();if(done)break;
+      size+=value.byteLength;
+      if(size>MAX_DATA_BYTES){await reader.cancel();throw new Error(`Data partition ${name} exceeds the browser limit`);}
+      chunks.push(value);
+    }
+  } finally {reader.releaseLock();}
+  const bytes=new Uint8Array(size);let offset=0;
+  for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.byteLength;}
+  if(expected){
+    const hashed=await crypto.subtle.digest('SHA-256',bytes);
+    const actual=Array.from(new Uint8Array(hashed),b=>b.toString(16).padStart(2,'0')).join('');
+    if(actual!==expected)throw new Error(`Data identity mismatch for ${name}. Reload for a consistent snapshot.`);
+  }
+  const body: unknown = JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
   if (signal?.aborted) throw new DOMException('Cancelled', 'AbortError');
+  if(name==='index'){
+    const files=(body as Partial<Index>).files;
+    if(!files||Object.keys(files).length<1||Object.keys(files).length>200||Object.entries(files).some(([file,hash])=>
+      !/^[a-z0-9_-]+\.json$/.test(file)||! /^[a-f0-9]{64}$/.test(hash)))throw new Error('Invalid snapshot identity manifest');
+    identities=files;
+  }
   cache.set(name, body);
   return body as T;
 }
@@ -47,7 +79,7 @@ export function table(rows: Record<string, unknown>[], limit = 80): string {
   if (columns.includes('lower') && available.includes('upper') && !columns.includes('upper')) {
     columns.pop(); columns.splice(columns.indexOf('lower')+1,0,'upper');
   }
-  return `<div class="table-scroll"><table><thead><tr>${columns.map(c => `<th scope="col">${safe(c.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${rows.slice(0,limit).map(r => `<tr>${columns.map(c => `<td>${safe(typeof r[c] === 'number' ? format(r[c],3) : r[c] ?? 'Unavailable')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${rows.length > limit ? `<p class="micro">Showing ${limit} of ${rows.length} rows. Use the view’s export controls for the complete selected table.</p>` : ''}`;
+  return `<div class="table-scroll"><table><thead><tr>${columns.map(c => `<th scope="col">${safe(c.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${rows.slice(0,limit).map(r => `<tr>${columns.map(c => `<td>${safe(typeof r[c] === 'number' ? /(^|_)year$/.test(c)&&Number.isInteger(r[c])?String(r[c]):format(r[c],3) : r[c] ?? 'Unavailable')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${rows.length > limit ? `<p class="micro">Showing ${limit} of ${rows.length} rows. Use the view’s export controls for the complete selected table.</p>` : ''}`;
 }
 
 let preparedUrl:string|undefined;

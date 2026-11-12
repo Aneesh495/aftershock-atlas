@@ -31,7 +31,7 @@ def gates(bundle: Path | None = None) -> list[dict]:
     studies = read_json(ROOT / "data/results/studies.json")
     coverage = {r["metric"]: r for r in panel["coverage"]}
     definitions = [
-        ("G01", "passed", f"{len(read_json(ROOT / 'configs/data-inputs.json'))} frozen sources; metric-level coverage", "DATASETS.json"),
+        ("G01", "passed", "22 core, 2 survey and 43 historical input partitions; metric-level coverage and separate rights", "DATASETS.json"),
         ("G02", "blocked", "Official archive-month editions present; original cell release-day and historical territory validation incomplete", "observations.csv"),
         ("G03", "passed", "Independent source-parser, matched annual denominators and direct age-standardization replay", "age-replay.json"),
         ("G04", "passed", f"{coverage['covid_deaths']['countries']} surveillance countries; real multiyear health and economic panel", "observations.csv"),
@@ -119,6 +119,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
     write_json(bundle / "ACCEPTANCE.json", {"profile": profile, "source": source, "gates": gates(),
                "requested": {"trained_seeds": 3, "minimum_configurations": 30},
                "completed": {"trained_seeds": 3, "configurations": read_json(results / "fit.json")["completed_configurations"]},
+               "configuration_exercises": {"retrospective_core": 60, "exploratory_dynamic": 6, "historical_v3": 66},
                "full_acceptance": False})
     make_manifest(bundle)
 

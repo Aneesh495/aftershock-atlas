@@ -1,5 +1,7 @@
 # Architecture
 
+The historical extension separates edition-month information sets from final target truth. [Editable origin diagram](diagrams/20-historical-origin.dot), [rendered diagram](diagrams/20-historical-origin.svg), [protocol](HISTORICAL_PLAN_V3.md) and [results](HISTORICAL_RESULTS.md) describe the two-year endpoint horizon, missingness and independent reconstruction. Browser partition verification checks consistency with the loaded snapshot index before parsing or caching data.
+
 The defining core is source-bound measurement reconciliation, temporal forecasting, explicit causal support checks and independent replay. Libraries provide serialization, projections and numerical primitives. Source bytes, measurement estimates, predictions and causal claims remain distinct.
 
 Acquisition is serial, byte-bounded and resumable. Typed observations are streamed into Arrow batches and queried through bounded DuckDB views. Source-specific biological, survey and excess-mortality pipelines write separate artifacts. A disclosure-filtered exporter creates the actual client snapshot. Static hosting and the loopback API share the public boundary.
