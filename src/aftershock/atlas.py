@@ -43,8 +43,11 @@ def export_atlas(build: bool = True) -> dict:
         write_json(public / f"{name}.json", value)
     lineages = read_json(ROOT / "data/results/lineages.json")
     write_json(public / "lineages.json", lineages)
+    dynamic = read_json(ROOT / "data/results/dynamic.json")
+    write_json(public / "dynamic.json", {k: v for k, v in dynamic.items() if k != "fits"})
     fit = read_json(ROOT / "data/results/fit.json")
     write_json(public / "scores.json", {k: v for k, v in fit.items() if k != "training"})
+    sources.update({k: {**v, "status": "acquired"} for k, v in read_json(ROOT / "configs/survey-inputs.json").items()})
     source_cards = [{k: v for k, v in source.items() if k not in {"headers", "path"}} for source in sources.values()]
     write_json(public / "sources.json", source_cards)
     numeric = {c.numeric: c.alpha_3 for c in pycountry.countries}

@@ -27,14 +27,18 @@ The WHO excess releases contain 4656 monthly country cells across 194 countries.
 
 The selected HGI analysis aligns 9,443 A2/B2 records after 243 ambiguous-strand exclusions; 9,328 have concordant direction. Cohort overlap and LD prevent independent replication claims. CDC viral estimates and host associations remain separate. Provider unreliable lineage cells are suppressed.
 
-Twelve study tables execute. Eight have bounded analysis support and four have incomplete outcome or design support. A missing hours or learning measure is an unavailable estimand, not a null pandemic effect. Household Pulse aggregates cannot independently establish survey-weight or nonresponse diagnostics. School closure contrasts do not identify causal effects under the unresolved policy bundle and interference assumptions.
+Twelve study tables execute. Eight have bounded analysis support and four have incomplete outcome or design support. A missing hours or learning measure is an unavailable estimand, not a null pandemic effect. The aggregate extract alone cannot establish survey-weight or nonresponse diagnostics. The separate version 2 week 1 public-use replay checks actual person and replicate weights; its later-wave and selection limits remain. School closure contrasts do not identify causal effects under the unresolved policy bundle and interference assumptions.
 
 The California and Florida count-model intervals cover only 43.3% and 35.7% of the held-out 2020-2022 observations against a nominal 90% target. Those failures argue against treating a pre-period seasonal count model as a reliable pandemic counterfactual.
 
 ## What is still required
 
-See [build status](BUILD_STATUS.md). In particular, complete historical as-of and geography validation, independent survey design auditing, lawful richer subgroup denominators, hours and learning outcomes, hierarchical dynamic modeling, and the complete full-profile scientific campaign remain incomplete. A working atlas and a diagnostic verifier pass do not close those requirements.
+See [build status](BUILD_STATUS.md). In particular, complete historical as-of and geography validation, independent survey design auditing, lawful richer subgroup denominators, hours and learning outcomes, the complete full-profile scientific campaign remain incomplete. A working atlas and a diagnostic verifier pass do not close those requirements.
 
 ## Source-frozen replay
 
 The final preview executable is `b6876777275d9696fcbd4c28bc669151552ba4ae`. The clean-checkout diagnostic is `source-clean-20261111`; full attempt `full-20261111` failed explicitly on incomplete gates. Exact source, inputs, command exits and independent replay quantities are in the preserved bundles.
+
+## Exploratory extension
+
+The [version 2 report](EXTENSION_RESULTS.md) adds actual 80-replicate survey replay and hierarchical dynamic forecasts. It retains two missed survey agreement tolerances, three model-family losses and substantial interval undercoverage. These outcomes do not close full scientific acceptance.

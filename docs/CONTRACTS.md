@@ -29,3 +29,7 @@ Atomic files are flushed and renamed on the same filesystem. Acquisition and pan
 The network predicts transformed annual changes using four preceding annual lags. Training normalization and calibration exclude held-out countries and future target years. GDP uses log1p scoring; displayed levels and intervals use the inverse transform. Calibrated 90 percent bands are predictive intervals, not credible causal effects.
 
 The school-closure group-time estimator reports computable contrasts under explicit assumptions. Insufficient groups receive null estimates. Non-rejection of pretrends does not establish parallel trends. Policy bundles, reverse causation, anticipation and spillovers prevent the current candidate from being presented as identified causal evidence.
+
+## Survey design extension
+
+Census week 1 person weights and all 80 successive-difference replicate weights are joined by source keys in memory. The join rejects duplicate or unmatched records. Public outputs contain aggregate cells only, with a 100-complete-respondent minimum and unstable-cell suppression. The combined-symptom estimate requires all four items, while individual scales require their own two items; each denominator is explicit. The July 21, 2021 reference-period change is retained per exported wave. See [the registered extension](EXTENSION_PLAN_V2.md).

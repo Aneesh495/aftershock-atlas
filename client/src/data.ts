@@ -47,7 +47,7 @@ export function table(rows: Record<string, unknown>[], limit = 80): string {
   if (columns.includes('lower') && available.includes('upper') && !columns.includes('upper')) {
     columns.pop(); columns.splice(columns.indexOf('lower')+1,0,'upper');
   }
-  return `<div class="table-scroll"><table><thead><tr>${columns.map(c => `<th scope="col">${safe(c.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${rows.slice(0,limit).map(r => `<tr>${columns.map(c => `<td>${safe(typeof r[c] === 'number' ? format(r[c],3) : r[c] ?? 'Unavailable')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${rows.length > limit ? `<p class="micro">Showing ${limit} of ${rows.length} rows. Export includes all eligible rows.</p>` : ''}`;
+  return `<div class="table-scroll"><table><thead><tr>${columns.map(c => `<th scope="col">${safe(c.replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${rows.slice(0,limit).map(r => `<tr>${columns.map(c => `<td>${safe(typeof r[c] === 'number' ? format(r[c],3) : r[c] ?? 'Unavailable')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${rows.length > limit ? `<p class="micro">Showing ${limit} of ${rows.length} rows. Use the view’s export controls for the complete selected table.</p>` : ''}`;
 }
 
 let preparedUrl:string|undefined;

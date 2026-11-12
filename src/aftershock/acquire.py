@@ -151,6 +151,9 @@ def acquire(refresh: bool = False, only: list[str] | None = None) -> dict:
                 index[source.id] = {"status": "blocked", **dataclasses.asdict(source), "error": str(e)}
                 print(f"blocked {source.id}: {e}", flush=True)
             write_json(raw / "index.json", index)
+    if only is None:
+        from .survey_design import acquire_design
+        acquire_design(refresh)
     return index
 
 

@@ -61,6 +61,8 @@ def analyze_surveys() -> dict:
     for row in rows:
         safe.append(Disclosure().apply({**row, "release_basis": "upstream_public_aggregate",
                                       "phase": row["flags"].split("phase=")[-1].split(";")[0]}))
+    for row in safe:
+        row["reference_days"] = 7 if row["event_start"] < "2021-07-21" else 14
     groups: dict[tuple, list[dict]] = {}
     for row in safe:
         if row["value"] is not None:
@@ -80,16 +82,18 @@ def analyze_surveys() -> dict:
                         "change_pp": delta, "lower": delta - radius, "upper": delta + radius,
                         "interval_method": "sum of published marginal half-widths; unknown covariance; approximate conservative bound",
                         "matched_respondents": False})
-    result = {"rows": safe, "phase_changes": changes, "country_count": 1,
+    from .survey_design import analyze_design
+    design = analyze_design()
+    result = {"design_replay": {k: v for k, v in design.items() if k != "sources"}, "rows": safe, "phase_changes": changes, "country_count": 1,
               "state_count": len({r["region"] for r in safe if r["region"] != "USA"}),
               "phases": sorted({r["phase"] for r in safe}), "suppressed": sum(r["value"] is None for r in safe),
-              "instrument": "PHQ-2 / GAD-2 symptoms during past 7 days; not a clinical diagnosis",
+              "instrument": "PHQ-2 / GAD-2 symptoms, 7-day reference before July 21 2021 and 14 days thereafter; not a clinical diagnosis",
               "mode": "Census Household Pulse online household survey; weighted estimates published by NCHS",
-              "independent_weight_recomputation": False, "response_rate_available_in_extract": False,
-              "limitations": ["Published aggregates do not contain design weights, PSUs or response denominators",
+              "independent_weight_recomputation": "week_1_only", "response_rate_available_in_extract": False,
+              "limitations": ["Published aggregates lack individual design information; week 1 is separately replayed from lawful public-use files",
                               "Cross-wave samples are not a matched panel", "No comparable pre-2020 series is present",
                               "Between-phase changes are not treated as instrument-stable effects",
                               "US source-defined race and ethnicity groups are not exported as universal categories"],
               "source": "https://data.cdc.gov/d/8pt5-q6wp"}
     write_json(ROOT / "data/results/surveys.json", result)
-    return {k: v for k, v in result.items() if k not in {"rows", "phase_changes"}}
+    return {k: v for k, v in result.items() if k not in {"rows", "phase_changes", "design_replay"}}

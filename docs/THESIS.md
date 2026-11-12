@@ -4,7 +4,7 @@
 
 Aftershock Atlas is a reproducible population-level research application that compares pandemic-era trajectories without turning incompatible measurements into a single universal score. A global report-week surveillance panel and annual multi-domain estimates feed an original temporal model, classical baselines, predictive scenarios, candidate group-time designs and an interactive atlas. Separate survey, subnational, host-genetic and viral pipelines preserve their own sampling and timing limits. The main result is mixed predictive performance with substantial interval undercoverage, alongside concrete evidence that data availability and measurement definitions restrict what the application can infer.
 
-The project is a research preview. Several scientific requirements remain incomplete, including historical available-at-time evaluation, full geography reconciliation, independent survey design auditing and complete hours or learning measurement. Missing data and failed identification are outputs of the workflow, not grounds for silently changing the question.
+The project is a research preview. Several scientific requirements remain incomplete, including historical available-at-time evaluation, full geography reconciliation, complete multiwave survey design auditing and complete hours or learning measurement. Missing data and failed identification are outputs of the workflow, not grounds for silently changing the question.
 
 ## Research design
 
@@ -198,9 +198,9 @@ Replay table: `data/results/studies/S09.csv`, produced by `make studies`; protoc
 
 Household Pulse first and last wave within each phase and geography. Missingness rule: Provider suppression retained; no pre-2020 matched baseline.
 
-Within-phase published symptom estimates vary across US groups and states. Nonresponse, design weights and cross-wave covariance cannot be independently audited from this aggregate extract.
+Within-phase published symptom estimates vary across US groups and states. The separate version 2 public-use replay joins 74,413 respondents to 80 replicate weights and reconstructs 24 national and source-defined subgroup estimates. Twenty-two agree within the registered tolerance. The two combined-symptom discrepancies remain unresolved. Later-wave weights, nonresponse bias and cross-wave covariance remain incomplete. The reference period changes from seven to fourteen days in July 2021.
 
-The executed table has 1216 rows. Support status is `partial_design_support`. Selected result fields: `{"independent_weight_recomputation": false, "states": 51, "suppressed": 235}`.
+The executed table has 1216 rows. Support status is `partial_design_support`. Selected result fields: `{"independent_weight_recomputation": "week_1_only", "states": 51, "suppressed": 235}`.
 
 Uncertainty: Published marginal intervals; conservative unknown-covariance change envelope. Material difference: Five percentage points. Alternate explanations include Nonresponse, Mode and instrument shifts, Repeated participants, Composition.
 
@@ -246,10 +246,12 @@ The public client is connected to the actual exported snapshot. Browser verifica
 
 Current source vintages do not prove historical deployability. Full border crosswalks and source-specific denominator auditing remain incomplete. Survey aggregates cannot reveal unmeasured nonresponse or participant-level instrument comparability. Employment ratios cannot recover hours lost; enrollment cannot establish learning attainment. HGI selected variants do not support genome-wide discovery, independent replication or personal risk predictions. Country associations cannot identify individual risks.
 
-The current implementation includes a local-level state filter but does not complete the requested hierarchical dynamic model. Neither the study breadth nor a polished interface compensates for that missing mechanism. Causal identification remains unresolved even where a numerical contrast is available. Most critically, learned and count-model interval undercoverage makes uncertainty a live failure, not a solved feature.
+The version 2 extension adds an original hierarchical damped level/slope filter with an empirical Gaussian slope prior and fitted process and observation noise. All 18 starts converged, but no outcome met the five-percent practical CRPS improvement criterion. Schooling, mortality and life expectancy lost to their frozen baselines. Mortality and life-expectancy coverage remained 68.66 and 61.21 percent for nominal 90 percent bands. These reused test outcomes provide exploratory evidence only. Causal identification remains unresolved even where a numerical contrast is available. Most critically, learned and count-model interval undercoverage makes uncertainty a live failure, not a solved feature.
 
 ## Reproducibility and references
 
-Run the root Makefile commands and use a new campaign identity. Exact protocols, source manifests, contracts, decisions and recovery instructions are in this repository. Original source and failed results are retained. No paid compute, participant records, individual genomes or clinical use are required.
+Run the root Makefile commands and use a new campaign identity. Exact protocols, source manifests, contracts, decisions and recovery instructions are in this repository. Original source and failed results are retained. No paid compute, identifiable participant records, individual genomes or clinical use are required. Public-use deidentified Census records are acquired only into ignored local storage and never enter public examples or evidence.
 
 Primary references: [WHO surveillance](https://data.who.int/dashboards/covid19/data), [WHO modeled excess mortality](https://www.who.int/data/sets/global-excess-deaths-associated-with-COVID-19-modelled-estimates), [Oxford final policy dataset](https://github.com/OxCGRT/covid-policy-dataset), [World Bank indicator API](https://datahelpdesk.worldbank.org/knowledgebase/articles/898581), [NCHS Household Pulse](https://data.cdc.gov/d/8pt5-q6wp), [HGI release 7](https://www.covid19hg.org/results/r7/), and [Callaway and Sant'Anna](https://arxiv.org/abs/1803.09015). These sources define data and methods; they do not endorse this implementation or certify its acceptance.
+
+The [exploratory extension report](EXTENSION_RESULTS.md) records the exact survey discrepancies, adult denominators, nonresponse definitions, hierarchical-model losses and replay commands.
