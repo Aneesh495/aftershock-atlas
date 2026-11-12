@@ -2,45 +2,41 @@
 
 Status: working research preview. Full acceptance is incomplete.
 
-Executable source: `8bd15fb2e9110197f32cf84ada81fd0b533c4371`.
+Executable source: `1bd53f80841fe08c1bfd3a2fafb9c8d53b042cb0`. The source was pushed, cloned from GitHub into a clean isolated checkout, and executed with frozen input bytes. No model checkpoints were copied into the fresh checkout before its first fit.
 
-The source was pushed, cloned from GitHub into a clean isolated checkout, and executed with frozen input bytes. The diagnostic bundle is `evidence/release-clean-20261111`. Full profile `evidence/release-full-20261111` returned exit 1 and preserved incomplete gate evidence.
+Diagnostic `history-final-clean-20261112` passed. It independently checked 209,894 core measurement records, 68,570 core prediction scores, 12,370 core score groups and all 20,571 eligible trained core network predictions. The historical exercise separately reconstructed 227,850 archived cells, 27,342 revision comparisons, 7,812 endpoint-sensitivity cells, 4,001 feature rows and all 42,097 historical predictions across 66 configurations. The 6,857 dynamic predictions and 24 Census design cells retain their separate exploratory protocol. Thirty-six correctness and integration tests passed. Nineteen actual subprocess tamper cases were rejected for their intended reasons.
 
-The diagnostic independently checked 209,894 measurement records, 68,570 predictions, 12,370 score groups, 175 joint multiyear economies, 174 saved-model predictions, four age contrasts and twenty released genetic probes. Fourteen subprocess mutations were rejected for their intended reasons. Thirty-one correctness and integration tests passed.
-
-The exploratory extension separately replayed 6,857 dynamic predictions, their 1,237 score groups and 24 Census design cells from 74,413 public-use respondents with 80 replicate weights. No respondent records enter evidence or the website. Twenty-two of 24 point comparisons met the prespecified tolerance; the failures remain visible. All 18 model starts converged, but the dynamic model lost on three families. See [extension results](EXTENSION_RESULTS.md).
-
-Hosted engineering checks and Pages deployment passed for the executable source: [workflow run](https://github.com/Aneesh495/aftershock-atlas/actions/runs/43133290855). This workflow does not certify full scientific acceptance.
+Full profile `history-final-full-20261112` completed all eleven stages, independent checks and its own nineteen tamper subprocesses, then returned CLI exit 1. Its verification status is `source_checks_passed_full_incomplete`, with `profile=full` and `full_acceptance=false`. Required scientific gaps remain. [Public receipts](PREVIEW_EVIDENCE.json) preserve exact sources, workload counts, command exits and rejection reasons. [Linux engineering CI](https://github.com/Aneesh495/aftershock-atlas/actions/runs/43251027119) passed; it does not certify full scientific acceptance.
 
 | Gate | Full-profile status | Evidence and limitation |
 | --- | --- | --- |
-| G01 | passed | 22 frozen sources; metric-level coverage |
-| G02 | blocked | Only identity geography crosswalks and current-vintage annual inputs; full historical as-of parity unavailable |
+| G01 | passed | 22 core, 2 survey and 43 historical input partitions; metric-level coverage and separate rights |
+| G02 | blocked | Official archive-month editions present; original cell release-day and historical territory validation incomplete |
 | G03 | passed | Independent source-parser, matched annual denominators and direct age-standardization replay |
 | G04 | passed | 230 surveillance countries; real multiyear health and economic panel |
 | G05 | passed | WHO 2022 and 2023 modeled excess releases, input support and changed age bands retained |
-| G06 | blocked | Week 1 design weights, 80 replicates and nonresponse scenarios replayed; later-wave auditing remains incomplete |
+| G06 | blocked | Week 1 replicate weights and nonresponse sensitivity replayed; later-wave design auditing remains incomplete |
 | G07 | blocked | GDP and enrollment run; hours, remote instruction and learning assessments absent |
 | G08 | unverified | Provider-released US subgroup estimates retain labels and suppression; independent subgroup denominator audit incomplete |
 | G09 | passed | Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit |
-| G10 | blocked | 60 configurations and three trained seeds; strict historical-vintage forecast campaign unavailable |
+| G10 | blocked | 60 original configurations plus 66 archive configurations; release-day proof and pandemic calibration remain incomplete |
 | G11 | passed | Real candidate group-time analyses, pretrends, pseudo-onsets and unsupported cells |
 | G12 | blocked | 12 executed tables, 4 with incomplete outcome or design support |
 | G13 | unverified | Atlas implementation exists; interactive source-frozen final walkthrough must be reviewed |
 | G14 | passed | Shared disclosure boundary, provider flags and export checks |
 | G15 | passed | Bounded acquisitions, checkpoint resume and measured storage accounting |
-| G16 | unverified | Requires recorded semantic negative-control subprocesses on this exact source |
+| G16 | passed | 19 actual source-matched semantic and structural tamper subprocesses rejected |
 
 ## Exact replay
 
 ```sh
-make verify EVIDENCE=evidence/release-clean-20261111 EXPECTED_SOURCE=8bd15fb2e9110197f32cf84ada81fd0b533c4371
+make verify EVIDENCE=evidence/history-final-clean-20261112 EXPECTED_SOURCE=1bd53f80841fe08c1bfd3a2fafb9c8d53b042cb0
 ```
 
-Use the explicit executable source when the branch contains later report-only commits. The verifier checks runtime files against that source, parses the frozen bytes, and never replaces absent work.
+The strict public verifier returns nonzero for `history-final-full-20261112`. Available source checks still executed before that final domain-gate rejection. Use the explicit executable source after report-only commits. The verifier checks runtime files against the trusted Git source, parses frozen bytes and never replaces absent work.
 
 ## Remaining work
 
-Complete historical availability and geographic crosswalk validation, complete multiwave survey-weight and nonresponse auditing, richer lawful subgroup denominator checks, working-hours and learning-assessment measurement, the full scientific campaign. Current Gaussian and count-model intervals under-cover during the pandemic. Eight studies have bounded support and four remain incomplete in outcome or design coverage. These gaps cannot be closed by presentation or diagnostic checks.
+Complete original cell publication-day and territorial validation, later-wave survey design/nonresponse and subgroup denominator auditing, hours and learning measurement, pandemic uncertainty calibration and the four partially supported studies. The atlas has bounded verified user paths, but missing required domains prevent full G13 acceptance. Historical mortality and life-expectancy cohorts only support 2022, and their nominal 90 percent learned intervals cover only about one quarter and one fifth of targets. These failures remain visible in the [historical report](HISTORICAL_RESULTS.md) and model tables.
 
-The [requirement and artifact map](COVERAGE_GAPS.md) also identifies absent tests, hospital/ICU, COVID vaccine-rollout, sector, hours, remote-instruction and learning-assessment measurements. G16 passed in the separate source-matched diagnostic. The full-profile bundle exits before its own tamper stage and retains that gate as unverified; it is not relabeled as a full pass. The original executable and results remain in the v0.1.0-preview tag and frozen local checkout.
+The [requirement and artifact map](COVERAGE_GAPS.md) also records absent tests, hospital/ICU, COVID vaccine-rollout, sector and remote-instruction measurements. The original v0.1.0-preview and v0.1.1-preview sources and evidence remain preserved. No diagnostic, model-count increase or presentation change closes these scientific requirements.

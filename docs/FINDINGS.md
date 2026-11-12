@@ -37,8 +37,12 @@ See [build status](BUILD_STATUS.md). In particular, complete historical as-of an
 
 ## Source-frozen replay
 
-The final preview executable is `b6876777275d9696fcbd4c28bc669151552ba4ae`. The clean-checkout diagnostic is `source-clean-20261111`; full attempt `full-20261111` failed explicitly on incomplete gates. Exact source, inputs, command exits and independent replay quantities are in the preserved bundles.
+The original v0.1.0-preview executable is `b6876777275d9696fcbd4c28bc669151552ba4ae`. The clean-checkout diagnostic is `source-clean-20261111`; full attempt `full-20261111` failed explicitly on incomplete gates. Exact source, inputs, command exits and independent replay quantities are in the preserved bundles.
 
 ## Exploratory extension
 
 The [version 2 report](EXTENSION_RESULTS.md) adds actual 80-replicate survey replay and hierarchical dynamic forecasts. It retains two missed survey agreement tolerances, three model-family losses and substantial interval undercoverage. These outcomes do not close full scientific acceptance.
+
+## Official historical editions
+
+The [version 3 report](HISTORICAL_RESULTS.md) uses six official archives with origin-specific inputs and no current-value fallback. It contains 66 separate configurations and 42,097 predictions. Only routine DTP meets the practical CRPS criterion; the learned GDP score is 41.27 percent worse than its validation-selected baseline. Every learned family undercovers nominal intervals. Mortality and life expectancy have eligible archived features only for 2022. A changed horizon, GDP index and training window prevent attributing the differences from version 1 solely to vintage. The final clean diagnostic passed nineteen actual tamper controls; the full profile executed those checks and still returned nonzero on incomplete scope.
