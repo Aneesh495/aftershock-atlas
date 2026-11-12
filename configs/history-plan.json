@@ -1,0 +1,25 @@
+{
+  "protocol": "historical-v3-exploratory",
+  "source_id": 57,
+  "editions": [
+    "201811",
+    "201912",
+    "202012",
+    "202112",
+    "202212",
+    "202312"
+  ],
+  "catalogue_sha256": "a58ffab4141feb86af06296402ea100d548b851cdfdc71396a4764c43c56e246",
+  "series": {
+    "population": "SP.POP.TOTL",
+    "employment": "SL.EMP.TOTL.SP.ZS",
+    "gdp": "NY.GDP.PCAP.KD",
+    "school": "SE.SEC.ENRR",
+    "immunization": "SH.IMM.IDPT",
+    "mortality": "SP.DYN.CDRT.IN",
+    "life_expectancy": "SP.DYN.LE00.IN"
+  },
+  "max_source_bytes": 12000000,
+  "future_reference_values": "excluded from features and observed displays; raw preserved",
+  "gdp_unit": "2010=100 within-edition index"
+}

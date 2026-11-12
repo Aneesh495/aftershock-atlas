@@ -558,6 +558,19 @@
         ],
         "title": "Twelve questions.Evidence with boundaries."
       }
+    },
+    {
+      "name": "published public Pages source and hierarchical extension verified",
+      "at": "2026-11-12T01:26:30.137Z",
+      "url": "https://aneesh495.github.io/aftershock-atlas/?view=methods&metric=employment&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=0&rate=0&study=S01&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "61retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonemployment8440.02pooled_ridge0.754allexploratory reused test outcomes, not a fresh confirmatory comparisongdp1,2340.023pooled_ridge0.772held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisongdp2900.023pooled_ridge0.749retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisongdp9440.023persistence0.895allexploratory reused test outcomes, not a fresh confirmatory comparisonschool749-0.047persistence0.926held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonschool176-0.048persistence0.885retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonschool573-0.047pooled_ridge0.861allexploratory reused test outcomes, not a fresh confirmatory comparisonimmunization1,1570.003pooled_ridge0.851held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonimmunization276-0.009pooled_ridge0.864retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonimmunization8810.007pooled_ridge0.687allexploratory reused test outcomes, not a fresh confirmatory comparisonmortality1,302-0.036pooled_ridge0.653held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonmortality300-0.058pooled_ridge0.697retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonmortality1,002-0.029pooled_ridge0.612allexploratory reused test outcomes, not a fresh confirmatory comparisonlife_expectancy1,302-0.021pooled_ridge0.573held_out_countryexploratory reused test outcomes, not a fresh confirmatory comparisonlife_expectancy300-0.042pooled_ridge0.624retained_countryexploratory reused test outcomes, not a fresh confirmatory comparisonlife_expectancy1,002-0.015Exact source identityExecutable source at export: 8bd15fb2e9110197f32cf84ada81fd0b533c4371Arrow panel: bee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba86440Source, experiment protocol, verifier and build status ↗Full acceptance is incomplete. This public non-personal demo includes bounded scientific results and explicit missing-evidence states.",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Measurement first.Inference second."
+      }
     }
   ]
 }
