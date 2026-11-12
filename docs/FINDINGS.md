@@ -34,3 +34,7 @@ The California and Florida count-model intervals cover only 43.3% and 35.7% of t
 ## What is still required
 
 See [build status](BUILD_STATUS.md). In particular, complete historical as-of and geography validation, independent survey design auditing, lawful richer subgroup denominators, hours and learning outcomes, hierarchical dynamic modeling, and the complete full-profile scientific campaign remain incomplete. A working atlas and a diagnostic verifier pass do not close those requirements.
+
+## Source-frozen replay
+
+The final preview executable is `b6876777275d9696fcbd4c28bc669151552ba4ae`. The clean-checkout diagnostic is `source-clean-20261111`; full attempt `full-20261111` failed explicitly on incomplete gates. Exact source, inputs, command exits and independent replay quantities are in the preserved bundles.

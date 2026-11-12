@@ -219,6 +219,110 @@
         ],
         "title": "Different shocks.Uneven recoveries."
       }
+    },
+    {
+      "name": "final 390px employment chart with chronological ticks",
+      "at": "2026-11-11T21:48:36.180Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=employment&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "ebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.3912,01659.391percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.8242,01759.824percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA60.1532,01860.153percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA60.5432,01960.543percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA56.5982,02056.598percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA58.2112,02158.211percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.5382,02259.538percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.8212,02359.821percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.4672,02459.467percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA59.1142,02559.114percent age 15+modeled_estimatebee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSA59.8percent age 15+-0.7 percent age 15+ since 2019",
+          "United KingdomGBR59.3percent age 15+-1 percent age 15+ since 2019"
+        ],
+        "focus": null,
+        "horizontalOverflow": false,
+        "scenario": true,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "employment"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
+    },
+    {
+      "name": "exact executable source identity and held-out methods",
+      "at": "2026-11-11T21:48:37.520Z",
+      "url": "http://127.0.0.1:8765/?view=methods&metric=employment&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "2all22.3692,0242.563school1870.7720.8672,0192.385all9.9162,0241.082employment2080.7870.0352,019-1.064all0.3872,0240.047gdp1930.8662.5352,0193.081all26.712,0242.884immunization2170.6440.7182,0192.284all10.4952,0240.845life_expectancy2170.6440.6882,0192.101all8.8112,0240.635mortality1610.8952.0392,0193.059all22.4812,0242.382school1870.7530.9092,0192.565all10.7722,0241.149employment2080.750.0352,019-0.959all0.4312,0240.045gdp1930.8762.5342,0193.084all26.2592,0243.063immunization2170.6210.7032,0192.198all10.2092,0240.873life_expectancy2170.6710.6262,0191.931all7.6082,0240.705mortality1610.8872.1212,0193.09all22.1322,0242.664school1870.6661.1762,0193.197all14.4642,0241.499employment2080.7370.0432,019-0.634all0.5082,0240.055gdp1930.8593.0872,0193.347all32.7442,0243.71immunization2170.4690.8832,0192.485all15.5472,0241.082life_expectancy2170.4830.7832,0192.17all12.3592,0240.826mortality1610.9052.5372,0193.403all29.0582,0243.072school1870.7740.8782,0192.466all9.9442,0241.104employment2080.7690.0342,019-1.093all0.4092,0240.043gdp1930.8592.5672,0193.087all26.6822,0242.935immunization2170.6140.7152,0192.312all10.9572,0240.812life_expectancy2170.6260.692,0192.098all8.92,0240.634mortality1610.8952.1672,0193.133all22.5572,0242.766school1870.7860.8692,0192.41all9.8152,0241.091employment2080.7770.0342,019-1.058all0.4072,0240.043gdp1930.862.5542,0193.085all26.452,0242.995immunization2170.6140.7212,0192.312all10.8882,0240.85life_expectancy2170.6440.6852,0192.138all8.7192,0240.634mortality1610.8852.1442,0193.101all22.532,0242.682school1870.7790.8692,0192.367all9.8322,0241.088employment2080.7840.0352,019-1.08all0.4052,0240.043gdp1930.8722.5512,0193.098all26.4852,0243.044immunization2170.5940.7092,0192.205all11.1872,0240.815life_expectancy2170.6540.6922,0192.118all8.7382,0240.662mortality1610.8952.112,0193.11all22.4732,0242.627schoolExact source identityExecutable source at export: b6876777275d9696fcbd4c28bc669151552ba4aeArrow panel: bee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba86440Source, experiment protocol, verifier and build status ↗Full acceptance is incomplete. This public non-personal demo includes bounded scientific results and explicit missing-evidence states.",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "Measurement first.Inference second."
+      }
+    },
+    {
+      "name": "final source missing-file error and truthful live announcement",
+      "at": "2026-11-11T21:49:08.908Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "DATA COULD NOT BE LOADEDThis view is unavailable.Cannot load school: HTTP 404Retry this viewSuccessful data remains cached in this browser session. An unavailable source is never filled with example values.",
+        "cards": [],
+        "focus": "workspace",
+        "horizontalOverflow": false,
+        "selection": [],
+        "title": "This view is unavailable."
+      }
+    },
+    {
+      "name": "final source successful error recovery",
+      "at": "2026-11-12T00:42:01.481Z",
+      "url": "http://127.0.0.1:8765/?view=atlas&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S06&subgroup=total&vintage=2023",
+      "observed": {
+        "body": "-vintage retrospective panelUSA97.6532,01597.653gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA98.772,01698.77gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA98.9522,01798.952gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA99.2762,01899.276gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA100.0632,019100.063gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA100.512,020100.51gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA101.1922,021101.192gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSA97.4732,02297.473gross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,023Unavailablegross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,024Unavailablegross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panelUSAUnavailable2,025Unavailablegross percentobservedbee6561349defacbab4eb6d340669167ebe2bbb294107b77dba82a07dba864402026-11-11 acquisition; final-vintage retrospective panel\n    READ THE EVIDENCEEvery trajectory has a definition.Surveillance reports, modeled estimates and survey responses answer different questions. Start with the source before drawing a conclusion.12 STUDY PROTOCOLSQuestions, resultsand limits ↗INDEPENDENT COVERAGESee what eachdomain measures ↗SEPARATE BIOLOGICAL EVIDENCEHost associationsand viral lineages ↗",
+        "cards": [
+          "United StatesUSAUnavailablegross percentNo matched 2019 baseline",
+          "United KingdomGBR112.1gross percent-5 gross percent since 2019"
+        ],
+        "focus": null,
+        "horizontalOverflow": false,
+        "scenario": true,
+        "selection": [
+          {
+            "id": "metric",
+            "value": "school"
+          },
+          {
+            "id": "primary",
+            "value": "USA"
+          },
+          {
+            "id": "comparison",
+            "value": "GBR"
+          }
+        ],
+        "title": "Different shocks.Uneven recoveries."
+      }
+    },
+    {
+      "name": "WHO 2022 versus 2023 vintage selector",
+      "at": "2026-11-12T00:42:01.787Z",
+      "url": "http://127.0.0.1:8765/?view=studies&metric=school&primary=USA&comparison=GBR&year=2023&indexed=0&scenario=1&rate=0&study=S01&subgroup=total&vintage=2022",
+      "observed": {
+        "body": "cess_estimate11,038.5944.983AZECOVID deaths summed by WHO report week2,4164113,016.35421,581.587modeled event year; not calendar-aligned with report datesmodeled_excess_estimate20,428.233.678AZECOVID deaths summed by WHO report week5,8685222,793.811-272.692modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-5,898.439-136.346BDICOVID deaths summed by WHO report week226,027.8353,258.443modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-3,214.725271.537BDICOVID deaths summed by WHO report week12710,310.19416,540.231modeled event year; not calendar-aligned with report datesmodeled_excess_estimate15,003.6230.854BELCOVID deaths summed by WHO report week19,3744217,961.7863,794.365modeled event year; not calendar-aligned with report datesmodeled_excess_estimate2,098.5260.43BELCOVID deaths summed by WHO report week8,818525,530.102184.447modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-7,755.9334.192BENCOVID deaths summed by WHO report week44167,387.5283,765.836modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-3,820.33232.187BENCOVID deaths summed by WHO report week1173111,394.36911.713modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-11,151.28311.689BFACOVID deaths summed by WHO report week782214,421.7928,028.475modeled event year; not calendar-aligned with report datesmodeled_excess_estimate-4,829.4633.592BFACOVID deaths summed by WHO report week2394121,773.649Showing 30 of 388 rows. Export includes all eligible rows.Published WHO revisionMay 2023 releaseMay 2022 releaseregionyearmonthmodeled excessreleaserevisionGBR2,02017,5202022-637.04GBR2,0202-4,2162022-5.638GBR2,02034,0132022849.27GBR2,020444,9732022-832.182GBR2,020515,4752022-1,539.677GBR2,02066852022-197.581GBR2,0207-4092022-193.481GBR2,02081,2422022-361.31GBR2,0209-122022135.284GBR2,020104,6422022-108.264GBR2,020117,6302022-271.657GBR2,020123,9612022-607.049Showing 12 of 48 rows. Export includes all eligible rows.Protocol v1 was frozen before study-table execution, after source inspection and engineering pilots. It is not a blinded external preregistration.",
+        "cards": [],
+        "focus": null,
+        "horizontalOverflow": false,
+        "selection": [
+          {
+            "id": "excess-vintage",
+            "value": "2022"
+          }
+        ],
+        "title": "Twelve questions.Evidence with boundaries."
+      }
     }
   ]
 }
