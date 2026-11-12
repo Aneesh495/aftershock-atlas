@@ -23,6 +23,19 @@ def require(condition: bool, reason: str) -> None:
         raise ValueError(reason)
 
 
+def verify_declared_scope(acceptance: dict) -> bool:
+    require(acceptance["profile"] in {"diagnostic", "full"}, "Unknown campaign profile")
+    gates = acceptance["gates"]
+    expected = {f"G{i:02d}" for i in range(1, 17)}
+    require(len(gates) == 16 and {g["gate"] for g in gates} == expected, "Required domain gate population changed")
+    require(all(g["status"] in {"passed", "failed", "blocked", "unverified"} for g in gates), "Invalid gate status")
+    unsupported = read_json(ROOT / "configs/full-scope.json")["unsupported_gates"]
+    require(all(g["status"] != "passed" for g in gates if g["gate"] in unsupported), "Full scope claims exceed source-supported capabilities")
+    complete = not unsupported and all(g["status"] == "passed" for g in gates)
+    require(acceptance["full_acceptance"] == (acceptance["profile"] == "full" and complete), "Forged full-acceptance flag")
+    return complete
+
+
 def trusted_inputs(expected: str) -> dict:
     require(len(expected) == 40 and all(c in "0123456789abcdef" for c in expected), "Expected full source commit is required")
     subprocess.run(["git", "cat-file", "-e", expected + "^{commit}"], cwd=ROOT, check=True, capture_output=True)
@@ -46,7 +59,26 @@ def verify_manifest(bundle: Path) -> dict:
         require(not path.is_symlink() and path.is_file(), "Evidence path is not an owned regular file")
         require(path.stat().st_size <= 80_000_000, "Oversized evidence artifact")
         require(digest(path) == expected["sha256"] and path.stat().st_size == expected["bytes"], "Artifact checksum or size mismatch: " + name)
+        if path.suffix == ".npz":
+            verify_array_archive(path)
     return manifest
+
+
+def verify_array_archive(path: Path) -> None:
+    with ZipFile(path) as archive:
+        members = archive.infolist()
+        require(len(members) <= 64 and len({m.filename for m in members}) == len(members), "Invalid array archive member set")
+        require(sum(m.file_size for m in members) <= 20_000_000, "Array archive expansion exceeds budget")
+        for member in members:
+            require(member.filename.endswith(".npy") and "/" not in member.filename, "Invalid array archive member")
+            with archive.open(member) as stream:
+                version = np.lib.format.read_magic(stream)
+                require(version in {(1, 0), (2, 0)}, "Unsupported array header version")
+                header = np.lib.format.read_array_header_1_0 if version == (1, 0) else np.lib.format.read_array_header_2_0
+                shape, _, dtype = header(stream)
+                require(not dtype.hasobject and len(shape) <= 3 and all(0 <= n <= 100_000 for n in shape), "Unsafe array shape or object dtype")
+                expected_bytes = math.prod(shape) * dtype.itemsize
+                require(expected_bytes <= 20_000_000 and expected_bytes == member.file_size - stream.tell(), "Array header allocation exceeds stored payload")
 
 
 def verify_observations(bundle: Path, datasets: dict) -> dict:
@@ -209,7 +241,7 @@ def verify_model_replay(bundle: Path, annual: dict) -> dict:
         require(np.allclose(base, expected_base, equal_nan=True), "Forecast base detached from preceding source value")
         require(np.array_equal(mask, np.isfinite(expected_target)), "Outcome missingness mask was changed")
         require(np.allclose(center, expected_center_y) and np.allclose(scale, expected_scale_y), "Target preprocessing fitted on wrong population")
-        require(len(keys) == len(x) and len(probes) >= 8, "Frozen replay probes missing")
+        require(len(keys) == len(x) and probes == [i for i, k in enumerate(keys) if 2019 <= k["target_year"] <= 2024], "Complete frozen replay population missing")
         replayed = 0
         for seed in (11, 29, 47):
             path = bundle / f"models/seed-{seed}/best.npz"
@@ -298,7 +330,7 @@ def verify_domain_semantics(bundle: Path) -> dict:
     return {"age_contrasts": len(s3["table"]), "genetic_probes": len(genes["representatives"]), "suppressed_survey_cells": hidden}
 
 
-def verify_bundle(path: str | Path, expected_source: str) -> dict:
+def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gates: bool = True) -> dict:
     bundle = Path(path).resolve()
     verify_manifest(bundle)
     source = read_json(bundle / "SOURCE_INPUTS.json")
@@ -308,6 +340,8 @@ def verify_bundle(path: str | Path, expected_source: str) -> dict:
     # Running code must match the trusted version too, even when this checkout has later reports.
     for name, checksum in trusted.items():
         require((ROOT / name).is_file() and digest(ROOT / name) == checksum, "Verifier runtime source mismatch: " + name)
+    acceptance = read_json(bundle / "ACCEPTANCE.json")
+    complete = verify_declared_scope(acceptance)
     datasets = read_json(bundle / "DATASETS.json")
     for source_id, data in datasets["sources"].items():
         trusted_data = read_json(ROOT / "configs/data-inputs.json")[source_id]
@@ -320,12 +354,13 @@ def verify_bundle(path: str | Path, expected_source: str) -> dict:
     from .verification_extension import verify_dynamic, verify_survey_design
     extension = {"survey": verify_survey_design(bundle), "dynamic": verify_dynamic(bundle, annual),
                  "dynamic_scores": verify_forecasts(bundle, annual, "dynamic-predictions.json", "dynamic.json", 6)}
+    from .verify_history import verify_history
+    historical = verify_history(bundle, annual)
     commands = [json.loads(line) for line in (bundle / "COMMANDS.jsonl").read_text().splitlines()]
     require(len(commands) >= 5 and all(r["exit"] == 0 for r in commands), "Required command missing or failed")
-    acceptance = read_json(bundle / "ACCEPTANCE.json")
-    require(acceptance["profile"] in {"diagnostic", "full"}, "Unknown campaign profile")
-    if acceptance["profile"] == "full":
-        require(all(g["status"] == "passed" for g in acceptance["gates"]), "Full profile has incomplete domain gates")
-    return {"status": "passed", "profile": acceptance["profile"], "source": expected_source,
-            "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain, "extension": extension,
-            "full_acceptance": acceptance["profile"] == "full"}
+    if acceptance["profile"] == "full" and require_domain_gates:
+        require(complete, "Full profile has incomplete domain gates")
+    status = "passed" if acceptance["profile"] == "diagnostic" or complete else "source_checks_passed_full_incomplete"
+    return {"status": status, "profile": acceptance["profile"], "source": expected_source,
+            "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain, "extension": extension, "historical": historical,
+            "full_acceptance": acceptance["profile"] == "full" and complete}

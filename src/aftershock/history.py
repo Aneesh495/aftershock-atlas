@@ -85,6 +85,9 @@ def acquire_history(refresh: bool = False) -> dict:
     plan = read_json(ROOT / "configs/history-plan.json")
     pin_path = ROOT / "configs/history-inputs.json"
     pins = read_json(pin_path) if pin_path.exists() else {}
+    if not (raw / "index.json").exists() and (ROOT / "configs/HISTORY_SNAPSHOT.json").exists() and not refresh:
+        from .history_snapshot import restore_history
+        restore_history(raw)
     with exclusive(raw / ".acquire.lock"):
         result = read_json(raw / "index.json") if (raw / "index.json").exists() else {}
         for source in archive_sources():

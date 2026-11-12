@@ -10,6 +10,10 @@ The verifier is implemented separately in `verification.py`. It reads trusted so
 
 Diagnostic verification establishes these executed invariants. It does not establish complete scientific acceptance. Full profile verification rejects any incomplete domain gate. No required skip, timeout, empty workload or nonfinite result is silently accepted.
 
+The historical extension adds `HISTORY_INPUTS.json`, 43 public aggregate raw partitions, the typed archived panel, revision and endpoint-sensitivity tables, six prediction partitions and saved historical model parameters. Its independent parser reconstructs every archived cell, within-edition GDP anchor and feature. The original core now replays all eligible test rows rather than a small probe subset. The 19-control source recipes include later-edition substitution, forged month bounds, future-feature injection, changed GDP anchors and forged full-pass flags. A source recipe is distinct from an executed rejection receipt.
+
+The full campaign runs available semantic checks and actual tamper subprocesses before reporting missing scope. `VERIFICATION.json` may record `source_checks_passed_full_incomplete`; that status retains `profile=full` and `full_acceptance=false`. `FULL_INCOMPLETE.json` and exit 1 preserve the unresolved gates. The public `verify` command remains strict and returns nonzero for that same bundle. Trusted `configs/full-scope.json` prevents saved gate booleans from asserting capabilities absent from the executable.
+
 ## Claim-to-evidence ledger
 
 | Claim | Owning mechanism | Replay artifact |

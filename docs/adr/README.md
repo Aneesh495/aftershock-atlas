@@ -12,3 +12,4 @@
 - [010: Keep host associations separate from viral estimates](010-keep-host-associations-separate-from-viral-estimates.md)
 - [011: Export a safe static snapshot with an optional local API](011-export-a-safe-static-snapshot-with-an-optional-local-api.md)
 - [012: Verify semantics against trusted source](012-verify-semantics-against-trusted-source.md)
+- [013: Reconstruct each origin from its designated archive](013-archive-specific-information-sets.md)

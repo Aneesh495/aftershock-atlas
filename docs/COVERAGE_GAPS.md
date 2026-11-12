@@ -8,7 +8,7 @@ This inventory describes implemented measurement and missing scope. A domain nam
 | COVID vaccine rollout | None | Routine DTP coverage is a different health-service outcome |
 | Excess mortality and revisions | `excess.py`, WHO May 2022 and May 2023 | Modeled 2020-2021 estimates, not observed daily deaths |
 | Geography and denominators | `geography.py`, current registry and additive crosswalk contract | Historical split/merge source validation incomplete; no invented residence denominator for occurrence counts |
-| Historical information sets | `temporal.py`, conservative acquisition availability | Annual final-vintage records cannot establish available-at-time forecasts |
+| Historical information sets | `history.py`, six official WDI archive editions; independent raw/feature replay | Archive-month bounds do not prove original cell publication days or territorial equivalence; sparse historical outcome support |
 | Employment and output | `features.py`, WDI employment ratio and constant-price GDP per person | No working-hours or sector series; annual frequency only |
 | Education | WDI gross secondary enrollment and Oxford school policies | No learning assessment or remote-instruction outcome; enrollment does not measure either |
 | Mobility exposure | `mobility.py`, UK daily aggregates | Opt-in device sample, no worker denominator or occupational exposure claim |
@@ -23,6 +23,8 @@ This inventory describes implemented measurement and missing scope. A domain nam
 | Candidate policy analysis | `causal.py`, real group-time/pretrend/placebo tables | Identification not established; unsupported late-cohort cells withheld |
 | Twelve studies | `studies.py`, twelve executed JSON and CSV tables | Four remain partial in outcome or design support |
 | Atlas and exports | TypeScript maps, linked comparisons, source library, study and vintage CSVs | Browser evidence covers bounded paths, not every combination or exhaustive accessibility conformance |
-| Independent verification | `verification.py`, `verification_extension.py` | Exact source and inputs required; engineering diagnostics cannot certify missing scientific work |
+| Independent verification | `verification.py`, `verification_extension.py`, `verify_history.py` | Exact source and inputs required; engineering diagnostics cannot certify missing scientific work |
 
 The full profile returns nonzero while mandatory evidence is incomplete. [Build status](BUILD_STATUS.md), [findings](FINDINGS.md) and the [extension report](EXTENSION_RESULTS.md) retain failures and narrower supported conclusions.
+
+The [historical extension](HISTORICAL_RESULTS.md) reports archived support by outcome and test year. Additional configurations cannot compensate for missing hours, learning, later-wave design or territorial evidence.

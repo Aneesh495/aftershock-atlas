@@ -28,9 +28,35 @@ def test_archive_rejects_partial_pages_and_edition_substitution():
     data["pages"] = 2
     with pytest.raises(ValueError, match="pagination"):
         validate_archive(data, "201811", "SP.POP.TOTL")
+
     data["pages"] = 1
     with pytest.raises(ValueError, match="substituted"):
         validate_archive(data, "201912", "SP.POP.TOTL")
     data["source"]["data"][1] = copy.deepcopy(data["source"]["data"][0])
     with pytest.raises(ValueError, match="Duplicate"):
         validate_archive(data, "201811", "SP.POP.TOTL")
+
+
+def test_array_header_cannot_request_more_memory_than_stored_bytes(tmp_path):
+    import io
+    from zipfile import ZipFile
+    import numpy as np
+    from aftershock.verification import verify_array_archive
+    buffer = io.BytesIO()
+    np.lib.format.write_array_header_1_0(buffer, {"descr": "<f8", "fortran_order": False, "shape": (100_000,)})
+    path = tmp_path / "malformed.npz"
+    with ZipFile(path, "w") as archive:
+        archive.writestr("x.npy", buffer.getvalue() + b"\x00" * 8)
+    with pytest.raises(ValueError, match="allocation"):
+        verify_array_archive(path)
+
+
+def test_saved_pass_flags_cannot_promote_unsupported_full_scope():
+    from aftershock.verification import verify_declared_scope
+    acceptance = {"profile": "full", "full_acceptance": True,
+                  "gates": [{"gate": f"G{i:02d}", "status": "passed"} for i in range(1, 17)]}
+    with pytest.raises(ValueError, match="exceed source-supported"):
+        verify_declared_scope(acceptance)
+    acceptance["gates"][-1] = acceptance["gates"][0]
+    with pytest.raises(ValueError, match="population"):
+        verify_declared_scope(acceptance)
