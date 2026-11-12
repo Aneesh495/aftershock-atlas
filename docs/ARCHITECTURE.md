@@ -30,3 +30,4 @@ Each source below is checked by Graphviz rendering and SVG XML inspection. These
 - [Numerical prediction paths](diagrams/16-model-math.dot) · [rendered SVG](diagrams/16-model-math.svg)
 - [Identity and coverage inventory](diagrams/17-coverage.dot) · [rendered SVG](diagrams/17-coverage.svg)
 - [Candidate treatment structure and threats](diagrams/18-treatment-structure.dot) · [rendered SVG](diagrams/18-treatment-structure.svg)
+- [Exploratory hierarchical dynamics](diagrams/19-dynamic.dot) · [rendered SVG](diagrams/19-dynamic.svg)

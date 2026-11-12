@@ -6,7 +6,7 @@ The raw observation CSV contains every surveillance and annual measurement used 
 
 The verifier is implemented separately in `verification.py`. It reads trusted source file identities from Git, rather than trusting the bundle's own declared commit. It independently parses upstream values, detects duplicate populations and forged timestamps, reconstructs features from earlier annual records, recomputes proper scores, verifies age-standardized rates, checks genetic effect directions and validates suppression. A good hash does not prove a scientific result.
 
-`negative-controls.json` records real subprocess invocations and rejection reasons. Semantic mutations are rehashed before invoking the same verifier. Controls include forged vintage, duplicate population, future feature year, invalid genetic sign, shifted placebo and shared-sample reclassification. Additional controls cover corruption, missing artifacts, source mismatch and failed saved-model replay. The test must reject for the intended reason.
+`negative-controls.json` records real subprocess invocations and rejection reasons. Semantic mutations are rehashed before invoking the same verifier. Controls include forged vintage, duplicate population, future feature year, invalid genetic sign, shifted placebo and shared-sample reclassification. Additional controls cover corruption, missing artifacts, source mismatch, failed saved-model replay, source-defined survey category reclassification, survey variance factors and denominators, and saved dynamic parameters. The test must reject for the intended reason.
 
 Diagnostic verification establishes these executed invariants. It does not establish complete scientific acceptance. Full profile verification rejects any incomplete domain gate. No required skip, timeout, empty workload or nonfinite result is silently accepted.
 
@@ -24,3 +24,5 @@ Diagnostic verification establishes these executed invariants. It does not estab
 | Survey suppression survives publication | shared disclosure boundary and public-cache test | `surveys.json` |
 | Actual browser paths work | retained DOM observations and screenshots | `docs/media/browser-checks.json` |
 | Full acceptance remains incomplete | explicit gate statuses and nonzero full profile | `FULL_INCOMPLETE.json`, build status |
+
+The extension stores only safe aggregate survey cells and `SURVEY_INPUTS.json` source identities in a bundle. Its independent verifier reacquires or reads the exact public-use ZIP in ignored local storage. Raw participant records are never copied into evidence. [The public receipt](PREVIEW_EVIDENCE.json) links exact-source diagnostic results, fourteen configured rejection recipes and the separately failed full profile.

@@ -172,6 +172,7 @@ def negative_controls(bundle: Path, source: str) -> dict:
     mutate("invalid-effect-sign", "genetics.json", json_change(lambda a: a["representatives"][0].update(a2_beta=-a["representatives"][0]["a2_beta"])), "Invalid genetic effect sign")
     mutate("shifted-placebo", "causal.json", json_change(lambda a: a["pseudo_onsets"][0].update(baseline_year=2000)), "Shifted placebo")
     mutate("shared-sample-reclassification", "genetics.json", json_change(lambda a: a.update(independent_replication=True)), "Shared-sample genetics")
+    mutate("survey-category", "survey-design.json", json_change(lambda a: a["rows"][12].update(group="Universal ancestral category")), "Survey population reclassified")
     mutate("survey-variance-factor", "survey-design.json", json_change(lambda a: a.update(variance_factor=1 / 80)), "Invalid survey variance factor")
     mutate("survey-denominator", "survey-design.json", json_change(lambda a: a["rows"][0].update(denominator=1.)), "Survey weighted denominator mismatch")
     mutate("dynamic-parameters", "dynamic.json", json_change(lambda a: a["fits"][0]["chosen"]["parameters"].__setitem__(0, 10.)), "Dynamic training likelihood replay mismatch")
