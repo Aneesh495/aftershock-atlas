@@ -37,6 +37,8 @@ The strict public verifier returns nonzero for `history-final-full-20261112`. Av
 
 ## Remaining work
 
+The [v0.2.0-preview release](https://github.com/Aneesh495/aftershock-atlas/releases/tag/v0.2.0-preview) is published. Its four original assets were downloaded or restored and byte-verified. The remote historical snapshot restored all 43 partitions. The public Pages walkthrough checked the frozen executable identity through downloaded CSVs, the full integrated path and 390 px / 1280 px layouts. [Publication receipts](RELEASE_RECEIPT_V3.json) and [offline thesis](paper/README.md) preserve this narrower verified outcome. These publication checks do not promote an incomplete scientific gate.
+
 Complete original cell publication-day and territorial validation, later-wave survey design/nonresponse and subgroup denominator auditing, hours and learning measurement, pandemic uncertainty calibration and the four partially supported studies. The atlas has bounded verified user paths, but missing required domains prevent full G13 acceptance. Historical mortality and life-expectancy cohorts only support 2022, and their nominal 90 percent learned intervals cover only about one quarter and one fifth of targets. These failures remain visible in the [historical report](HISTORICAL_RESULTS.md) and model tables.
 
 The [requirement and artifact map](COVERAGE_GAPS.md) also records absent tests, hospital/ICU, COVID vaccine-rollout, sector and remote-instruction measurements. The original v0.1.0-preview and v0.1.1-preview sources and evidence remain preserved. No diagnostic, model-count increase or presentation change closes these scientific requirements.

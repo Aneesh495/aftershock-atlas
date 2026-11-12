@@ -57,6 +57,7 @@ The independent verifier reads frozen upstream bytes, checks every included meas
 - [Measurement and schema contracts](docs/CONTRACTS.md)
 - [Frozen experiment protocol](docs/EXPERIMENT_PLAN.md)
 - [Data rights and model card](docs/DATA_RIGHTS.md)
+- [Offline PDF thesis and raw figure data](docs/paper/README.md)
 - [Four complete execution walkthroughs](docs/walkthroughs/README.md)
 - [Reproduction and recovery](docs/REPRODUCING.md)
 - [Evidence format and claim ledger](docs/EVIDENCE.md)
