@@ -36,6 +36,17 @@ Positive improvement means lower CRPS than the baseline chosen using validation 
 
 These zeros are actual source support, not software errors or zero effects. A family score for mortality or life expectancy describes the 2022 cohort only. Sparse enrollment support further limits cross-country conclusions. The model cannot acquire information by filling these gaps from later editions.
 
+| Learned interval coverage, nominal 90% | Range across three seeds |
+| --- | --- |
+| Employment | 41.35% to 44.32% |
+| Indexed GDP | 70.27% to 72.68% |
+| Secondary enrollment | 64.11% to 72.98% |
+| DTP coverage | 78.46% to 83.56% |
+| Crude mortality | 25.26% to 27.84% |
+| Life expectancy | 20.62% to 21.65% |
+
+Every family undercovers its nominal target. The small mortality and life-expectancy cohorts describe 2022 only. These intervals do not support reliable pandemic uncertainty claims. The atlas exposes every model's coverage and interval score beside CRPS, including these failures and all untrained controls.
+
 The change from version 1 also changes forecast horizon, training period, GDP transformation and information set. A performance difference between versions cannot be attributed solely to data revisions. The separate endpoint-sensitivity table compares designated archived, initial-edition and current endpoints without feeding current values into model inputs.
 
 ## Independent replay and failure boundaries

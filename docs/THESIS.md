@@ -4,7 +4,7 @@
 
 Aftershock Atlas is a reproducible population-level research application that compares pandemic-era trajectories without turning incompatible measurements into a single universal score. A global report-week surveillance panel and annual multi-domain estimates feed an original temporal model, classical baselines, predictive scenarios, candidate group-time designs and an interactive atlas. Separate survey, subnational, host-genetic and viral pipelines preserve their own sampling and timing limits. The main result is mixed predictive performance with substantial interval undercoverage, alongside concrete evidence that data availability and measurement definitions restrict what the application can infer.
 
-The project is a research preview. Several scientific requirements remain incomplete, including historical available-at-time evaluation, full geography reconciliation, complete multiwave survey design auditing and complete hours or learning measurement. Missing data and failed identification are outputs of the workflow, not grounds for silently changing the question.
+The project is a research preview. Several scientific requirements remain incomplete, including original cell publication-day proof, full geography reconciliation, complete multiwave survey design auditing and complete hours or learning measurement. Missing data and failed identification are outputs of the workflow, not grounds for silently changing the question.
 
 ## Research design
 
@@ -29,6 +29,16 @@ Country identities are assigned by a frozen hash rule. Held-out countries enter 
 Persistence, local trend, pooled ridge and a local-level filter use the same permitted lag information. Validation selects the baseline and early stopping. Absolute standardized validation residuals calibrate 90 percent predictive bands. This calibration has no exchangeability guarantee through a pandemic regime shift. Proper scores, interval coverage and untrained controls test different aspects of the model rather than making a single accuracy claim.
 
 A separate pre-2020 scenario extrapolates 2010-2019 linear trends and reports a local-level alternative. It is labeled predictive no-shock throughout. It is not presented as what would certainly have happened without the pandemic. The CDC state studies fit an original negative-binomial IRLS model with trend and seasonal harmonics; negative report corrections are not silently transformed into valid count-model observations.
+
+## Official archive information sets
+
+The separately registered version 3 exercise uses six official WDI archive editions and keeps edition month, acquisition time and reference year separate. Each test target Y receives four lags Y-5 through Y-2 from the designated edition at the end of Y-1. The two-year endpoint horizon allows a publication lag. Future-reference values remain in raw audit bytes but are withheld from observation displays and lag features. No current-vintage value fills a missing archived endpoint. The initial 201811 edition supplies training and validation labels, which are retrospective labels known at that edition.
+
+GDP is indexed to its own positive 2010 anchor in each edition, then transformed with log1p. This removes constant price-base scaling without eliminating methodological or denominator revisions. It changes the target unit, so numerical scores cannot be pooled with version 1 dollar scores. Current country codes do not establish stable historical populations. An official archive-month identifier does not establish an independently witnessed original publication day.
+
+The source-frozen diagnostic at ea4b73c62731648ca2cec417242d7df9082bf88f reconstructed 227,850 archived cells, 27,342 early/late revision comparisons, 7,812 endpoint-sensitivity cells and every historical feature. Three fresh seeds and five classical baselines produced 66 configurations and 42,097 predictions. The learned network met its practical CRPS criterion only for routine DTP coverage. GDP CRPS was 41.27 percent worse than the validation-selected dynamic baseline. Employment was approximately tied; mortality and life expectancy lost. Mortality and life expectancy had eligible archived outcomes only in 2022. Those scores cannot describe performance across six pandemic years.
+
+Historical calibration also failed severely. Nominal 90 percent learned intervals covered only about one quarter of mortality targets and one fifth of life-expectancy targets. Better point distribution scores do not establish reliable uncertainty. These outcomes remain in the model tables and are not repaired by tuning on the test set. Calendar outcomes were already inspected in earlier protocols, and the new exercise remains exploratory. Differences from version 1 mix horizon, training window, target unit and information set, so they cannot isolate a causal effect of data vintage. See the [complete historical report](HISTORICAL_RESULTS.md) for cohort sizes and source-bound artifacts.
 
 ## Identification and causal limits
 
@@ -236,7 +246,7 @@ Replay table: `data/results/studies/S12.csv`, produced by `make studies`; protoc
 
 ## Independent verification
 
-Evidence bundles bind executable files to an independently supplied Git commit. They include frozen upstream identities, raw records, command exits, environment, completed workloads, model states and per-unit predictions. The verifier is implemented separately from the summarizer. It independently parses all included WHO and annual values, rejects duplicate populations or forged availability, reconstructs features from earlier source records, recomputes proper scores and replays fixed saved-model probes without retraining.
+Evidence bundles bind executable files to an independently supplied Git commit. They include frozen upstream identities, raw records, command exits, environment, completed workloads, model states and per-unit predictions. The verifier is implemented separately from the summarizer. It independently parses all included WHO and annual values, rejects duplicate populations or forged availability, reconstructs features from earlier source records, recomputes proper scores and replays every eligible core network test prediction without retraining.
 
 Age-standardized rates are independently summed from source age counts, denominators and common weights. Genetic odds ratios must agree with signed log effects and aligned direction. Suppressed survey values cannot reappear through confidence intervals or export. Rehashed semantic mutations test these relationships rather than only file corruption.
 

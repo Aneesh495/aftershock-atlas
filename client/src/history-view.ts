@@ -1,4 +1,4 @@
-import {country,format,read,safe,table} from './data';
+import {country,download,read,safe,table} from './data';
 import {lineChart} from './charts';
 import type {Rendered} from './atlas-view';
 import type {Index,State} from './types';
@@ -7,6 +7,7 @@ interface HistoryIndex {
   editions:string[];
   metrics:Record<string,{title:string;unit:string}>;
   availability_basis:string;
+  panel_sha256:string;
   limitations:string[];
   inventory:{edition:string;metric:string;nonmissing:number;countries:number;excluded_future_values:number;edition_available_at:string;unit:string}[];
 }
@@ -23,7 +24,7 @@ export async function historyView(index:Index,state:State,signal:AbortSignal,upd
   const [a,b,revisions,scores,sensitivity]=await Promise.all([
     read<Partition>(`hist_${early}_${metric}`,signal),read<Partition>(`hist_${late}_${metric}`,signal),
     read<{summaries:Record<string,unknown>[];trajectory_signs:Record<string,unknown>[]}>('history-revisions',signal),
-    read<{completed_configurations:number;prediction_rows:number;learned_comparisons:Record<string,unknown>[];test_support:Record<string,unknown>[]}>('history-scores',signal),
+    read<{completed_configurations:number;prediction_rows:number;learned_comparisons:Record<string,unknown>[];test_support:Record<string,unknown>[];scores:Record<string,unknown>[]}>('history-scores',signal),
     metric==='population'?Promise.resolve({rows:[] as Record<string,unknown>[]}):read<{rows:Record<string,unknown>[]}>(`history-sensitivity_${metric}`,signal)]);
   const regions=[state.primary,state.comparison].filter((r,i,all)=>all.indexOf(r)===i);
   const points=[a,b].flatMap((partition,editionIndex)=>regions.map((region,countryIndex)=>({
@@ -49,6 +50,9 @@ export async function historyView(index:Index,state:State,signal:AbortSignal,upd
   const signs=revisions.trajectory_signs.filter(r=>r.metric===metric&&regions.includes(String(r.region)));
   const metricComparison=scores.learned_comparisons.filter(r=>r.metric===metric).map(r=>({baseline:r.validation_selected_baseline,crps_improvement_percent:Number(r.relative_crps_improvement)*100,cluster_lower_percent:Number(r.cluster_lower)*100,cluster_upper_percent:Number(r.cluster_upper)*100,countries:r.countries,practical_criterion_met:r.practical_5pct_and_positive_interval}));
   const support=scores.test_support.filter(r=>r.metric===metric);
+  const modelScores=scores.scores.filter(r=>r.metric===metric&&r.group==='all').map(r=>({model:r.model,crps:r.crps,
+    coverage_90_percent:Number(r.coverage_90)*100,interval_score_90:r.interval_score_90,eligible_predictions:r.n}));
+  const selectedSensitivity=sensitivity.rows.filter(r=>regions.includes(String(r.region)));
   return {html:`<div class="page-heading compact"><div><div class="eyebrow">HISTORICAL EDITIONS / EXPLORATORY V3</div><h1>The past gets<br><em>revised too.</em></h1><p>Compare official archive editions. A reference year is not a publication date, and today’s value can differ from the earlier estimate.</p></div></div>
     <section class="panel"><div class="history-controls">
       <label>Historical outcome<select id="history-metric">${Object.entries(history.metrics).map(([id,m])=>`<option value="${id}" ${id===metric?'selected':''}>${safe(m.title)}</option>`).join('')}</select></label>
@@ -63,10 +67,17 @@ export async function historyView(index:Index,state:State,signal:AbortSignal,upd
     <details><summary>Inspect selected editions and export provenance</summary>${table(selected,25)}</details></section>
     <section class="panel prose"><span class="eyebrow">REGISTERED REVISION STUDY / 201811 VERSUS 202312</span><h2>Revisions are part of the measurement.</h2>${table(revisions.summaries.filter(r=>r.metric===metric),10)}${signs.length?table(signs,10):'<p>No jointly eligible 2010-2017 direction comparison for these countries.</p>'}<p>These are exact contrasts in a frozen panel, not independent sampled observations. Revisions can reflect precision, definition changes and backcasts.</p></section>
     <section class="panel prose"><span class="eyebrow">ORIGIN-SPECIFIC FORECASTS</span><h2>${scores.completed_configurations} separate historical configurations</h2><p>Models fit the 201811 edition. Each later forecast uses its designated archive, with four lags ending two years before its target. The three network seeds begin from new random parameters. No current-vintage value fills an unavailable historical feature.</p><p>Calendar test outcomes were inspected in earlier protocols, so these comparisons are exploratory. Positive improvement percentages mean lower CRPS than the validation-selected baseline. GDP scores use log1p of a within-edition index and cannot be pooled with the earlier dollar-target scores.</p>
-    ${metric==='population'?'<p>Population is a denominator series and is not a forecast target in this experiment.</p>':`${table(metricComparison,6)}<h3>Eligible outcomes by test year</h3>${table(support,10)}<p class="micro">Zero support is unavailable evidence, not a successful forecast. Historical publication lags can remove entire outcome-year cells.</p>`}</section>
-    <section class="panel prose"><h2>Inspect feature-vintage sensitivity</h2><p>These rows compare the actual feature endpoint with the initial and current editions. Values use ${metric==='gdp'?'log1p of the within-edition GDP index':safe(a.unit)}. They are diagnostics. Current values do not replace missing historical inputs.</p>${table(sensitivity.rows.filter(r=>regions.includes(String(r.region))),20)}</section><section class="panel prose"><h2>Follow both upstream identities</h2><p>${early}: <code>${safe(a.source_sha256)}</code></p><p>${late}: <code>${safe(b.source_sha256)}</code></p><p><a href="https://datatopics.worldbank.org/world-development-indicators/wdi-archives.html" target="_blank" rel="noreferrer">Official WDI archive catalogue and metadata caveat ↗</a></p></section>`,rows:selected,after:root=>{
+    ${metric==='population'?'<p>Population is a denominator series and is not a forecast target in this experiment.</p>':`<p>These forecast tables use all eligible global test outcomes for this family. Country selectors affect the edition curves and endpoint diagnostics.</p>${table(metricComparison,6)}<h3>Every model and its uncertainty</h3><p>Coverage is the percentage of eligible targets inside a nominal 90% predictive interval. Severe undercoverage remains visible even when CRPS improves. Scores use this outcome’s model units.</p>${table(modelScores,20)}<button id="history-model-export" class="secondary">Export historical model scores</button><h3>Eligible outcomes by test year</h3>${table(support,10)}<p class="micro">Zero support is unavailable evidence, not a successful forecast. Historical publication lags can remove entire outcome-year cells.</p>`}</section>
+    <section class="panel prose"><h2>Inspect feature-vintage sensitivity</h2><p>These rows compare the actual feature endpoint with the initial and current editions. Values use ${metric==='gdp'?'log1p of the within-edition GDP index':safe(a.unit)}. They are diagnostics. Current values do not replace missing historical inputs.</p>${table(selectedSensitivity,20)}${selectedSensitivity.length?'<button id="history-sensitivity-export" class="secondary">Export feature-vintage sensitivity</button>':''}</section><section class="panel prose"><h2>Follow both upstream identities</h2><p>${early}: <code>${safe(a.source_sha256)}</code></p><p>${late}: <code>${safe(b.source_sha256)}</code></p><p><a href="https://datatopics.worldbank.org/world-development-indicators/wdi-archives.html" target="_blank" rel="noreferrer">Official WDI archive catalogue and metadata caveat ↗</a></p></section>`,rows:selected,after:root=>{
       const bindings:{id:string;key:keyof State}[]=[{id:'history-metric',key:'historyMetric'},{id:'history-early',key:'edition'},
         {id:'history-late',key:'revisionEdition'},{id:'history-primary',key:'primary'},{id:'history-comparison',key:'comparison'}];
       for(const {id,key} of bindings)root.querySelector<HTMLSelectElement>(`#${id}`)!.onchange=e=>update({[key]:(e.target as HTMLSelectElement).value});
+      const modelExport=root.querySelector<HTMLButtonElement>('#history-model-export');
+      if(modelExport)modelExport.onclick=()=>download(modelScores.map(r=>({...r,metric,unit:metric==='gdp'?'log1p 2010=100 within-edition index':a.unit,
+        protocol:'historical-v3-exploratory',group:'all eligible global test outcomes',archive_panel_sha256:history.panel_sha256,
+        current_target_panel_sha256:index.panel_sha256,executable_source:index.source_commit})),`aftershock-history-models-${metric}`);
+      const sensitivityExport=root.querySelector<HTMLButtonElement>('#history-sensitivity-export');
+      if(sensitivityExport)sensitivityExport.onclick=()=>download(selectedSensitivity.map(r=>({...r,archive_panel_sha256:history.panel_sha256,
+        current_target_panel_sha256:index.panel_sha256,executable_source:index.source_commit})),`aftershock-history-sensitivity-${metric}-${regions.join('-')}`);
     }};
 }
