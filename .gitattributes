@@ -1,0 +1,2 @@
+# Preserve the published figure artifact's exact bytes and SHA256.
+docs/paper/historical-coverage.csv -text whitespace=cr-at-eol
