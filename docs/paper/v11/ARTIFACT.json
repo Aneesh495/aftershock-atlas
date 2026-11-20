@@ -1,0 +1,15 @@
+{
+  "scientific_source": "1bd53f80841fe08c1bfd3a2fafb9c8d53b042cb0",
+  "publication_source": "eaf144b0ea47babd2a170ae1ece671d3b3f84d78",
+  "thesis_markdown_sha256": "57f6203054a66f65ab0e70ebb7b01d01b1f6b85d48ae914027e98af3f5323c7f",
+  "score_partition_sha256": "62cdd9570cba2a6f2e688ff859f9b7917d45872a34b2bacc44b10a6cf5a07e21",
+  "figure_data_sha256": "a4933a8eb35c958a8ee20c52605a1982071971928e8cf899247f4de38c2822e0",
+  "authoring_code_sha256": "dd64f35af7d3e26b8ecca797798ca9ac8601c3d42b0118dfce6dd4df4429716b",
+  "pdf_sha256": "1c2bf1638c22650fd75ba253703e66a0273366c1a6b1d7fefa6e5e6ee3d9f302",
+  "full_acceptance": false,
+  "figure_rows": 18,
+  "extension_scientific_source": "9c95b49e92cbcc7c6eba90e5aa9d3bbc166ade4a",
+  "extension_campaign": "https://github.com/Aneesh495/aftershock-atlas/actions/runs/44824997496",
+  "extension_receipt_sha256": "8344c2e9b22478777a559ed6e6dc73b5a6789551f3a9fab9953b3a475e355423",
+  "addendum_sha256": "8dfdbf159e1dd13f0e8217ee366c1fbc9903187bff9b439bdbd1c162b972152e"
+}

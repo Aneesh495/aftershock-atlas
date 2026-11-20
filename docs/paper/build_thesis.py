@@ -65,7 +65,7 @@ def styles():
     return s
 
 
-def table(data, widths, s):
+def table(data, widths, s, vertical_padding=6):
     wrapped = [[Paragraph(inline(str(cell)), s['ResearchCell']) for cell in row] for row in data]
     t = Table(wrapped, colWidths=widths, repeatRows=1, hAlign='LEFT')
     t.setStyle(TableStyle([
@@ -73,7 +73,7 @@ def table(data, widths, s):
         ('LINEBELOW', (0, 0), (-1, 0), .6, GREEN),
         ('LINEBELOW', (0, 1), (-1, -1), .25, colors.HexColor('#DDE3D8')),
         ('LEFTPADDING', (0, 0), (-1, -1), 7), ('RIGHTPADDING', (0, 0), (-1, -1), 7),
-        ('TOPPADDING', (0, 0), (-1, -1), 6), ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+        ('TOPPADDING', (0, 0), (-1, -1), vertical_padding), ('BOTTOMPADDING', (0, 0), (-1, -1), vertical_padding),
     ]))
     return t
 
@@ -209,6 +209,9 @@ def build(output, publication_source, addendum=None, extension_receipt=None):
     flow.extend([table(table_rows, [176, 145, 203], s), Spacer(1, 9),
         Paragraph('Figure 1. Empirical coverage of nominal 90% historical predictive intervals. The seed range is not a confidence interval. Raw values are in the companion historical-coverage.csv. Run: history-final-clean-20261112. Source: ' + source + '.', s['ResearchSmall']),
         Paragraph('The learned GDP CRPS is 41.27% worse than its validation-selected baseline. Only routine DTP meets the registered practical improvement criterion. These exploratory comparisons reuse previously inspected calendar outcomes and do not isolate causal pandemic effects.', body), PageBreak()])
+    if sources:
+        flow.append(Paragraph('Original thesis text from the November 12 preview. The dated updates follow in the addendum.',
+                              s['ResearchSmall']))
     flow.extend(markdown_flow(thesis.read_text(), s))
     if addendum:
         flow.extend([PageBreak(), Paragraph('Extension evidence', s['ResearchH1']),
@@ -217,8 +220,9 @@ def build(output, publication_source, addendum=None, extension_receipt=None):
         flow.extend(markdown_flow(addendum.read_text(), s))
     flow.extend([Spacer(1, 10), Paragraph('Artifact provenance', s['ResearchH1']),
         Paragraph('Scientific source: ' + source + '. Snapshot publication: ' + publication_source + '. Thesis Markdown SHA256: ' + sha(thesis) + '. Score partition SHA256: ' + sha(score_path) + '.', s['ResearchSmall'])])
-    links = list(dict.fromkeys(re.findall(r'\[([^\]]+)\]\((https?://[^)]+)\)', thesis.read_text())))
-    flow.append(table([['Reference', 'Primary source URL'], *[list(pair) for pair in links]], [150, 374], s))
+    bibliography = thesis.read_text() + ('\n' + addendum.read_text() if addendum else '')
+    links = list(dict.fromkeys(re.findall(r'\[([^\]]+)\]\((https?://[^)]+)\)', bibliography)))
+    flow.append(table([['Reference', 'Primary source URL'], *[list(pair) for pair in links]], [150, 374], s, vertical_padding=2 if sources else 6))
 
     def frame(canvas, doc):
         canvas.saveState()

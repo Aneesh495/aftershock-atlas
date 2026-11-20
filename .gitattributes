@@ -5,3 +5,4 @@ docs/paper/historical-coverage.csv -text whitespace=cr-at-eol
 docs/media/hosted-v9/*.csv -text whitespace=cr-at-eol
 docs/media/hosted-v11/*.csv -text whitespace=cr-at-eol
 docs/paper/*/historical-coverage.csv -text whitespace=cr-at-eol
+docs/paper/v11/*.pdf binary
