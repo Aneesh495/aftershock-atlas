@@ -26,6 +26,7 @@ export interface State {
   healthDomain: HealthDomain; reportingState: string; reportingYear: number; hospitalMetric: string;
   pulseWave: string; pulseGroup: string; contextGroup: string; contextOutcome: string; contextSensitivity: boolean;
   chronologySection: string; gdpQuarter: string; ctCounty: string;
+  transitionRegion: string; territoryEdition: string; mortalityForecastCountry: string;
   laborSector: string; laborCountry: string; laborWindow: string; occupationGroup: string; occupationOutcome: string;
   measurementSection: string; learningSubject: string; instructionGroup: string; hoursYear: number;
   view: View; metric: string; primary: string; comparison: string; year: number;
