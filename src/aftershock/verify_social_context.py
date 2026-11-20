@@ -178,6 +178,10 @@ def verify_context(data: dict, source: str, public_raw: Path | None = None) -> d
                         "Social context output exposed unreleased fields")
                 test[identity] = {}
                 for label, active in (("primary", np.ones(len(age), dtype=bool)), ("birthday_sensitivity", ok)):
+                    reported = recorded[label]
+                    if reported["suppressed"]:
+                        require(all(v is None for k, v in reported.items() if k != "suppressed"),
+                                "Social context suppressed cell exposed a protected estimate or denominator")
                     value, reps = cell(eligible, bands, active, answered, positive, weights, standard, bridge)
                     compare(recorded[label], value, "social standardized proportion or suppression")
                     test[identity][label] = value, reps
