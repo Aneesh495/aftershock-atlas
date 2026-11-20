@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "months": [
+    "2020-09",
+    "2021-09",
+    "2022-09"
+  ],
+  "sources": {
+    "cps_basic_202009": {
+      "archive_member": "sep20pub.dat",
+      "record_width": 1000
+    },
+    "cps_covid_202009": {
+      "archive_member": "sep20cpucvd.txt",
+      "record_width": 20
+    },
+    "cps_basic_202109": {
+      "archive_member": "sep21pub.dat",
+      "record_width": 1000
+    },
+    "cps_covid_202109": {
+      "archive_member": "sep21cpucvd.txt",
+      "record_width": 19
+    },
+    "cps_basic_202209": {
+      "archive_member": "sep22pub.dat",
+      "record_width": 1000
+    },
+    "cps_covid_202209": {
+      "archive_member": "sep22cpucvd.txt",
+      "record_width": 19
+    }
+  },
+  "fields": {
+    "basic": {
+      "month": [
+        16,
+        17
+      ],
+      "year": [
+        18,
+        21
+      ],
+      "age": [
+        122,
+        123
+      ],
+      "person_type": [
+        161,
+        162
+      ],
+      "employment": [
+        180,
+        181
+      ],
+      "industry": [
+        482,
+        483
+      ],
+      "occupation": [
+        486,
+        487
+      ],
+      "household_key": [
+        815,
+        819
+      ],
+      "person_key": [
+        820,
+        821
+      ],
+      "supplement_weight": [
+        613,
+        622
+      ],
+      "composite_weight": [
+        846,
+        855
+      ]
+    },
+    "covid": {
+      "month": [
+        8,
+        9
+      ],
+      "year": [
+        10,
+        11
+      ],
+      "household_key": [
+        1,
+        5
+      ],
+      "person_key": [
+        6,
+        7
+      ],
+      "telework": [
+        12,
+        13
+      ],
+      "unable_to_work": [
+        14,
+        15
+      ]
+    }
+  },
+  "occupations": {
+    "1": "Management, business, and financial occupations",
+    "2": "Professional and related occupations",
+    "3": "Service occupations",
+    "4": "Sales and related occupations",
+    "5": "Office and administrative support occupations",
+    "6": "Farming, fishing, and forestry occupations",
+    "7": "Construction and extraction occupations",
+    "8": "Installation, maintenance, and repair occupations",
+    "9": "Production occupations",
+    "10": "Transportation and material moving occupations"
+  },
+  "industries": {
+    "1": "Agriculture, forestry, fishing, and hunting",
+    "2": "Mining",
+    "3": "Construction",
+    "4": "Manufacturing",
+    "5": "Wholesale and retail trade",
+    "6": "Transportation and utilities",
+    "7": "Information",
+    "8": "Financial activities",
+    "9": "Professional and business services",
+    "10": "Educational and health services",
+    "11": "Leisure and hospitality",
+    "12": "Other services",
+    "13": "Public administration"
+  },
+  "minimum_complete": 100,
+  "minimum_both_outcomes": 10,
+  "practical_pp": 5,
+  "weight_divisor": 10000,
+  "recall_days": 28,
+  "telework_comparators": {
+    "2020-09": {
+      "value": 22.7,
+      "url": "https://www.bls.gov/news.release/archives/empsit_10022020.htm"
+    },
+    "2021-09": {
+      "value": 13.2,
+      "url": "https://www.bls.gov/news.release/archives/empsit_10082021.htm"
+    },
+    "2022-09": {
+      "value": 5.2,
+      "url": "https://www.bls.gov/news.release/archives/empsit_10072022.htm"
+    }
+  },
+  "provider_agreement_pp": 0.2,
+  "population": "Currently employed civilian respondents ages 16 or older in the US basic Current Population Survey",
+  "limitations": [
+    "Different sampled populations in each snapshot. No individual linking across months.",
+    "Questions refer to the previous four weeks and name the pandemic as the stated reason.",
+    "Weighted survey estimates omit full design sampling intervals. Item bounds describe missing responses only.",
+    "Within-group occupational and industrial contrasts do not identify infection risk or an intervention effect."
+  ]
+}
