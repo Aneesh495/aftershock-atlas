@@ -155,13 +155,18 @@ def coverage_figure(scores):
     return d, lookup, data
 
 
-def build(output, publication_source):
+def build(output, publication_source, addendum=None, extension_receipt=None):
     s = styles()
     thesis = ROOT / 'docs/THESIS.md'
     score_path = ROOT / 'client/public/data/history-scores.json'
-    index = json.loads((ROOT / 'client/public/data/index.json').read_text())
-    source = index['source_commit']
     scores = json.loads(score_path.read_text())
+    source = scores['source']
+    sources = json.loads(extension_receipt.read_text()) if extension_receipt else None
+    if (addendum is None) != (sources is None):
+        raise ValueError('The evidence update needs both its text and a verified extension receipt')
+    if sources and 'mortality_calibration' not in sources['verification']:
+        raise ValueError('The evidence update requires the independent mortality calibration receipt')
+    cover_date = '20 NOVEMBER 2026' if sources else '12 NOVEMBER 2026'
     assert scores['completed_configurations'] == 66 and scores['prediction_rows'] == 42097
     figure, lookup, data = coverage_figure(scores['scores'])
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -179,13 +184,21 @@ def build(output, publication_source):
     body = s['BodyResearch']
     flow = [Spacer(1, 58), Paragraph('AFTERSHOCK<br/>ATLAS', ParagraphStyle('cover', fontName='Times-Roman', fontSize=46, leading=47, textColor=GREEN)),
             Spacer(1, 16), Paragraph('Pandemic trajectories, measurement<br/>and the limits of comparison', ParagraphStyle('subtitle', fontName='Helvetica', fontSize=16, leading=23, textColor=INK)),
-            Spacer(1, 24), Paragraph('RESEARCH PREVIEW / 12 NOVEMBER 2026', s['ResearchSmall']),
+            Spacer(1, 24), Paragraph('RESEARCH PREVIEW / ' + cover_date, s['ResearchSmall']),
             Paragraph('<b>Full acceptance is incomplete.</b>', body),
             Paragraph('This paper preserves failed forecasts, unsupported comparisons and missing evidence. It provides population-level research and no clinical or personal-risk recommendations.', body), Spacer(1, 18)]
-    flow.append(table([['Evidence identity', 'Frozen value'], ['Scientific executable', source], ['Snapshot publication', publication_source],
-        ['Diagnostic', 'history-final-clean-20261112 / passed / 19 tamper cases rejected'],
-        ['Full profile', 'history-final-full-20261112 / exit 1 / seven incomplete gates'],
-        ['Source partitions', '22 core + 2 survey + 43 historical partitions; not independent samples']], [138, 386], s))
+    cover_rows = [['Evidence identity', 'Frozen value'], ['V3 scientific executable', source],
+                  ['Snapshot publication', publication_source],
+                  ['V3 diagnostic', 'history-final-clean-20261112 / passed / 19 tamper cases rejected'],
+                  ['V3 full profile', 'history-final-full-20261112 / exit 1 / seven incomplete gates']]
+    if sources:
+        cover_rows.extend([
+            ['Extension scientific executable', sources['source']],
+            ['Extension checks', f"{sources['command_count']} stages, "
+             f"{sources['negative_controls']['rejected']} tamper cases rejected"],
+            ['Unresolved campaign gates', ', '.join(record['gate'] for record in sources['remaining_gates'])],
+        ])
+    flow.append(table(cover_rows, [158, 366], s))
     flow.extend([Spacer(1, 14), Paragraph('Original source code is MIT licensed. WHO excess-mortality-derived material retains CC BY-NC-SA 3.0 IGO terms; other data retain their source-specific licenses. See the repository DATA_RIGHTS.md. This noncommercial paper contains no respondent records or individual genomes.', s['ResearchSmall']), PageBreak(),
         Paragraph('Read the uncertainty first', s['ResearchH1']),
         Paragraph('Every learned outcome undercovers its nominal interval in the historical exercise. Mortality and life expectancy have eligible archived targets only for 2022. Better CRPS does not establish reliable uncertainty.', body), figure])
@@ -197,6 +210,11 @@ def build(output, publication_source):
         Paragraph('Figure 1. Empirical coverage of nominal 90% historical predictive intervals. The seed range is not a confidence interval. Raw values are in the companion historical-coverage.csv. Run: history-final-clean-20261112. Source: ' + source + '.', s['ResearchSmall']),
         Paragraph('The learned GDP CRPS is 41.27% worse than its validation-selected baseline. Only routine DTP meets the registered practical improvement criterion. These exploratory comparisons reuse previously inspected calendar outcomes and do not isolate causal pandemic effects.', body), PageBreak()])
     flow.extend(markdown_flow(thesis.read_text(), s))
+    if addendum:
+        flow.extend([PageBreak(), Paragraph('Extension evidence', s['ResearchH1']),
+                     Paragraph('Scientific source: ' + sources['source'] + '. Research campaign: '
+                               + sources['runner'] + '.', s['ResearchSmall'])])
+        flow.extend(markdown_flow(addendum.read_text(), s))
     flow.extend([Spacer(1, 10), Paragraph('Artifact provenance', s['ResearchH1']),
         Paragraph('Scientific source: ' + source + '. Snapshot publication: ' + publication_source + '. Thesis Markdown SHA256: ' + sha(thesis) + '. Score partition SHA256: ' + sha(score_path) + '.', s['ResearchSmall'])])
     links = list(dict.fromkeys(re.findall(r'\[([^\]]+)\]\((https?://[^)]+)\)', thesis.read_text())))
@@ -222,6 +240,9 @@ def build(output, publication_source):
     receipt = {'scientific_source': source, 'publication_source': publication_source, 'thesis_markdown_sha256': sha(thesis),
         'score_partition_sha256': sha(score_path), 'figure_data_sha256': sha(csv_path), 'authoring_code_sha256': sha(Path(__file__)),
         'pdf_sha256': sha(output), 'full_acceptance': False, 'figure_rows': 18}
+    if sources:
+        receipt.update(extension_scientific_source=sources['source'], extension_campaign=sources['runner'],
+                       extension_receipt_sha256=sha(extension_receipt), addendum_sha256=sha(addendum))
     (output.parent / 'ARTIFACT.json').write_text(json.dumps(receipt, indent=2) + '\n')
     print(json.dumps(receipt, indent=2))
 
@@ -230,5 +251,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT / 'docs/paper/aftershock-thesis.pdf')
     parser.add_argument('--publication-source', default=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip())
+    parser.add_argument('--addendum', type=Path)
+    parser.add_argument('--extension-receipt', type=Path)
     args = parser.parse_args()
-    build(args.output, args.publication_source)
+    build(args.output, args.publication_source, args.addendum, args.extension_receipt)
