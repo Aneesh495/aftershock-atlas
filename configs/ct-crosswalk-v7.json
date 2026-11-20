@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "state": "09",
+  "population_day": "2020-04-01",
+  "levels": {
+    "state": "040",
+    "old_county": "050",
+    "municipality": "060"
+  },
+  "archive_members": [
+    "ctgeo2020.pl",
+    "ct000012020.pl",
+    "ct000022020.pl",
+    "ct000032020.pl"
+  ],
+  "geo_indices": {
+    "summary": 2,
+    "logical_record": 7,
+    "geoid": 9,
+    "state": 12,
+    "county": 14,
+    "name": 86,
+    "population": 90
+  },
+  "p1_indices": {
+    "logical_record": 4,
+    "population": 5
+  },
+  "relationship_rows": 174,
+  "municipalities": 169,
+  "water_relationships": 5,
+  "water_geographies": 4,
+  "planning_benchmarks": {
+    "09110": 976248,
+    "09120": 325778,
+    "09130": 174225,
+    "09140": 450376,
+    "09150": 95348,
+    "09160": 112503,
+    "09170": 570487,
+    "09180": 280430,
+    "09190": 620549
+  },
+  "state_benchmark": 3605944,
+  "notice_date": "2022-06-06",
+  "tiger_boundary_date": "2022-01-01",
+  "tiger_release_date": "2022-09-30",
+  "acs_vintage": "2022, except mixed CBSA-county summary levels in the 2018\u20132022 ACS use earlier county boundaries",
+  "population_basis": "2020 Census resident population, with people assigned through their whole municipality",
+  "limitation": "Shares apply to the April 2020 resident-population crosswalk. County-only event counts cannot be exactly transferred. No weights for mortality by place of occurrence."
+}
