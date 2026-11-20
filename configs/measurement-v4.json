@@ -1,0 +1,252 @@
+{
+  "census": {
+    "age_bands": [
+      [
+        18,
+        29
+      ],
+      [
+        30,
+        39
+      ],
+      [
+        40,
+        49
+      ],
+      [
+        50,
+        59
+      ],
+      [
+        60,
+        69
+      ],
+      [
+        70,
+        79
+      ],
+      [
+        80,
+        120
+      ]
+    ],
+    "design_factor": 0.05,
+    "eligibility": "ENROLL1",
+    "eligible_code": 1,
+    "gender_labels": {
+      "1": "Male",
+      "2": "Female"
+    },
+    "interval_critical_value": 1.959963984540054,
+    "items": {
+      "TEACH1": "In-person classes cancelled",
+      "TEACH2": "Classes moved online",
+      "TEACH3": "Paper materials sent home",
+      "TEACH4": "Classes changed in another way",
+      "TEACH5": "Schools stayed open with no change"
+    },
+    "minimum_complete": 100,
+    "minimum_outcome_count": 10,
+    "missing_code": -88,
+    "not_selected_code": -99,
+    "selected_code": 1,
+    "time_items": {
+      "TSCHLHRS": {
+        "label": "Live phone or video contact with teachers",
+        "maximum": 25
+      },
+      "TTCH_HRS": {
+        "label": "Household teaching activities",
+        "maximum": 48
+      }
+    },
+    "universe": "Adults who reported a child in their household enrolled in public or private K-12 in February 2020",
+    "week": 1
+  },
+  "hours": {
+    "admissible_statuses": [
+      "",
+      "A",
+      "E",
+      "P"
+    ],
+    "baseline_year": 2019,
+    "comparison_years": [
+      2020,
+      2022
+    ],
+    "end_year": 2024,
+    "flow": "OECD.ELS.SAE,DSD_HW@DF_AVG_ANN_HRS_WKD,1.0",
+    "key": ".HW.H_Y_PS._Z._Z.EMP.A.ACTUAL._T._Z.MEAN._Z._T",
+    "provider": "OECD",
+    "source_role": "Within-country annual sensitivity. ILO weekly and sector gaps remain distinct.",
+    "start_year": 2010,
+    "unit": "hours actually worked per employed person per year"
+  },
+  "pisa": {
+    "change_se_basis": "OECD released 2022 minus 2018 trend SE including cross-cycle link error per Annex A7",
+    "cycle_years": [
+      2015,
+      2018,
+      2022
+    ],
+    "mean_reconciliation_tolerance": 1.5,
+    "sheets": {
+      "mathematics": {
+        "change": 26,
+        "means": [
+          10,
+          12,
+          14
+        ],
+        "name": "Table I.B1.5.4"
+      },
+      "reading": {
+        "change": 30,
+        "means": [
+          12,
+          14,
+          16
+        ],
+        "name": "Table I.B1.5.5"
+      },
+      "science": {
+        "change": 22,
+        "means": [
+          8,
+          10,
+          12
+        ],
+        "name": "Table I.B1.5.6"
+      }
+    },
+    "system_row_ranges": [
+      [
+        11,
+        47
+      ],
+      [
+        53,
+        96
+      ]
+    ],
+    "systems": {
+      "Albania": "ALB",
+      "Argentina": "ARG",
+      "Australia": "AUS",
+      "Austria": "AUT",
+      "Baku (Azerbaijan)": null,
+      "Belgium": "BEL",
+      "Brazil": "BRA",
+      "Brunei Darussalam": "BRN",
+      "Bulgaria": "BGR",
+      "Cambodia": "KHM",
+      "Canada": "CAN",
+      "Chile": "CHL",
+      "Chinese Taipei": null,
+      "Colombia": "COL",
+      "Costa Rica": "CRI",
+      "Croatia": "HRV",
+      "Cyprus": "CYP",
+      "Czech Republic": "CZE",
+      "Denmark": "DNK",
+      "Dominican Republic": "DOM",
+      "El Salvador": "SLV",
+      "Estonia": "EST",
+      "Finland": "FIN",
+      "France": "FRA",
+      "Georgia": "GEO",
+      "Germany": "DEU",
+      "Greece": "GRC",
+      "Guatemala": "GTM",
+      "Hong Kong (China)": null,
+      "Hungary": "HUN",
+      "Iceland": "ISL",
+      "Indonesia": "IDN",
+      "Ireland": "IRL",
+      "Israel": "ISR",
+      "Italy": "ITA",
+      "Jamaica": "JAM",
+      "Japan": "JPN",
+      "Jordan": "JOR",
+      "Kazakhstan": "KAZ",
+      "Korea": "KOR",
+      "Kosovo": "XKX",
+      "Latvia": "LVA",
+      "Lithuania": "LTU",
+      "Macao (China)": null,
+      "Malaysia": "MYS",
+      "Malta": "MLT",
+      "Mexico": "MEX",
+      "Moldova": "MDA",
+      "Mongolia": "MNG",
+      "Montenegro": "MNE",
+      "Morocco": "MAR",
+      "Netherlands": "NLD",
+      "New Zealand": "NZL",
+      "North Macedonia": "MKD",
+      "Norway": "NOR",
+      "Palestinian Authority": null,
+      "Panama": "PAN",
+      "Paraguay": "PRY",
+      "Peru": "PER",
+      "Philippines": "PHL",
+      "Poland": "POL",
+      "Portugal": "PRT",
+      "Qatar": "QAT",
+      "Romania": "ROU",
+      "Saudi Arabia": "SAU",
+      "Serbia": "SRB",
+      "Singapore": "SGP",
+      "Slovak Republic": "SVK",
+      "Slovenia": "SVN",
+      "Spain": "ESP",
+      "Sweden": "SWE",
+      "Switzerland": "CHE",
+      "Thailand": "THA",
+      "Türkiye": "TUR",
+      "Ukrainian regions (18 of 27)": null,
+      "United Arab Emirates": "ARE",
+      "United Kingdom": "GBR",
+      "United States": "USA",
+      "Uruguay": "URY",
+      "Uzbekistan": "UZB",
+      "Viet Nam": "VNM"
+    }
+  },
+  "sources": {
+    "oecd_hours_structure": {
+      "acquired_at": "2026-11-20T19:43:49.538027+00:00",
+      "available_at": "2026-11-20T19:43:49.538050+00:00",
+      "bytes": 1270099,
+      "citation": "https://www.oecd.org/en/data/indicators/hours-worked.html",
+      "format": "xml",
+      "id": "oecd_hours_structure",
+      "limitations": "annual hours actually worked per employed person, source dimensions",
+      "max_bytes": 2000000,
+      "path": "oecd_hours_structure/6c53c48a45fd02ebe4545107141ca93a24b2624b7754c7445254bb409c3cca32.xml",
+      "redistribute": true,
+      "rights": "OECD Data terms",
+      "sha256": "6c53c48a45fd02ebe4545107141ca93a24b2624b7754c7445254bb409c3cca32",
+      "timing": "current metadata",
+      "url": "https://sdmx.oecd.org/public/rest/dataflow/OECD.ELS.SAE/DSD_HW@DF_AVG_ANN_HRS_WKD/1.0?references=all"
+    },
+    "pisa_2022_b15": {
+      "acquired_at": "2026-11-12T16:47:20.707020+00:00",
+      "available_at": "2026-11-12T16:47:20.707051+00:00",
+      "bytes": 3304663,
+      "citation": "https://www.oecd.org/en/publications/pisa-2022-results-volume-i_53f23881-en/full-report/results-for-countries-and-economies_360c8f67.html",
+      "format": "xlsx",
+      "id": "pisa_2022_b15",
+      "limitations": "Repeated cross-sectional cohorts; response, linkage and comparability cautions; no participant files",
+      "max_bytes": 20000000,
+      "path": "pisa_2022_b15/beee4303bc9c6b9a878be7589f96e79b7e9d3c31bb9a385a7fac85fa94acb009.xlsx",
+      "redistribute": true,
+      "rights": "OECD data terms; dataset-specific attribution and restrictions must be retained",
+      "sha256": "beee4303bc9c6b9a878be7589f96e79b7e9d3c31bb9a385a7fac85fa94acb009",
+      "timing": "PISA 2022 published retrospective aggregate trend table",
+      "url": "https://stat.link/wh9d4z"
+    }
+  },
+  "version": "measurement-v4"
+}
