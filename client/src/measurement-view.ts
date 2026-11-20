@@ -1,4 +1,5 @@
 import { country, read, safe, table } from './data';
+import { occupationView, sectorView } from './labor-view';
 import type { Rendered } from './atlas-view';
 import type { Index, State } from './types';
 
@@ -20,11 +21,13 @@ interface Measurement {
   remote_instruction: { rows: RecordRow[]; population: string; limitation: string };
 }
 
-type StudySection = 'learning' | 'instruction' | 'hours';
+type StudySection = 'learning' | 'instruction' | 'hours' | 'sector' | 'occupation';
 const sections = {
   learning: 'Learning assessments',
   instruction: 'US remote instruction',
   hours: 'Annual hours and GDP',
+  sector: 'Quarterly sector hours',
+  occupation: 'Occupational disruptions',
 };
 const subjects = ['mathematics', 'reading', 'science'];
 const option = (value: string, label: string, selection: string) =>
@@ -47,9 +50,29 @@ function assessmentExport(row: LearningRow): RecordRow {
 export async function measurementView(
   index: Index, state: State, signal: AbortSignal, update: (patch: Partial<State>) => void,
 ): Promise<Rendered> {
-  const data = await read<Measurement>('measurement-v4', signal);
   const section = state.measurementSection as StudySection;
-  const choices = Object.entries(sections).map(([key, text]) => option(key, text, section)).join('');
+  const choices = Object.entries(sections).filter(([key]) =>
+    (key !== 'sector' || index.files['sector-hours.json']) && (key !== 'occupation' || index.files['occupational-work.json']),
+  ).map(([key, text]) => option(key, text, section)).join('');
+  const heading = `<section class="page-heading measurement-heading"><div><div class="eyebrow">WORK AND EDUCATION</div>
+      <h1>Hours worked, instruction and learning</h1>
+      <p>Explore work hours, occupational disruptions, learning assessments and reported instruction in their own populations.</p></div>
+      <div class="measurement-selector"><label class="filter-label" for="measurement-section">Measure</label>
+      <select id="measurement-section">${choices}</select></div>
+    </section>`;
+  const bindSection = (root: HTMLElement) => {
+    const field = root.querySelector<HTMLSelectElement>('#measurement-section');
+    field?.addEventListener('change', () => update({ measurementSection: field.value }));
+  };
+  if (section === 'sector' || section === 'occupation') {
+    const labor = await (section === 'sector' ? sectorView : occupationView)(state, signal, update);
+    return {
+      html: heading + labor.html,
+      rows: labor.rows,
+      after: async root => { bindSection(root); await labor.after?.(root); },
+    };
+  }
+  const data = await read<Measurement>('measurement-v4', signal);
   let rows: RecordRow[] = [];
   let content = '';
   if (section === 'learning') {
@@ -98,16 +121,11 @@ export async function measurementView(
   }
   const provenance = { scientific_source: data.source, protocol: data.protocol, definition_sha256: data.definition_sha256 };
   return {
-    html: `<section class="page-heading measurement-heading"><div><div class="eyebrow">WORK AND EDUCATION</div>
-      <h1>Hours worked, instruction and learning</h1>
-      <p>Compare actual annual work hours and real GDP within countries. Explore measured learning and reported instruction in their own populations.</p></div>
-      <div class="measurement-selector"><label class="filter-label" for="measurement-section">Measure</label>
-      <select id="measurement-section">${choices}</select></div>
-    </section>${content}`,
+    html: heading + content,
     rows: rows.map(r => ({ ...r, ...provenance })),
     after(root) {
+      bindSection(root);
       const selectors: [string, (value: string) => Partial<State>][] = [
-        ['measurement-section', measurementSection => ({ measurementSection })],
         ['learning-subject', learningSubject => ({ learningSubject })],
         ['instruction-group', instructionGroup => ({ instructionGroup })],
         ['hours-year', value => ({ hoursYear: Number(value) })],

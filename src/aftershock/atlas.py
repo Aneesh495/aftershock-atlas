@@ -57,6 +57,12 @@ def export_atlas(build: bool = True) -> dict:
         write_json(public / "measurement-v4.json", data)
         sources.update({k: {**v, "status": "acquired"} for k, v in data["sources"].items()})
     sources.update(export_health(public))
+    for name, pin in (("sector-hours", "sector-hours-inputs"), ("occupational-work", "occupation-inputs")):
+        artifact = ROOT / f"data/results/{name}.json"
+        if artifact.exists():
+            write_json(public / f"{name}.json", read_json(artifact))
+            sources.update({key: {**value, "status": "acquired"}
+                            for key, value in read_json(ROOT / f"configs/{pin}.json").items()})
     source_cards = [{k: v for k, v in source.items() if k not in {"headers", "path"}} for source in sources.values()]
     write_json(public / "sources.json", source_cards)
     numeric = {c.numeric: c.alpha_3 for c in pycountry.countries}
