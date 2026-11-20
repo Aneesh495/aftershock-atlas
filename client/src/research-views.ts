@@ -27,11 +27,21 @@ export async function studiesView(index:Index,state:State,signal:AbortSignal,upd
 }
 
 export async function coverageView(index:Index,signal:AbortSignal):Promise<Rendered> {
-  const [excess,mobility,genetics,lineages,health]=await Promise.all([
+  function optional<T>(name:string):Promise<T|undefined> {
+    return index.files[`${name}.json`] ? read<T>(name,signal) : Promise.resolve(undefined);
+  }
+  const [excess,mobility,genetics,lineages,health,school,sector,occupation,context,gdp,ct]=await Promise.all([
     read<{countries:number;months:number}>('excess',signal),read<{country_count:number}>('mobility',signal),
     read<{aligned_variants:number}>('genetics',signal),read<{unique_selected_rows:number;suppressed_rows:number}>('lineages',signal),
     index.files['state-surveillance.json'] ? read<{jurisdictions:unknown[];
-      summary:Record<string,{weeks:number;with_reports:number;with_seven_report_dates:number}>}>('state-surveillance',signal) : undefined]);
+      summary:Record<string,{weeks:number;with_reports:number;with_seven_report_dates:number}>}>('state-surveillance',signal) : undefined,
+    optional<{learning:{rows:unknown[]}; hours:{rows:unknown[]}; remote_instruction:{rows:unknown[]}}>('measurement-v4'),
+    optional<{observations:unknown[]; comparisons:unknown[]}>('sector-hours'),
+    optional<{periods:Record<string,{rows:unknown[]}>; comparisons:unknown[]}>('occupational-work'),
+    optional<{waves:Record<string,{rows:{primary:{suppressed:boolean}}[]}>}>('social-context'),
+    optional<{editions:unknown[]; revisions:unknown[]}>('uk-vintages'),
+    optional<{municipalities:unknown[]; overlaps:unknown[]}>('ct-crosswalk'),
+  ]);
   const rows=index.coverage.map(r=>({metric:index.metrics[r.metric]?.title??r.metric,countries:r.countries,regions:r.regions,
     observed_values:r.nonmissing,all_rows:r.row_count,missing_percent:(1-r.nonmissing/r.row_count)*100,
     first:r.first_date,last:r.last_date,kind:r.kind,frequency:r.frequency}));
@@ -42,7 +52,32 @@ export async function coverageView(index:Index,signal:AbortSignal):Promise<Rende
   const healthSection = health ? `<section class="panel prose"><h2>US public health reporting coverage</h2>
     <p>Seven report dates can still contain incomplete measurements. Vaccination updates may appear less than daily.</p>
     ${table(healthRows,3)}<button class="text-button" data-view="health">Explore state reports ↗</button></section>` : '';
-  return {html:`${heading('COVERAGE & MEASUREMENT','The gaps are<br><em>part of the result.</em>','Country counts belong to individual metrics. A global health panel does not make the survey or biological evidence global.')}<div class="coverage-cards"><div><strong>${index.country_registry.length}</strong><span>country registry entries</span></div><div><strong>${format(index.record_count,0)}</strong><span>typed panel records</span></div><div><strong>${excess.countries}</strong><span>WHO modeled excess countries</span></div><div><strong>1</strong><span>survey country</span></div></div><section class="panel"><div class="panel-heading"><div><span class="eyebrow">METRIC-LEVEL INVENTORY</span><h2>Independent populations, independent counts</h2></div></div>${table(rows,100)}</section>${healthSection}<div class="two-columns"><section class="panel prose"><h2>Evidence outside the country panel</h2><ul><li>Mobility: ${mobility.country_count} country, UK national daily aggregates.</li><li>Surveys: US national and 51 state jurisdictions. No matched pre-2020 survey.</li><li>Host genetics: ${format(genetics.aligned_variants,0)} aligned selected-variant records. No national genetic trajectory model.</li><li>Viral estimates: US national archived weighted series. ${format(lineages.suppressed_rows,0)} unreliable cells are withheld.</li></ul></section><section class="panel prose"><h2>Calendar and identity limits</h2><p>Annual estimates stay annual. WHO surveillance uses report weeks. CDC mortality uses event weeks and state of occurrence. The atlas does not merge these into one daily death series.</p><p>The geography registry uses current country identifiers. Historical split and merge crosswalks remain incomplete. The map is a reference, not evidence of stable borders.</p></section></div>`,rows:[...rows,...healthRows]};
+  const extensionRows = [
+    {series:'WHO modeled excess mortality', count:excess.countries, unit:'reporting populations', scope:'Separate modeled releases', view:'studies'},
+    {series:'Mobility', count:mobility.country_count, unit:'countries', scope:'UK daily aggregate mobility', view:'studies'},
+    {series:'Host association', count:genetics.aligned_variants, unit:'aligned selected variants', scope:'Shared clinical samples', view:'biology'},
+    {series:'Viral lineages', count:lineages.unique_selected_rows, unit:'source cells', scope:`${lineages.suppressed_rows} unreliable cells withheld`, view:'biology'},
+    ...(school ? [
+      {series:'PISA trends', count:school.learning.rows.length, unit:'subject-system rows', scope:'Cycle linkage and response flags', view:'measurement'},
+      {series:'Actual annual hours', count:school.hours.rows.length, unit:'country-year rows', scope:'Annual hours per employed person', view:'measurement'},
+      {series:'Adult-reported remote instruction', count:school.remote_instruction.rows.length, unit:'subgroup rows', scope:'US Household Pulse', view:'measurement'},
+    ] : []),
+    ...(sector ? [{series:'Quarterly worker hours',count:sector.observations.length,unit:'country-sector-quarter cells',scope:'EU-27 · flag-aware',view:'measurement'}] : []),
+    ...(occupation ? [{series:'Work disruptions',count:Object.values(occupation.periods).reduce((n,p)=>n+p.rows.length,0),
+      unit:'period/group/indicator cells',scope:'US CPS public-use, three September snapshots',view:'measurement'}] : []),
+    ...(context ? [{series:'Standardized social context',count:Object.values(context.waves).reduce((n,w)=>n+w.rows.filter(row=>!row.primary.suppressed).length,0),
+      unit:'released primary estimates',scope:'US Household Pulse · two separate waves',view:'health'}] : []),
+    ...(gdp ? [{series:'UK GDP',count:gdp.editions.length,unit:'dated workbook editions',scope:`${gdp.revisions.length} reference quarters`,view:'chronology'}] : []),
+    ...(ct ? [{series:'Connecticut resident geography',count:ct.municipalities.length,unit:'municipalities',
+      scope:`${ct.overlaps.length} old-county links to planning regions`,view:'chronology'}] : []),
+  ];
+  const extensionSection = `<section class="panel prose"><h2>Study and measurement coverage</h2>
+    <p>Counts use the population and unit of each source.</p>${table(extensionRows.map(({view,...row})=>row))}
+    <div class="chart-options">${[...new Set(extensionRows.map(row=>row.view))].map(view=>
+      `<button class="text-button" data-view="${view}">${({studies:'Study register',biology:'Biological evidence',
+        measurement:'Work and education',health:'US public health',chronology:'Release dates and boundaries'} as Record<string,string>)[view]} ↗</button>`).join('')}</div>
+    </section>`;
+  return {html:`${heading('COVERAGE & MEASUREMENT','The gaps are<br><em>part of the result.</em>','Country counts belong to individual metrics. A global health panel does not make the survey or biological evidence global.')}<div class="coverage-cards"><div><strong>${index.country_registry.length}</strong><span>country registry entries</span></div><div><strong>${format(index.record_count,0)}</strong><span>typed panel records</span></div><div><strong>${excess.countries}</strong><span>WHO modeled excess countries</span></div><div><strong>1</strong><span>survey country</span></div></div><section class="panel"><div class="panel-heading"><div><span class="eyebrow">METRIC-LEVEL INVENTORY</span><h2>Independent populations, independent counts</h2></div></div>${table(rows,100)}</section>${healthSection}${extensionSection}<div class="two-columns"><section class="panel prose"><h2>Evidence outside the country panel</h2><ul><li>Mobility: ${mobility.country_count} country, UK national daily aggregates.</li><li>Surveys: US national and 51 state jurisdictions. No matched pre-2020 survey.</li><li>Host genetics: ${format(genetics.aligned_variants,0)} aligned selected-variant records. No national genetic trajectory model.</li><li>Viral estimates: US national archived weighted series. ${format(lineages.suppressed_rows,0)} unreliable cells are withheld.</li></ul></section><section class="panel prose"><h2>Calendar and identity limits</h2><p>Annual estimates stay annual. WHO surveillance uses report weeks. CDC mortality uses event weeks and state of occurrence. The atlas does not merge these into one daily death series.</p><p>The geography registry uses current country identifiers. Historical split and merge crosswalks remain incomplete. The map is a reference, not evidence of stable borders.</p></section></div>`,rows:[...rows,...healthRows,...extensionRows]};
 }
 
 export async function biologyView(signal:AbortSignal):Promise<Rendered> {
