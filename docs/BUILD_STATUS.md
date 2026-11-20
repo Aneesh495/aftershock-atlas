@@ -46,3 +46,9 @@ The [requirement and artifact map](COVERAGE_GAPS.md) also records absent tests, 
 ## Work and education execution
 
 The [work and education report](MEASUREMENT_RESULTS_V4.md) records actual annual-hours, PISA and adult remote-instruction estimates. The [clean Linux full run](https://github.com/Aneesh495/aftershock-atlas/actions/runs/44809921182) at `13e35cdb95bbe256e2ed5a79d3e64b74a8f6c72b` completed 13 commands, independently replayed 443 new rows, rejected all 23 tamper cases and exited 1 on the seven incomplete domain gates. The archived V3 table above retains the status of its own executable. The public work and education view passed tested widths of 320, 390 and 1280 pixels. The 137 downloaded CSV rows matched the published data and source identities. [V4 execution and browser receipt](MEASUREMENT_RECEIPT_V4.json).
+
+## Public health and labor checkpoints
+
+The public health replay at `8808b6fb129899a7bb6445607c866570d8d4c903` completed 17 commands and independently verified 29,376 state-weeks and 66 survey cells. It rejected 28 tampered bundles and exited 1 on remaining gates. G06 has passing evidence from the two later survey waves. Live exports matched 138 rows, and tested 320 and 390 pixel layouts had no page overflow. [Public health report](SURVEILLANCE_RESULTS_V5.md) and [exact replay receipt](SURVEILLANCE_RECEIPT_V5.json).
+
+The current published scientific data at `2fc48f28d71f63ce225bff24f94cbff0714d5513` add occupational disruptions and flag-aware quarterly actual hours. Independent local replay checked every occupation cell and Eurostat cube/contrast cell. All 12 bounded study tables are populated. The full Linux campaign is separately tracked. [Labor report](LABOR_RESULTS_V6.md) and [Linux campaign](https://github.com/Aneesh495/aftershock-atlas/actions/runs/44816168837).
