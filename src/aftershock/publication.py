@@ -8,7 +8,7 @@ import shutil
 
 from .io import ROOT, digest, read_json, write_json
 from .resources import usage
-from .verification import verify_bundle
+from .verification import REQUIRED_NEGATIVE_CONTROLS, verify_bundle
 
 
 def package_release(evidence: str | None) -> dict:
@@ -17,8 +17,8 @@ def package_release(evidence: str | None) -> dict:
     bundle = Path(evidence).resolve()
     source = read_json(bundle / "SOURCE_INPUTS.json")["commit"]
     verification = verify_bundle(bundle, source)
-    if len(read_json(bundle / "negative-controls.json")["controls"]) < 23:
-        raise ValueError("Twenty-three recorded negative controls required before packaging")
+    if len(read_json(bundle / "negative-controls.json")["controls"]) < REQUIRED_NEGATIVE_CONTROLS:
+        raise ValueError(f"At least {REQUIRED_NEGATIVE_CONTROLS} recorded negative controls required before packaging")
     usage(250_000_000)
     output = ROOT / "releases"
     output.mkdir(exist_ok=True)

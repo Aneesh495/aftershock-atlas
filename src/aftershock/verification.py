@@ -18,6 +18,14 @@ from scipy.special import erf
 from .io import ROOT, contained, digest, read_json
 
 
+CAMPAIGN_STAGES = (
+    "panel", "history-panel", "fit", "dynamic", "history-fit", "forecasts", "causal",
+    "measurement-data", "measurement", "surveillance-data", "surveillance",
+    "studies", "history-atlas", "atlas",
+)
+REQUIRED_NEGATIVE_CONTROLS = 26
+
+
 def require(condition: bool, reason: str) -> None:
     if not condition:
         raise ValueError(reason)
@@ -41,7 +49,7 @@ def trusted_inputs(expected: str) -> dict:
     subprocess.run(["git", "cat-file", "-e", expected + "^{commit}"], cwd=ROOT, check=True, capture_output=True)
     names = subprocess.check_output(["git", "ls-tree", "-r", "--name-only", expected], cwd=ROOT, text=True).splitlines()
     selected = [p for p in names if p.startswith(("src/", "configs/", "client/src/", "tests/", "scripts/", ".github/")) or p in
-                {"pyproject.toml", "uv.lock", "client/package-lock.json", "client/package.json", "client/index.html", "Makefile", "docs/EXPERIMENT_PLAN.md", "docs/EXTENSION_PLAN_V2.md", "docs/HISTORICAL_PLAN_V3.md", "docs/MEASUREMENT_PLAN_V4.md"}]
+                {"pyproject.toml", "uv.lock", "client/package-lock.json", "client/package.json", "client/index.html", "Makefile", "docs/EXPERIMENT_PLAN.md", "docs/EXTENSION_PLAN_V2.md", "docs/HISTORICAL_PLAN_V3.md", "docs/MEASUREMENT_PLAN_V4.md", "docs/SURVEILLANCE_PLAN_V5.md"}]
     result = {}
     for name in selected:
         content = subprocess.check_output(["git", "show", f"{expected}:{name}"], cwd=ROOT)
@@ -342,6 +350,12 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
         require((ROOT / name).is_file() and digest(ROOT / name) == checksum, "Verifier runtime source mismatch: " + name)
     acceptance = read_json(bundle / "ACCEPTANCE.json")
     complete = verify_declared_scope(acceptance)
+    commands = [json.loads(line) for line in (bundle / "COMMANDS.jsonl").read_text().splitlines()]
+    require(tuple(r["stage"] for r in commands) == (*CAMPAIGN_STAGES, "correctness")
+            and all(r["exit"] == 0 for r in commands), "Required command missing or failed")
+    from .verify_surveillance import verify_surveillance
+    surveillance = verify_surveillance(read_json(bundle / "state-surveillance.json"),
+                                       bundle / "state-surveillance-raw", expected_source)
     datasets = read_json(bundle / "DATASETS.json")
     for source_id, data in datasets["sources"].items():
         trusted_data = read_json(ROOT / "configs/data-inputs.json")[source_id]
@@ -358,11 +372,9 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
     historical = verify_history(bundle, annual)
     from .verify_measurement import verify_measurement
     measurement = verify_measurement(bundle, annual, expected_source)
-    commands = [json.loads(line) for line in (bundle / "COMMANDS.jsonl").read_text().splitlines()]
-    require(len(commands) >= 5 and all(r["exit"] == 0 for r in commands), "Required command missing or failed")
     if acceptance["profile"] == "full" and require_domain_gates:
         require(complete, "Full profile has incomplete domain gates")
     status = "passed" if acceptance["profile"] == "diagnostic" or complete else "source_checks_passed_full_incomplete"
     return {"status": status, "profile": acceptance["profile"], "source": expected_source,
             "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain, "extension": extension, "historical": historical,
-            "measurement": measurement, "full_acceptance": acceptance["profile"] == "full" and complete}
+            "measurement": measurement, "state_surveillance": surveillance, "full_acceptance": acceptance["profile"] == "full" and complete}
