@@ -31,14 +31,14 @@ def gates(bundle: Path | None = None) -> list[dict]:
     studies = read_json(ROOT / "data/results/studies.json")
     coverage = {r["metric"]: r for r in panel["coverage"]}
     definitions = [
-        ("G01", "passed", "22 core, 2 survey and 43 historical input partitions; metric-level coverage and separate rights", "DATASETS.json"),
+        ("G01", "passed", "Pinned core, history, work and education, state surveillance and survey inputs; separate rights and coverage", "DATASETS.json"),
         ("G02", "blocked", "Official archive-month editions present; original cell release-day and historical territory validation incomplete", "observations.csv"),
         ("G03", "passed", "Independent source-parser, matched annual denominators and direct age-standardization replay", "age-replay.json"),
         ("G04", "passed", f"{coverage['covid_deaths']['countries']} surveillance countries; real multiyear health and economic panel", "observations.csv"),
         ("G05", "passed", "WHO 2022 and 2023 modeled excess releases, input support and changed age bands retained", "excess.json"),
-        ("G06", "blocked", "Week 1 replicate weights and nonresponse sensitivity replayed; later-wave design auditing remains incomplete", "surveys.json"),
+        ("G06", "passed", "Weeks 1, 33 and 34 design replay. Nonresponse bounds and separate seven- and fourteen-day symptom estimates", "survey-bridge.json"),
         ("G07", "blocked", "Verified annual hours, learning and remote instruction use distinct populations; ILO weekly hours and sector checks remain incomplete", "measurement-v4.json"),
-        ("G08", "unverified", "Provider-released US subgroup estimates retain labels and suppression; independent subgroup denominator audit incomplete", "surveys.json"),
+        ("G08", "unverified", "US race and income denominators replayed separately by wave; age-standardized subgroup and broader social context incomplete", "surveys.json"),
         ("G09", "passed", "Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit", "genetics.json"),
         ("G10", "blocked", f"{fit['completed_configurations']} original configurations plus 66 archive configurations; release-day proof and pandemic calibration remain incomplete", "history-fit.json"),
         ("G11", "passed", "Real candidate group-time analyses, pretrends, pseudo-onsets and unsupported cells", "causal.json"),
@@ -89,6 +89,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
     assemble_history(bundle)
     assemble_measurement(bundle)
     assemble_surveillance(bundle)
+    shutil.copyfile(results / "survey-bridge.json", bundle / "survey-bridge.json")
     source_files = trusted_inputs(source)
     write_json(bundle / "SOURCE_INPUTS.json", {"commit": source, "files": source_files, "protocol_sha256": digest(ROOT / "docs/EXPERIMENT_PLAN.md")})
     sources = read_json(ROOT / "configs/data-inputs.json")
@@ -298,6 +299,10 @@ def negative_controls(bundle: Path, source: str) -> dict:
     mutate("vaccine-report-date", surveillance, json_change(lambda x: next(
         r["latest_report"] for r in x["states"]["CA"]["vaccination"] if r["latest_report"]
     ).update(report_date="2020-01-01")), "Surveillance value changed")
+    mutate("survey-bridge-recall", "survey-bridge.json", json_change(
+        lambda x: x["waves"]["34"]["wave"].update(recall_days=7)), "Survey bridge recall")
+    mutate("survey-bridge-weight", "survey-bridge.json", json_change(
+        lambda x: x["waves"]["33"]["rows"][0].update(denominator=1)), "Survey bridge value changed")
     result = {"controls": receipts, "rejected": len(receipts), "source": source}
     write_json(bundle / "negative-controls.json", result)
     make_manifest(bundle)

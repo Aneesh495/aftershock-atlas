@@ -156,10 +156,21 @@ def run_studies() -> dict:
            "measurement_protocol": measurement["definition_sha256"],
            "remote_instruction_available": True, "learning_assessment_available": True,
            }, "PISA score changes vary by system and subject, with both increases and declines. US adults reported several overlapping instruction arrangements. These sources describe distinct populations and permit descriptive comparisons.", "bounded_analysis")
-    result(10, survey["phase_changes"], {"states": survey["state_count"], "phases": survey["phases"],
-           "suppressed": survey["suppressed"], "independent_weight_recomputation": "week_1_only",
-           "weight_point_matches": survey["design_replay"]["point_matches"], "weight_point_comparisons": survey["design_replay"]["point_comparisons"]},
-           "Within-phase published symptom estimates vary across US groups and states. A separate week 1 public-use replay audits person and replicate weights and source-defined subgroup denominators. Later weights, nonresponse bias and cross-wave covariance remain unresolved. The question reference period changes in July 2021.", "partial_design_support")
+    bridge = read_json(directory / "survey-bridge.json")
+    bridge_rows = [
+        {**row, "recall_days": wave["wave"]["recall_days"], "event_start": wave["wave"]["start"],
+         "event_end": wave["wave"]["end"], "income_reference_year": wave["wave"]["income_year"],
+         "weighted_unit_response_percent": wave["wave"]["weighted_unit_response_percent"],
+         "source_sha256": wave["source_sha256"]}
+        for wave in bridge["waves"].values() for row in wave["rows"]
+    ]
+    result(10, bridge_rows, {
+           "published_phase_states": survey["state_count"], "published_phase_inventory": survey["phases"],
+           "design_waves": [1, 33, 34], "two_wave_replayed_cells": len(bridge_rows),
+           "bridge_provider_comparisons": sum(r.get("provider_value") is not None for r in bridge_rows),
+           "bridge_provider_point_matches": sum(r.get("provider_agreement") is True for r in bridge_rows),
+           "definition_sha256": bridge["definition_sha256"],
+           }, "Separate week 33 and 34 estimates use person and replicate weights, item-missingness bounds and unit-nonresponse scenarios. The recall period expands from seven to fourteen days and the income question advances its reference year. Provider comparison discrepancies remain visible; the estimates do not identify a change in underlying distress.", "bounded_analysis")
     dominant = {}
     for row in lineage["rows"]:
         if row["value"] is not None and (row["week"] not in dominant or row["value"] > dominant[row["week"]]["value"]):

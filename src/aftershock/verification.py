@@ -21,9 +21,10 @@ from .io import ROOT, contained, digest, read_json
 CAMPAIGN_STAGES = (
     "panel", "history-panel", "fit", "dynamic", "history-fit", "forecasts", "causal",
     "measurement-data", "measurement", "surveillance-data", "surveillance",
+    "survey-bridge-data", "survey-bridge",
     "studies", "history-atlas", "atlas",
 )
-REQUIRED_NEGATIVE_CONTROLS = 26
+REQUIRED_NEGATIVE_CONTROLS = 28
 
 
 def require(condition: bool, reason: str) -> None:
@@ -372,9 +373,22 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
     historical = verify_history(bundle, annual)
     from .verify_measurement import verify_measurement
     measurement = verify_measurement(bundle, annual, expected_source)
+    from .verify_survey_bridge import verify_survey_bridge
+    bridge = read_json(bundle / "survey-bridge.json")
+    bridge_replay = verify_survey_bridge(bridge, bundle / datasets["sources"]["survey"]["bundle_path"], expected_source)
+    studies = read_json(bundle / "studies.json")["studies"]
+    bridge_rows = [
+        {**row, "recall_days": wave["wave"]["recall_days"], "event_start": wave["wave"]["start"],
+         "event_end": wave["wave"]["end"], "income_reference_year": wave["wave"]["income_year"],
+         "weighted_unit_response_percent": wave["wave"]["weighted_unit_response_percent"],
+         "source_sha256": wave["source_sha256"]}
+        for wave in bridge["waves"].values() for row in wave["rows"]
+    ]
+    require(next(s for s in studies if s["id"] == "S10")["table"] == bridge_rows,
+            "Study symptom results differ from the independently verified survey bridge")
     if acceptance["profile"] == "full" and require_domain_gates:
         require(complete, "Full profile has incomplete domain gates")
     status = "passed" if acceptance["profile"] == "diagnostic" or complete else "source_checks_passed_full_incomplete"
     return {"status": status, "profile": acceptance["profile"], "source": expected_source,
             "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain, "extension": extension, "historical": historical,
-            "measurement": measurement, "state_surveillance": surveillance, "full_acceptance": acceptance["profile"] == "full" and complete}
+            "measurement": measurement, "state_surveillance": surveillance, "survey_bridge": bridge_replay, "full_acceptance": acceptance["profile"] == "full" and complete}
