@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "waves": {
+    "33": {
+      "phase": "3.1",
+      "start": "2021-06-23",
+      "end": "2021-07-05",
+      "release": "2021-07-14",
+      "recall_days": 7,
+      "income_year": 2019,
+      "responses": 66262,
+      "invited_households": 1042285,
+      "weighted_unit_response_percent": 6.3
+    },
+    "34": {
+      "phase": "3.2",
+      "start": "2021-07-21",
+      "end": "2021-08-02",
+      "release": "2021-08-11",
+      "recall_days": 14,
+      "income_year": 2020,
+      "responses": 64562,
+      "invited_households": 1042642,
+      "weighted_unit_response_percent": 6.1
+    }
+  },
+  "person_replicates": 80,
+  "variance_factor": 0.05,
+  "confidence_level": 0.95,
+  "minimum_complete": 100,
+  "minimum_in_each_outcome": 10,
+  "maximum_relative_standard_error": 0.3,
+  "provider_agreement_pp": 0.15,
+  "subgroups": {
+    "race_origin": {
+      "Hispanic or Latino": [
+        2,
+        null
+      ],
+      "Non-Hispanic White, single race": [
+        1,
+        1
+      ],
+      "Non-Hispanic Black, single race": [
+        1,
+        2
+      ],
+      "Non-Hispanic Asian, single race": [
+        1,
+        3
+      ],
+      "Non-Hispanic, other races and multiple races": [
+        1,
+        4
+      ]
+    },
+    "income": {
+      "Under $35,000": [
+        1,
+        2
+      ],
+      "$35,000 to $74,999": [
+        3,
+        4
+      ],
+      "$75,000 to $149,999": [
+        5,
+        6
+      ],
+      "$150,000 and above": [
+        7,
+        8
+      ],
+      "Income not reported": [
+        -99,
+        -88
+      ]
+    }
+  },
+  "items": {
+    "anxiety": [
+      "ANXIOUS",
+      "WORRY"
+    ],
+    "depression": [
+      "INTEREST",
+      "DOWN"
+    ]
+  },
+  "population": "Adults aged 18 or older in US housing units, with valid responses for the selected symptom scale",
+  "context": "Source-defined race and Hispanic origin categories and prior-calendar-year household income. Estimates describe adults within groups and do not isolate effects of race or income.",
+  "wave_comparability": "Separate estimates, with no pooled value or across-wave difference. Recall and income reference years changed. Different respondent samples and revisions persist."
+}
