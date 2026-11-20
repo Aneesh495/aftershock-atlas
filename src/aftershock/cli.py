@@ -9,7 +9,7 @@ import sys
 def main() -> int:
     parser = argparse.ArgumentParser(prog="aftershock")
     parser.add_argument("command", choices=["doctor", "data", "covid-data", "panel", "fit", "forecasts", "causal",
-        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance", "survey-bridge-data", "survey-bridge", "sector-hours-data", "sector-hours", "occupation-data", "occupation"])
+        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance", "survey-bridge-data", "survey-bridge", "sector-hours-data", "sector-hours", "occupation-data", "occupation", "ct-crosswalk-data", "ct-crosswalk"])
     parser.add_argument("--run-id", default="diagnostic")
     parser.add_argument("--profile", choices=["diagnostic", "full"], default="diagnostic")
     parser.add_argument("--evidence")
@@ -29,6 +29,14 @@ def main() -> int:
             if any(v == "blocked" for v in result.values()):
                 print(json.dumps(result, indent=2))
                 return 1
+        elif command == "ct-crosswalk-data":
+            from .ct_crosswalk import acquire_ct
+            result = acquire_ct()
+        elif command == "ct-crosswalk":
+            from .ct_crosswalk import build_ct
+            from .verify_ct_crosswalk import verify_ct
+            data = build_ct()
+            result = verify_ct(data, data["source"])
         elif command == "sector-hours-data":
             from .sector_hours import acquire_sectors
             result = acquire_sectors()
