@@ -25,15 +25,17 @@ def checked(raw: Path, pin: dict) -> Path:
     return file
 
 
-def read_matrix(file: Path, week: str, count: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def read_matrix(
+    file: Path, week: str, count: int, extra_demographics: tuple[str, ...] = (),
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     main = f"pulse2021_puf_{week}.csv"
     replicates = f"pulse2021_repwgt_puf_{week}.csv"
     dictionary = f"pulse2021_data.dictionary_CSV_{week}.xlsx"
     items = np.empty((count, 4), dtype=np.int16)
-    demographics = np.empty((count, 3), dtype=np.int16)
+    demographics = np.empty((count, 3 + len(extra_demographics)), dtype=np.int16)
     weights = np.empty((count, 81))
     identities = {}
-    fields = ("ANXIOUS", "WORRY", "INTEREST", "DOWN", "RHISPANIC", "RRACE", "INCOME")
+    fields = ("ANXIOUS", "WORRY", "INTEREST", "DOWN", "RHISPANIC", "RRACE", "INCOME", *extra_demographics)
     with ZipFile(file) as archive:
         members = archive.infolist()
         require(len(members) == 3 and set(archive.namelist()) == {main, replicates, dictionary}

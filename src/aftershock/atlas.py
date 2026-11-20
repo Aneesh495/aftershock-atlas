@@ -63,6 +63,19 @@ def export_atlas(build: bool = True) -> dict:
             write_json(public / f"{name}.json", read_json(artifact))
             sources.update({key: {**value, "status": "acquired"}
                             for key, value in read_json(ROOT / f"configs/{pin}.json").items()})
+    for name in ("ct-crosswalk", "uk-vintages", "social-context"):
+        artifact = ROOT / f"data/results/{name}.json"
+        if artifact.exists():
+            data = read_json(artifact)
+            if data["source"] != source_commit():
+                raise ValueError(f"Rebuild {name} at the current source before exporting it")
+            write_json(public / f"{name}.json", data)
+    if (public / "ct-crosswalk.json").exists():
+        from .chronology import chronology_pins
+        sources.update({entry["id"]: {**entry, "status": "acquired"} for entry in chronology_pins()})
+    if (public / "social-context.json").exists():
+        context_sources = read_json(ROOT / "configs/social-context-inputs.json")
+        sources.update({key: {**entry, "status": "acquired"} for key, entry in context_sources.items()})
     source_cards = [{k: v for k, v in source.items() if k not in {"headers", "path"}} for source in sources.values()]
     write_json(public / "sources.json", source_cards)
     numeric = {c.numeric: c.alpha_3 for c in pycountry.countries}

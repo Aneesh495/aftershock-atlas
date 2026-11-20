@@ -32,13 +32,13 @@ def gates(bundle: Path | None = None) -> list[dict]:
     coverage = {r["metric"]: r for r in panel["coverage"]}
     definitions = [
         ("G01", "passed", "Pinned core, history, work and education, state surveillance and survey inputs; separate rights and coverage", "DATASETS.json"),
-        ("G02", "blocked", "Official archive-month editions present; original cell release-day and historical territory validation incomplete", "observations.csv"),
+        ("G02", "blocked", "UK GDP release-day and Connecticut territorial replay verified. Original release days and geography changes across global panels remain incomplete", "uk-vintages.json"),
         ("G03", "passed", "Independent source-parser, matched annual denominators and direct age-standardization replay", "age-replay.json"),
         ("G04", "passed", f"{coverage['covid_deaths']['countries']} surveillance countries; real multiyear health and economic panel", "observations.csv"),
         ("G05", "passed", "WHO 2022 and 2023 modeled excess releases, input support and changed age bands retained", "excess.json"),
         ("G06", "passed", "Weeks 1, 33 and 34 design replay. Nonresponse bounds and separate seven- and fourteen-day symptom estimates", "survey-bridge.json"),
         ("G07", "passed", "Annual and quarterly actual hours, flag-aware sector contrasts, PISA and adult-reported instruction under separate definitions", "sector-hours.json"),
-        ("G08", "unverified", "US race and income denominators replayed separately by wave; age-standardized subgroup and broader social context incomplete", "surveys.json"),
+        ("G08", "passed", "US race and Hispanic origin, tenure and household income. Direct adult age standardization, 80 person replicates, item-response bounds and independent suppression checks", "social-context.json"),
         ("G09", "passed", "Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit", "genetics.json"),
         ("G10", "blocked", f"{fit['completed_configurations']} original configurations plus 66 archive configurations; release-day proof and pandemic calibration remain incomplete", "history-fit.json"),
         ("G11", "passed", "Real candidate group-time analyses, pretrends, pseudo-onsets and unsupported cells", "causal.json"),
@@ -92,6 +92,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
     assemble_surveillance(bundle)
     shutil.copyfile(results / "survey-bridge.json", bundle / "survey-bridge.json")
     assemble_labor(bundle)
+    assemble_chronology(bundle)
     source_files = trusted_inputs(source)
     write_json(bundle / "SOURCE_INPUTS.json", {"commit": source, "files": source_files, "protocol_sha256": digest(ROOT / "docs/EXPERIMENT_PLAN.md")})
     sources = read_json(ROOT / "configs/data-inputs.json")
@@ -184,6 +185,27 @@ def assemble_labor(bundle: Path) -> None:
     shutil.copyfile(RAW / pin["path"], bundle / "sector-hours-source.json")
     shutil.copyfile(RESULT, bundle / "sector-hours.json")
     shutil.copyfile(ROOT / "data/results/occupational-work.json", bundle / "occupational-work.json")
+
+
+
+def assemble_chronology(bundle: Path) -> None:
+    from .chronology import chronology_pins
+    from .social_context import PINS
+    from .uk_vintages import RAW
+
+    for name in ("ct-crosswalk", "uk-vintages", "social-context"):
+        shutil.copyfile(ROOT / "data/results" / f"{name}.json", bundle / f"{name}.json")
+    for pin in (*chronology_pins(), *read_json(PINS).values()):
+        if not pin["redistribute"]:
+            raise ValueError("Protected source cannot enter the public evidence bundle")
+        origin = RAW / pin["path"]
+        target = bundle / "chronology-raw" / pin["path"]
+        target.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            os.link(origin, target)
+        except OSError:
+            usage(pin["bytes"])
+            shutil.copyfile(origin, target)
 
 
 def negative_controls(bundle: Path, source: str) -> dict:
@@ -325,6 +347,22 @@ def negative_controls(bundle: Path, source: str) -> dict:
     mutate("cps-suppression-leak", "occupational-work.json", json_change(
         lambda x: next(r for r in x["periods"]["2022-09"]["rows"] if r["suppressed"]).update(complete_respondents=9)),
            "CPS worker weighting or disclosure changed")
+
+    mutate("ct-county-assignment", "ct-crosswalk.json", json_change(
+        lambda x: x["municipalities"][0].update(planning_region="09110")),
+        "Connecticut municipal allocation differs")
+    mutate("ct-event-weight-substitution", "ct-crosswalk.json", json_change(
+        lambda x: x.update(limitations="Population weights can be applied to deaths by occurrence.")),
+        "Connecticut resident weights promoted to event counts")
+    mutate("uk-forged-original-release-day", "uk-vintages.json", json_change(
+        lambda x: x["editions"][0].update(release_day="2021-10-01")),
+        "ONS release evidence detached from raw editions")
+    mutate("uk-use-future-release", "uk-vintages.json", json_change(
+        lambda x: x["as_of"][0].update(available_release=x["editions"][0]["release_id"])),
+        "ONS as-of replay selects a future or incomplete release")
+    mutate("social-context-suppression-leak", "social-context.json", json_change(
+        lambda x: next(r["primary"] for r in x["waves"]["33"]["rows"] if r["primary"]["suppressed"]).update(complete_adults=9)),
+        "Social context")
     result = {"controls": receipts, "rejected": len(receipts), "source": source}
     write_json(bundle / "negative-controls.json", result)
     make_manifest(bundle)

@@ -9,7 +9,7 @@ import sys
 def main() -> int:
     parser = argparse.ArgumentParser(prog="aftershock")
     parser.add_argument("command", choices=["doctor", "data", "covid-data", "panel", "fit", "forecasts", "causal",
-        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance", "survey-bridge-data", "survey-bridge", "sector-hours-data", "sector-hours", "occupation-data", "occupation", "ct-crosswalk-data", "ct-crosswalk"])
+        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance", "survey-bridge-data", "survey-bridge", "sector-hours-data", "sector-hours", "occupation-data", "occupation", "ct-crosswalk-data", "ct-crosswalk", "chronology-data", "uk-vintages", "social-context-data", "social-context"])
     parser.add_argument("--run-id", default="diagnostic")
     parser.add_argument("--profile", choices=["diagnostic", "full"], default="diagnostic")
     parser.add_argument("--evidence")
@@ -29,6 +29,20 @@ def main() -> int:
             if any(v == "blocked" for v in result.values()):
                 print(json.dumps(result, indent=2))
                 return 1
+        elif command == "chronology-data":
+            from .chronology import restore_chronology
+            result = restore_chronology()
+        elif command == "uk-vintages":
+            from .uk_vintages import build_uk
+            data = build_uk()
+            result = {"editions": len(data["editions"]), "origin_checks": len(data["as_of"])}
+        elif command == "social-context-data":
+            from .social_context import acquire_context
+            result = acquire_context()
+        elif command == "social-context":
+            from .social_context import build_context
+            data = build_context()
+            result = {"waves": len(data["waves"]), "cells": sum(len(w["rows"]) for w in data["waves"].values())}
         elif command == "ct-crosswalk-data":
             from .ct_crosswalk import acquire_ct
             result = acquire_ct()

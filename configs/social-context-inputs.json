@@ -1,0 +1,50 @@
+{
+  "census_food_week33": {
+    "acquired_at": "2026-11-20T21:17:57.456146+00:00",
+    "available_at": "2026-11-20T21:17:57.456179+00:00",
+    "bytes": 503793,
+    "citation": "https://www2.census.gov/programs-surveys/demo/tables/hhp/2021/wk33/food2_week33.xlsx",
+    "format": "xlsx",
+    "id": "census_food_week33",
+    "limitations": "Public household food results and age standard only",
+    "max_bytes": 4000000,
+    "path": "census_food_week33/868551be6c8ca08ad3b4267146321feb22ad95babbbfb8b9c749a753d96b082b.xlsx",
+    "redistribute": true,
+    "rights": "US government public aggregate",
+    "sha256": "868551be6c8ca08ad3b4267146321feb22ad95babbbfb8b9c749a753d96b082b",
+    "timing": "Official standard or corresponding survey wave publication",
+    "url": "https://www2.census.gov/programs-surveys/demo/tables/hhp/2021/wk33/food2_week33.xlsx"
+  },
+  "census_food_week34": {
+    "acquired_at": "2026-11-20T21:17:57.905541+00:00",
+    "available_at": "2026-11-20T21:17:57.905558+00:00",
+    "bytes": 559945,
+    "citation": "https://www2.census.gov/programs-surveys/demo/tables/hhp/2021/wk34/food1_week34.xlsx",
+    "format": "xlsx",
+    "id": "census_food_week34",
+    "limitations": "Public household food results and age standard only",
+    "max_bytes": 4000000,
+    "path": "census_food_week34/104d1fdce0538be3660b8c82e48ea546dd0dae36e686736b34e15b57413c97ef.xlsx",
+    "redistribute": true,
+    "rights": "US government public aggregate",
+    "sha256": "104d1fdce0538be3660b8c82e48ea546dd0dae36e686736b34e15b57413c97ef",
+    "timing": "Official standard or corresponding survey wave publication",
+    "url": "https://www2.census.gov/programs-surveys/demo/tables/hhp/2021/wk34/food1_week34.xlsx"
+  },
+  "nchs_2000_standard": {
+    "acquired_at": "2026-11-20T21:17:56.943037+00:00",
+    "available_at": "2026-11-20T21:17:56.943075+00:00",
+    "bytes": 92312,
+    "citation": "https://www.cdc.gov/nchs/hus/sources-definitions/age-adjustment.htm",
+    "format": "html",
+    "id": "nchs_2000_standard",
+    "limitations": "Public household food results and age standard only",
+    "max_bytes": 4000000,
+    "path": "nchs_2000_standard/ed59270b0d24d06995f6c7dcb002c421a1ceff4a62dbc131d1742b51e5a22d65.html",
+    "redistribute": true,
+    "rights": "US government public aggregate",
+    "sha256": "ed59270b0d24d06995f6c7dcb002c421a1ceff4a62dbc131d1742b51e5a22d65",
+    "timing": "Official standard or corresponding survey wave publication",
+    "url": "https://www.cdc.gov/nchs/hus/sources-definitions/age-adjustment.htm"
+  }
+}

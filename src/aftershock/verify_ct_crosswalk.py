@@ -2,13 +2,15 @@
 from __future__ import annotations
 
 from collections import Counter
+from pathlib import Path
 from zipfile import ZipFile
 
 from .io import ROOT, contained, digest, read_json
 from .verification import require
 from .verify_measurement import same
 
-def verify_ct(data: dict, source: str) -> dict:
+def verify_ct(data: dict, source: str, raw: Path | None = None) -> dict:
+    raw = raw or ROOT / "data/chronology/raw"
     definitions = ROOT / "configs/ct-crosswalk-v7.json"
     pins = ROOT / "configs/ct-crosswalk-inputs.json"
     cfg = read_json(definitions)
@@ -22,7 +24,7 @@ def verify_ct(data: dict, source: str) -> dict:
 
     paths = {}
     for key, record in read_json(pins).items():
-        path = contained(ROOT / "data/chronology/raw", record["path"])
+        path = contained(raw, record["path"])
         require(path.stat().st_size == record["bytes"] and digest(path) == record["sha256"],
                 "Connecticut raw reference mismatch")
         paths[key] = path

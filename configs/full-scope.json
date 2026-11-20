@@ -1,8 +1,7 @@
 {
   "schema_version": 1,
   "unsupported_gates": {
-    "G02": "Original cell publication days and historical territorial equivalence are unverified",
-    "G08": "Groups and denominator evidence exists for US race/Hispanic origin and income. Age-standardized subgroup and broader social context remain incomplete.",
+    "G02": "UK GDP and Connecticut are verified. Original cell publication days and historical territorial coverage remain incomplete across the global panels.",
     "G10": "Pandemic uncertainty calibration and full historical availability proof remain incomplete",
     "G13": "Required domain coverage is incomplete in the atlas"
   },
