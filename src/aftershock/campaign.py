@@ -37,7 +37,7 @@ def gates(bundle: Path | None = None) -> list[dict]:
         ("G04", "passed", f"{coverage['covid_deaths']['countries']} surveillance countries; real multiyear health and economic panel", "observations.csv"),
         ("G05", "passed", "WHO 2022 and 2023 modeled excess releases, input support and changed age bands retained", "excess.json"),
         ("G06", "blocked", "Week 1 replicate weights and nonresponse sensitivity replayed; later-wave design auditing remains incomplete", "surveys.json"),
-        ("G07", "blocked", "GDP and enrollment run; hours, remote instruction and learning assessments absent", "studies.json"),
+        ("G07", "blocked", "Verified annual hours, learning and remote instruction use distinct populations; ILO weekly hours and sector checks remain incomplete", "measurement-v4.json"),
         ("G08", "unverified", "Provider-released US subgroup estimates retain labels and suppression; independent subgroup denominator audit incomplete", "surveys.json"),
         ("G09", "passed", "Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit", "genetics.json"),
         ("G10", "blocked", f"{fit['completed_configurations']} original configurations plus 66 archive configurations; release-day proof and pandemic calibration remain incomplete", "history-fit.json"),
@@ -52,9 +52,9 @@ def gates(bundle: Path | None = None) -> list[dict]:
     if bundle is not None and (bundle / "negative-controls.json").exists():
         controls = read_json(bundle / "negative-controls.json")
         expected_source = read_json(bundle / "START.json")["source"]
-        if controls["source"] == expected_source and controls["rejected"] == len(controls["controls"]) >= 19:
+        if controls["source"] == expected_source and controls["rejected"] == len(controls["controls"]) >= 23:
             row = next(r for r in rows if r["gate"] == "G16")
-            row.update(status="passed", reason="19 actual source-matched semantic and structural tamper subprocesses rejected")
+            row.update(status="passed", reason=f"{controls['rejected']} source-matched tamper subprocesses rejected")
     return rows
 
 
@@ -87,6 +87,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
     shutil.copytree(ROOT / "data/models", bundle / "models", ignore=shutil.ignore_patterns("resume.npz", "history.json"))
     write_json(bundle / "SURVEY_INPUTS.json", read_json(ROOT / "configs/survey-inputs.json"))
     assemble_history(bundle)
+    assemble_measurement(bundle)
     source_files = trusted_inputs(source)
     write_json(bundle / "SOURCE_INPUTS.json", {"commit": source, "files": source_files, "protocol_sha256": digest(ROOT / "docs/EXPERIMENT_PLAN.md")})
     sources = read_json(ROOT / "configs/data-inputs.json")
@@ -144,6 +145,16 @@ def assemble_history(bundle: Path) -> None:
             shutil.copyfile(origin, destination)
         record["bundle_path"] = str(destination.relative_to(bundle))
     write_json(bundle / "HISTORY_INPUTS.json", sources)
+
+
+def assemble_measurement(bundle: Path) -> None:
+    from .measurement import RAW, RESULT, input_manifest, pinned_file
+
+    shutil.copyfile(RESULT, bundle / "measurement-v4.json")
+    directory = bundle / "measurement-raw"
+    directory.mkdir()
+    for key, record in input_manifest().items():
+        shutil.copyfile(pinned_file(RAW, record), directory / f"{key}.{record['format']}")
 
 
 def negative_controls(bundle: Path, source: str) -> dict:
@@ -246,6 +257,19 @@ def negative_controls(bundle: Path, source: str) -> dict:
         np.savez_compressed(stream, **arrays)
         return stream.getvalue()
     mutate("failed-replay", "models/seed-11/best.npz", bad_checkpoint, "Saved model mean replay failed")
+    measurement = "measurement-v4.json"
+    mutate("hours-unit", measurement,
+           json_change(lambda x: x["hours"]["rows"][0].update(unit="usual weekly employee hours")),
+           "Hours definition or denominator substituted")
+    mutate("hours-gdp-merge", measurement,
+           json_change(lambda x: x["hours"]["rows"][0].update(gdp_per_person_index=-100)),
+           "Hours and GDP merge population changed")
+    mutate("assessment-change-error", measurement,
+           json_change(lambda x: x["learning"]["rows"][0]["2018_to_2022_released"].update(se=0.1)),
+           "Released assessment value or standard error changed")
+    mutate("instruction-population", measurement,
+           json_change(lambda x: x["remote_instruction"]["rows"][0].update(unit="percent of students")),
+           "Remote instruction denominator unit changed")
     result = {"controls": receipts, "rejected": len(receipts), "source": source}
     write_json(bundle / "negative-controls.json", result)
     make_manifest(bundle)
@@ -261,7 +285,7 @@ def acceptance(run_id: str, profile: str) -> dict:
     source = source_commit()
     write_json(bundle / "START.json", {"source": source, "profile": profile, "at": now()})
     try:
-        for name in ("panel", "history-panel", "fit", "dynamic", "history-fit", "forecasts", "causal", "studies", "history-atlas", "atlas"):
+        for name in ("panel", "history-panel", "fit", "dynamic", "history-fit", "forecasts", "causal", "measurement-data", "measurement", "studies", "history-atlas", "atlas"):
             execute_stage(bundle, name, [sys.executable, "-m", "aftershock.cli", name])
         execute_stage(bundle, "correctness", [sys.executable, "-m", "pytest", "-q"])
         assemble(bundle, source, profile)

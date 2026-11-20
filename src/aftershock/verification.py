@@ -41,7 +41,7 @@ def trusted_inputs(expected: str) -> dict:
     subprocess.run(["git", "cat-file", "-e", expected + "^{commit}"], cwd=ROOT, check=True, capture_output=True)
     names = subprocess.check_output(["git", "ls-tree", "-r", "--name-only", expected], cwd=ROOT, text=True).splitlines()
     selected = [p for p in names if p.startswith(("src/", "configs/", "client/src/", "tests/", "scripts/", ".github/")) or p in
-                {"pyproject.toml", "uv.lock", "client/package-lock.json", "client/package.json", "client/index.html", "Makefile", "docs/EXPERIMENT_PLAN.md", "docs/EXTENSION_PLAN_V2.md", "docs/HISTORICAL_PLAN_V3.md"}]
+                {"pyproject.toml", "uv.lock", "client/package-lock.json", "client/package.json", "client/index.html", "Makefile", "docs/EXPERIMENT_PLAN.md", "docs/EXTENSION_PLAN_V2.md", "docs/HISTORICAL_PLAN_V3.md", "docs/MEASUREMENT_PLAN_V4.md"}]
     result = {}
     for name in selected:
         content = subprocess.check_output(["git", "show", f"{expected}:{name}"], cwd=ROOT)
@@ -356,6 +356,8 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
                  "dynamic_scores": verify_forecasts(bundle, annual, "dynamic-predictions.json", "dynamic.json", 6)}
     from .verify_history import verify_history
     historical = verify_history(bundle, annual)
+    from .verify_measurement import verify_measurement
+    measurement = verify_measurement(bundle, annual, expected_source)
     commands = [json.loads(line) for line in (bundle / "COMMANDS.jsonl").read_text().splitlines()]
     require(len(commands) >= 5 and all(r["exit"] == 0 for r in commands), "Required command missing or failed")
     if acceptance["profile"] == "full" and require_domain_gates:
@@ -363,4 +365,4 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
     status = "passed" if acceptance["profile"] == "diagnostic" or complete else "source_checks_passed_full_incomplete"
     return {"status": status, "profile": acceptance["profile"], "source": expected_source,
             "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain, "extension": extension, "historical": historical,
-            "full_acceptance": acceptance["profile"] == "full" and complete}
+            "measurement": measurement, "full_acceptance": acceptance["profile"] == "full" and complete}
