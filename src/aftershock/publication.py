@@ -17,8 +17,8 @@ def package_release(evidence: str | None) -> dict:
     bundle = Path(evidence).resolve()
     source = read_json(bundle / "SOURCE_INPUTS.json")["commit"]
     verification = verify_bundle(bundle, source)
-    if len(read_json(bundle / "negative-controls.json")["controls"]) < 19:
-        raise ValueError("Nineteen recorded negative controls required before packaging")
+    if len(read_json(bundle / "negative-controls.json")["controls"]) < 23:
+        raise ValueError("Twenty-three recorded negative controls required before packaging")
     usage(250_000_000)
     output = ROOT / "releases"
     output.mkdir(exist_ok=True)

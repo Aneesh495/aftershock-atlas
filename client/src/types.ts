@@ -20,8 +20,9 @@ export interface Study {
   intervals: string; alternatives: string[]; practical: string; support: string; status: string;
   conclusion: string; table: Record<string,unknown>[]; summary: Record<string,unknown>;
 }
-export type View = 'atlas' | 'studies' | 'coverage' | 'biology' | 'subnational' | 'methods' | 'sources' | 'vintages';
+export type View = 'atlas' | 'studies' | 'coverage' | 'biology' | 'subnational' | 'methods' | 'sources' | 'vintages' | 'measurement';
 export interface State {
+  measurementSection: string; learningSubject: string; instructionGroup: string; hoursYear: number;
   view: View; metric: string; primary: string; comparison: string; year: number;
   indexed: boolean; scenario: boolean; rate: boolean; study: string; subgroup: string; vintage: string; historyMetric:string; edition:string; revisionEdition:string;
 }

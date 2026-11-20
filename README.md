@@ -65,3 +65,5 @@ The independent verifier reads frozen upstream bytes, checks every included meas
 - [Contributing](docs/CONTRIBUTING.md)
 
 The source is MIT licensed. Datasets keep their own terms, including WHO excess mortality's CC BY-NC-SA 3.0 IGO terms. Public examples and releases contain no participant records or individual genomes. Lawful public-use survey bytes stay in ignored local storage for independent replay. No clinical recommendations or race-as-biology inference are included.
+
+The [work and education extension](docs/MEASUREMENT_RESULTS_V4.md) adds independent checks on OECD hours and learning assessments, plus disclosure-checked Census remote-instruction estimates.
