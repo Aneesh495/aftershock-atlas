@@ -24,9 +24,9 @@ CAMPAIGN_STAGES = (
     "survey-bridge-data", "survey-bridge",
     "sector-hours-data", "sector-hours", "occupation-data", "occupation",
     "chronology-data", "ct-crosswalk", "uk-vintages", "uk-forecast", "social-context-data", "social-context",
-    "studies", "history-atlas", "atlas",
+    "territory-audit", "mortality-calibration", "studies", "history-atlas", "atlas",
 )
-REQUIRED_NEGATIVE_CONTROLS = 39
+REQUIRED_NEGATIVE_CONTROLS = 42
 
 
 def require(condition: bool, reason: str) -> None:
@@ -402,6 +402,8 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
     from .verify_uk_vintages import verify_uk
     from .verify_social_context import verify_context
     from .verify_uk_forecast import verify_uk_forecast
+    from .verify_territory_audit import verify_territory
+    from .verify_mortality_calibration import verify_mortality
 
     chronology_raw = bundle / "chronology-raw"
     geography = verify_ct(read_json(bundle / "ct-crosswalk.json"), expected_source, chronology_raw)
@@ -409,10 +411,16 @@ def verify_bundle(path: str | Path, expected_source: str, *, require_domain_gate
     context = verify_context(read_json(bundle / "social-context.json"), expected_source, chronology_raw)
     uk_forecast = verify_uk_forecast(bundle, chronology_raw, expected_source)
     require(context["national_benchmark_agreements"] == context["waves"], "Social context national benchmarks did not reconcile")
+    territorial = verify_territory(read_json(bundle / "territory-audit.json"), expected_source)
+    mortality = verify_mortality(read_json(bundle / "mortality-calibration.json"), expected_source)
+    if next(g for g in acceptance["gates"] if g["gate"] == "G10")["status"] == "passed":
+        require(mortality["ridge_passes_observed_coverage"] and uk_forecast["prediction_checks"] == 56,
+                "Forecast gate exceeds the preregistered held-out evidence")
+
     if acceptance["profile"] == "full" and require_domain_gates:
         require(complete, "Full profile has incomplete domain gates")
     status = "passed" if acceptance["profile"] == "diagnostic" or complete else "source_checks_passed_full_incomplete"
     return {"status": status, "profile": acceptance["profile"], "source": expected_source,
             "observations": observations, "forecasts": forecasts, "replay": replay, "domain": domain, "extension": extension, "historical": historical,
-            "measurement": measurement, "state_surveillance": surveillance, "survey_bridge": bridge_replay, "sector_hours": sector_replay, "occupation": occupation_replay, "geography": geography, "uk_releases": releases, "social_context": context, "uk_forecast": uk_forecast,
+            "measurement": measurement, "state_surveillance": surveillance, "survey_bridge": bridge_replay, "sector_hours": sector_replay, "occupation": occupation_replay, "geography": geography, "uk_releases": releases, "social_context": context, "uk_forecast": uk_forecast, "territory_audit": territorial, "mortality_calibration": mortality,
             "full_acceptance": acceptance["profile"] == "full" and complete}
