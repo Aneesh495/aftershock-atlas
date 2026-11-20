@@ -9,7 +9,7 @@ import sys
 def main() -> int:
     parser = argparse.ArgumentParser(prog="aftershock")
     parser.add_argument("command", choices=["doctor", "data", "covid-data", "panel", "fit", "forecasts", "causal",
-        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance", "survey-bridge-data", "survey-bridge", "sector-hours-data", "sector-hours", "occupation-data", "occupation", "ct-crosswalk-data", "ct-crosswalk", "chronology-data", "uk-vintages", "social-context-data", "social-context", "uk-forecast"])
+        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance", "survey-bridge-data", "survey-bridge", "sector-hours-data", "sector-hours", "occupation-data", "occupation", "ct-crosswalk-data", "ct-crosswalk", "chronology-data", "uk-vintages", "social-context-data", "social-context", "uk-forecast", "territory-audit"])
     parser.add_argument("--run-id", default="diagnostic")
     parser.add_argument("--profile", choices=["diagnostic", "full"], default="diagnostic")
     parser.add_argument("--evidence")
@@ -36,6 +36,11 @@ def main() -> int:
             from .uk_vintages import build_uk
             data = build_uk()
             result = {"editions": len(data["editions"]), "origin_checks": len(data["as_of"])}
+        elif command == "territory-audit":
+            from .territory_audit import build_territory_audit
+            from .verify_territory_audit import verify_territory
+            data = build_territory_audit()
+            result = verify_territory(data, data["source"])
         elif command == "uk-forecast":
             from .uk_forecast import build_uk_forecast
             data = build_uk_forecast()
