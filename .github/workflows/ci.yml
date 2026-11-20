@@ -61,7 +61,7 @@ jobs:
         run: |
           for delay in 1 1 2 3 5 8; do
             if gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" |
-              jq -e --arg name "github-pages-$GITHUB_RUN_ATTEMPT"                 '.artifacts | any(.name == $name and (.expired | not))' >/dev/null; then
+              jq -e --arg name "github-pages-$GITHUB_RUN_ATTEMPT" '.artifacts | any(.name == $name and (.expired | not))' >/dev/null; then
               exit 0
             fi
             sleep "$delay"

@@ -37,12 +37,13 @@ def gates(bundle: Path | None = None) -> list[dict]:
         ("G04", "passed", f"{coverage['covid_deaths']['countries']} surveillance countries; real multiyear health and economic panel", "observations.csv"),
         ("G05", "passed", "WHO 2022 and 2023 modeled excess releases, input support and changed age bands retained", "excess.json"),
         ("G06", "passed", "Weeks 1, 33 and 34 design replay. Nonresponse bounds and separate seven- and fourteen-day symptom estimates", "survey-bridge.json"),
-        ("G07", "blocked", "Verified annual hours, learning and remote instruction use distinct populations; ILO weekly hours and sector checks remain incomplete", "measurement-v4.json"),
+        ("G07", "passed", "Annual and quarterly actual hours, flag-aware sector contrasts, PISA and adult-reported instruction under separate definitions", "sector-hours.json"),
         ("G08", "unverified", "US race and income denominators replayed separately by wave; age-standardized subgroup and broader social context incomplete", "surveys.json"),
         ("G09", "passed", "Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit", "genetics.json"),
         ("G10", "blocked", f"{fit['completed_configurations']} original configurations plus 66 archive configurations; release-day proof and pandemic calibration remain incomplete", "history-fit.json"),
         ("G11", "passed", "Real candidate group-time analyses, pretrends, pseudo-onsets and unsupported cells", "causal.json"),
-        ("G12", "blocked", f"{studies['count']} executed tables, {studies['partial_support']} with incomplete outcome or design support", "studies.json"),
+        ("G12", "passed" if studies["partial_support"] == 0 else "blocked",
+         f"{studies['count']} executed tables, {studies['partial_support']} with incomplete outcome or design support", "studies.json"),
         ("G13", "unverified", "Atlas implementation exists; interactive source-frozen final walkthrough must be reviewed", "browser-checks.json"),
         ("G14", "passed", "Shared disclosure boundary, provider flags and export checks", "surveys.json"),
         ("G15", "passed", "Bounded acquisitions, checkpoint resume and measured storage accounting", "ENVIRONMENT.json"),
@@ -90,6 +91,7 @@ def assemble(bundle: Path, source: str, profile: str) -> None:
     assemble_measurement(bundle)
     assemble_surveillance(bundle)
     shutil.copyfile(results / "survey-bridge.json", bundle / "survey-bridge.json")
+    assemble_labor(bundle)
     source_files = trusted_inputs(source)
     write_json(bundle / "SOURCE_INPUTS.json", {"commit": source, "files": source_files, "protocol_sha256": digest(ROOT / "docs/EXPERIMENT_PLAN.md")})
     sources = read_json(ROOT / "configs/data-inputs.json")
@@ -173,6 +175,15 @@ def assemble_surveillance(bundle: Path) -> None:
         except OSError:
             usage(record["bytes"])
             shutil.copyfile(origin, target)
+
+
+def assemble_labor(bundle: Path) -> None:
+    from .sector_hours import PINS, RAW, RESULT
+
+    pin = read_json(PINS)["eurostat_sector_hours"]
+    shutil.copyfile(RAW / pin["path"], bundle / "sector-hours-source.json")
+    shutil.copyfile(RESULT, bundle / "sector-hours.json")
+    shutil.copyfile(ROOT / "data/results/occupational-work.json", bundle / "occupational-work.json")
 
 
 def negative_controls(bundle: Path, source: str) -> dict:
@@ -303,6 +314,17 @@ def negative_controls(bundle: Path, source: str) -> dict:
         lambda x: x["waves"]["34"]["wave"].update(recall_days=7)), "Survey bridge recall")
     mutate("survey-bridge-weight", "survey-bridge.json", json_change(
         lambda x: x["waves"]["33"]["rows"][0].update(denominator=1)), "Survey bridge value changed")
+    mutate("sector-hours-denominator", "sector-hours.json", json_change(
+        lambda x: x.update(population="All employed people including absences")), "Sector-hours worker denominator changed")
+    mutate("sector-break-treatment", "sector-hours.json", json_change(
+        lambda x: next(r for r in x["comparisons"] if r["unfit_flags"]).update(change_hours=0.0)),
+           "Sector comparison or break handling changed")
+    mutate("cps-survey-denominator", "occupational-work.json", json_change(
+        lambda x: x["periods"]["2020-09"]["rows"][0].update(adult_worker_denominator=1)),
+           "CPS worker weighting or disclosure changed")
+    mutate("cps-suppression-leak", "occupational-work.json", json_change(
+        lambda x: next(r for r in x["periods"]["2022-09"]["rows"] if r["suppressed"]).update(complete_respondents=9)),
+           "CPS worker weighting or disclosure changed")
     result = {"controls": receipts, "rejected": len(receipts), "source": source}
     write_json(bundle / "negative-controls.json", result)
     make_manifest(bundle)

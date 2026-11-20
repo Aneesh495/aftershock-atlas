@@ -9,7 +9,7 @@ import sys
 def main() -> int:
     parser = argparse.ArgumentParser(prog="aftershock")
     parser.add_argument("command", choices=["doctor", "data", "covid-data", "panel", "fit", "forecasts", "causal",
-        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance", "survey-bridge-data", "survey-bridge"])
+        "studies", "atlas", "demo", "bench", "stress", "docs", "acceptance", "verify", "release", "biology", "surveys", "survey-data", "dynamic", "history-data", "history-panel", "history-fit", "history-atlas", "measurement-data", "measurement", "surveillance-data", "surveillance", "survey-bridge-data", "survey-bridge", "sector-hours-data", "sector-hours", "occupation-data", "occupation"])
     parser.add_argument("--run-id", default="diagnostic")
     parser.add_argument("--profile", choices=["diagnostic", "full"], default="diagnostic")
     parser.add_argument("--evidence")
@@ -29,6 +29,20 @@ def main() -> int:
             if any(v == "blocked" for v in result.values()):
                 print(json.dumps(result, indent=2))
                 return 1
+        elif command == "sector-hours-data":
+            from .sector_hours import acquire_sectors
+            result = acquire_sectors()
+        elif command == "sector-hours":
+            from .sector_hours import run_sectors
+            data = run_sectors()
+            result = {"source": data["source"], "quarters": len(data["observations"]), "comparisons": len(data["comparisons"])}
+        elif command == "occupation-data":
+            from .occupational_work import acquire_occupation
+            result = acquire_occupation()
+        elif command == "occupation":
+            from .occupational_work import run_occupation
+            data = run_occupation()
+            result = {"source": data["source"], "periods": list(data["periods"]), "comparisons": len(data["comparisons"])}
         elif command == "survey-bridge-data":
             from .survey_bridge import acquire_bridge
             result = acquire_bridge()
@@ -108,6 +122,12 @@ def main() -> int:
             from .survey_bridge import RESULT as BRIDGE_RESULT, run_bridge
             if not BRIDGE_RESULT.exists() or read_json(BRIDGE_RESULT)["source"] != source_commit():
                 run_bridge()
+            from .sector_hours import RESULT as SECTOR_RESULT, run_sectors
+            from .occupational_work import RESULT as OCCUPATION_RESULT, run_occupation
+            if not SECTOR_RESULT.exists() or read_json(SECTOR_RESULT)["source"] != source_commit():
+                run_sectors()
+            if not OCCUPATION_RESULT.exists() or read_json(OCCUPATION_RESULT)["source"] != source_commit():
+                run_occupation()
             result = run_studies()
         elif command == "atlas":
             from .atlas import export_atlas
