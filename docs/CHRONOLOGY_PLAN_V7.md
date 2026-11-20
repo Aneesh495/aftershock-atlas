@@ -1,0 +1,19 @@
+# Release-date and boundary verification protocol
+
+Register the historical timing and Connecticut crosswalk checks before interpreting revised values. Existing World Bank archive results retain their original monthly edition bounds.
+
+## UK real-time GDP
+
+Use Office for National Statistics series ABMI, quarterly chained-volume UK GDP at market prices. Capture official release-time workbooks and the corresponding release pages. Use the provider's first estimate and quarterly national accounts release types. Keep the date named by the statistical bulletin, the last reference quarter and the later capture timestamp separately. A dataset page shared across editions can show the latest general release date. Use a date only when the contemporaneous bulletin links the relevant dataset edition or names that archived edition. Preserve source-use conditions and any correction notice. Do not promote a later posted correction to the original vintage without a labeled source snapshot.
+
+Register exact workbook tabs, rows, release columns, workbook reference units and linked bulletin paths before reading outcome comparisons. Select consecutive archived releases where possible. At each origin, reconstruct observed inputs using only the latest validated release at or before the origin. Omit a reference quarter whose end follows the origin. Compare quarterly growth within the same release, using two consecutive quarters. Publish the change in growth when a reference quarter is revised. Avoid comparing the face value of chained-volume pounds directly across rebased editions.
+
+The first comparison is original versus later published quarterly growth, with revision size and resulting sign changes. Use 0.25 percentage points as the practical threshold. Off-window observations and unavailable cells stay visible. Preserve cases where the first usable capture is a later release. Use capped, run-specific inputs and an independent workbook cell and as-of join verifier before treating dates as covered.
+
+## Connecticut county equivalents
+
+Build a resident population crosswalk from the Census Bureau's Connecticut county-to-subdivision file and 2020 Census population at the municipal unit. Independently reconcile municipal sums to the official 2020 old county totals and to published 2020 populations for the nine planning regions. Report row and column mass balance and ambiguity for historic county-only counts. Compare Census vintage, notice date and actual adoption by data product separately.
+
+Each town with a resident population must map to exactly one old county and one planning region. Explicit zero-population geographic water units can be excluded from the person crosswalk. The overlap matrix represents April 2020 resident population. No geographic weighting of health events or applying resident weights to deaths by occurrence. Annual and state labels cannot turn Connecticut municipalities into matched event records. Retain counts for the existing state level and show where only approximate assignment is possible.
+
+Bounds are 15 MB per source, 160 MB expanded for the legacy Connecticut Census summary, and no temporary uncompressed copy. Cap official GDP workbook acquisitions at three at a time. Use [ONS ABMI real-time releases](https://www.ons.gov.uk/economy/grossdomesticproductgdp/datasets/realtimedatabaseforukgdpabmi), [ONS open data terms](https://www.ons.gov.uk/help/terms-conditions), [Census crosswalk](https://www2.census.gov/geo/docs/reference/ct_change/ct_cou_to_cousub_crosswalk.txt), [Census legacy state file](https://www2.census.gov/programs-surveys/decennial/2020/data/01-Redistricting_File--PL_94-171/Connecticut/), [planning region method](https://www2.census.gov/adrm/PDB/2024/2024_PDB_Documentation.pdf) and [Federal Register notice](https://www.federalregister.gov/documents/2022/06/06/2022-12063/change-to-county-equivalents-in-the-state-of-connecticut).
