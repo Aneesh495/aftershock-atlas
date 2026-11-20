@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "initial_release_id": "ons_abmi_2021_q3_first",
+  "training_start": "2001Q1",
+  "training_end": "2018Q4",
+  "validation_start": "2019Q1",
+  "validation_end": "2021Q3",
+  "calibration_start": "2021Q4",
+  "calibration_end": "2023Q4",
+  "evaluation_start": "2024Q1",
+  "evaluation_end": "2025Q4",
+  "nominal_coverage": 0.9,
+  "practical_minimum_covered": 7,
+  "baseline_models": ["zero", "persistence", "rolling_mean", "seasonal_naive"],
+  "ridge_penalties": [1, 10, 100],
+  "target": "Quarter-on-quarter change in UK real GDP in the first estimate, percent",
+  "scope": "UK only. Fixed rolling release origins, with one short evaluation sequence. Binomial intervals describe the counts under independence. Time dependence can make this uncertainty optimistic."
+}
