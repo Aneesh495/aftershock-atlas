@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import os
 from pathlib import Path
 from statistics import median
 from zipfile import ZipFile
@@ -11,7 +12,7 @@ from openpyxl import load_workbook
 from openpyxl.utils.cell import get_column_letter
 
 from .acquire import Source, acquire_one
-from .io import ROOT, digest, exclusive, read_json, source_commit, write_json
+from .io import ROOT, contained, digest, exclusive, read_json, source_commit, write_json
 from .resources import usage
 from .statistics import bh_adjust
 
@@ -36,12 +37,25 @@ def input_manifest() -> dict:
 def acquire_measurement() -> dict:
     """Retrieve each official source and check it against its registered bytes."""
     sources = input_manifest()
+    snapshots = read_json(ROOT / "configs/MEASUREMENT_SNAPSHOT.json")
     with exclusive(RAW / ".acquire.lock"):
         for identity, record in sources.items():
-            source = Source(**{k: record[k] for k in Source.__dataclass_fields__})
-            received = acquire_one(source, RAW)
-            if received["sha256"] != record["sha256"]:
+            local = contained(RAW, record["path"])
+            if local.exists():
+                pinned_file(RAW, record)
+                continue
+            spec = {k: record[k] for k in Source.__dataclass_fields__}
+            if identity in snapshots:
+                if not record["redistribute"]:
+                    raise ValueError("Protected measurement inputs cannot use public mirrors")
+                spec.update(id=identity + "_snapshot", url=snapshots[identity]["url"])
+            received = acquire_one(Source(**spec), RAW)
+            if (received["sha256"], received["bytes"]) != (record["sha256"], record["bytes"]):
                 raise ValueError(f"Measurement source {identity} drifted from its registered vintage")
+            restored = contained(RAW, received["path"])
+            if restored != local:
+                local.parent.mkdir(parents=True, exist_ok=True)
+                os.link(restored, local)
         write_json(RAW / "index.json", sources)
     return {key: "acquired" for key in sources}
 
