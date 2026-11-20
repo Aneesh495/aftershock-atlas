@@ -2,6 +2,8 @@
 
 A research atlas of pandemic-era trajectories across mortality, employment, economic output, education, health services, surveys, policy and aggregate biological evidence.
 
+[Open the live atlas](https://aneesh495.github.io/aftershock-atlas/) · [Preview releases](https://github.com/Aneesh495/aftershock-atlas/releases)
+
 ![Aftershock Atlas comparing US and UK mortality trajectories](docs/media/atlas-desktop.jpg)
 
 ## Run
@@ -50,7 +52,7 @@ make acceptance RUN_ID=my-diagnostic PROFILE=diagnostic
 make verify EVIDENCE=evidence/my-diagnostic
 ```
 
-The independent verifier reads frozen upstream bytes, checks every included measurement, recomputes scores, reconstructs chronological features and replays saved parameters. The current campaign defines 19 subprocess negative-control recipes, including altered archive editions, future features, GDP anchors and forged full-pass flags. Actual receipts distinguish executed controls from recipes. Full campaigns use `PROFILE=full`, execute available source checks and return nonzero while any mandatory domain gate is incomplete.
+The independent verifier reads frozen upstream bytes, checks every included measurement, recomputes scores, reconstructs chronological features and replays saved parameters. The current campaign defines 43 subprocess negative-control recipes, including altered archive editions, future features, GDP anchors, substituted browser downloads and forged full-pass flags. Actual receipts distinguish executed controls from recipes. Full campaigns use `PROFILE=full`, execute available source checks and return nonzero while any mandatory domain gate is incomplete.
 
 ## Mechanisms and research
 
@@ -67,5 +69,3 @@ The independent verifier reads frozen upstream bytes, checks every included meas
 - [Contributing](docs/CONTRIBUTING.md)
 
 The source is MIT licensed. Datasets keep their own terms, including WHO excess mortality's CC BY-NC-SA 3.0 IGO terms. Public examples and releases contain no participant records or individual genomes. Lawful public-use survey bytes stay in ignored local storage for independent replay. No clinical recommendations or race-as-biology inference are included.
-
-The [work and education extension](docs/MEASUREMENT_RESULTS_V4.md) adds independent checks on OECD hours and learning assessments, plus disclosure-checked Census remote-instruction estimates.

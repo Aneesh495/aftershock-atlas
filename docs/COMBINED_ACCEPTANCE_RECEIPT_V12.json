@@ -1,0 +1,1029 @@
+{
+  "archive_scope": "Published aggregate reports, exported browser records, stage logs and fitted model checkpoints. Raw inputs and derived panel data remain outside this runner upload.",
+  "archived_member_hashes_checked": 111,
+  "campaign": "https://github.com/Aneesh495/aftershock-atlas/actions/runs/44827315753",
+  "completed_at": "2026-11-20T22:45:59Z",
+  "completed_stages": [
+    "panel",
+    "history-panel",
+    "fit",
+    "dynamic",
+    "history-fit",
+    "forecasts",
+    "causal",
+    "measurement-data",
+    "measurement",
+    "surveillance-data",
+    "surveillance",
+    "survey-bridge-data",
+    "survey-bridge",
+    "sector-hours-data",
+    "sector-hours",
+    "occupation-data",
+    "occupation",
+    "chronology-data",
+    "ct-crosswalk",
+    "uk-vintages",
+    "uk-forecast",
+    "social-context-data",
+    "social-context",
+    "territory-audit",
+    "mortality-calibration",
+    "studies",
+    "history-atlas",
+    "atlas",
+    "correctness"
+  ],
+  "full_acceptance": false,
+  "full_campaign_command_exit": 1,
+  "gates": [
+    {
+      "artifact": "DATASETS.json",
+      "gate": "G01",
+      "reason": "Pinned core, history, work and education, state surveillance and survey inputs; separate rights and coverage",
+      "status": "passed"
+    },
+    {
+      "artifact": "territory-audit.json",
+      "gate": "G02",
+      "reason": "UK release days, Connecticut resident geography and three UN territorial transitions verified. Global original release days and full territory coverage remain incomplete",
+      "status": "blocked"
+    },
+    {
+      "artifact": "age-replay.json",
+      "gate": "G03",
+      "reason": "Independent source-parser, matched annual denominators and direct age-standardization replay",
+      "status": "passed"
+    },
+    {
+      "artifact": "observations.csv",
+      "gate": "G04",
+      "reason": "230 surveillance countries; real multiyear health and economic panel",
+      "status": "passed"
+    },
+    {
+      "artifact": "excess.json",
+      "gate": "G05",
+      "reason": "WHO 2022 and 2023 modeled excess releases, input support and changed age bands retained",
+      "status": "passed"
+    },
+    {
+      "artifact": "survey-bridge.json",
+      "gate": "G06",
+      "reason": "Weeks 1, 33 and 34 design replay. Nonresponse bounds and separate seven- and fourteen-day symptom estimates",
+      "status": "passed"
+    },
+    {
+      "artifact": "sector-hours.json",
+      "gate": "G07",
+      "reason": "Annual and quarterly actual hours, flag-aware sector contrasts, PISA and adult-reported instruction under separate definitions",
+      "status": "passed"
+    },
+    {
+      "artifact": "social-context.json",
+      "gate": "G08",
+      "reason": "US race and Hispanic origin, tenure and household income. Direct adult age standardization, 80 person replicates, item-response bounds and independent suppression checks",
+      "status": "passed"
+    },
+    {
+      "artifact": "genetics.json",
+      "gate": "G09",
+      "reason": "Real HGI technical harmonization and archived CDC weighted lineage estimates; shared sample and LD limits explicit",
+      "status": "passed"
+    },
+    {
+      "artifact": "mortality-calibration.json",
+      "gate": "G10",
+      "reason": "60 original configurations plus 66 historical configurations. Separate dated UK GDP and geographically held-out mortality intervals. Earlier exploratory undercoverage retained",
+      "status": "passed"
+    },
+    {
+      "artifact": "causal.json",
+      "gate": "G11",
+      "reason": "Real candidate group-time analyses, pretrends, pseudo-onsets and unsupported cells",
+      "status": "passed"
+    },
+    {
+      "artifact": "studies.json",
+      "gate": "G12",
+      "reason": "12 executed tables, 0 with incomplete outcome or design support",
+      "status": "passed"
+    },
+    {
+      "artifact": "browser-v9/checks.json",
+      "gate": "G13",
+      "reason": "Source-bound hosted comparisons, scenario toggling, causal, local, biological and new measurement views. Eight downloaded CSVs and responsive layout verified",
+      "status": "passed"
+    },
+    {
+      "artifact": "surveys.json",
+      "gate": "G14",
+      "reason": "Shared disclosure boundary, provider flags and export checks",
+      "status": "passed"
+    },
+    {
+      "artifact": "ENVIRONMENT.json",
+      "gate": "G15",
+      "reason": "Bounded acquisitions, checkpoint resume and measured storage accounting",
+      "status": "passed"
+    },
+    {
+      "artifact": "negative-controls.json",
+      "gate": "G16",
+      "reason": "43 source-matched tamper subprocesses rejected",
+      "status": "passed"
+    }
+  ],
+  "manifest_sha256": "49bb7edeff2014948a0ff121a6564c31334f5addad0aa2c9e99b3b4466a81088",
+  "negative_controls": {
+    "controls": [
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-forged-vintage",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "forged-vintage",
+        "reason": "aftershock: Forged vintage or availability timestamp",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-duplicate-population",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "duplicate-population",
+        "reason": "aftershock: Duplicate measurement population in evidence",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-future-label",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "future-label",
+        "reason": "aftershock: Future feature label or feature chronology violation",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-invalid-effect-sign",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "invalid-effect-sign",
+        "reason": "aftershock: Invalid genetic effect sign or odds ratio",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-shifted-placebo",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "shifted-placebo",
+        "reason": "aftershock: Shifted placebo baseline",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-shared-sample-reclassification",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "shared-sample-reclassification",
+        "reason": "aftershock: Shared-sample genetics reclassified as independent replication",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-survey-category",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "survey-category",
+        "reason": "aftershock: Survey population reclassified",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-survey-variance-factor",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "survey-variance-factor",
+        "reason": "aftershock: Invalid survey variance factor",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-survey-denominator",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "survey-denominator",
+        "reason": "aftershock: Survey weighted denominator mismatch",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-dynamic-parameters",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "dynamic-parameters",
+        "reason": "aftershock: Dynamic training likelihood replay mismatch",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-later-archive",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "later-archive",
+        "reason": "aftershock: Historical edition follows origin",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-forged-archive-bound",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "forged-archive-bound",
+        "reason": "aftershock: Forged historical edition bound",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-changed-gdp-anchor",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "changed-gdp-anchor",
+        "reason": "aftershock: Historical GDP anchor detached from raw edition",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-future-history-feature",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "future-history-feature",
+        "reason": "aftershock: Historical replay inputs differ from raw archives: x",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-forged-full-pass",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "forged-full-pass",
+        "reason": "aftershock: Full scope claims exceed source-supported capabilities",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-corruption",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "corruption",
+        "reason": "aftershock: Artifact checksum or size mismatch: genetics.json",
+        "rehashes_recomputed": false
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-missing-artifact",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "missing-artifact",
+        "reason": "aftershock: Unlisted or missing evidence artifact",
+        "rehashes_recomputed": false
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-source-mismatch",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "source-mismatch",
+        "reason": "aftershock: Source commit mismatch",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-failed-replay",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "failed-replay",
+        "reason": "aftershock: Saved model mean replay failed",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-hours-unit",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "hours-unit",
+        "reason": "aftershock: Hours definition or denominator substituted",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-hours-gdp-merge",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "hours-gdp-merge",
+        "reason": "aftershock: Hours and GDP merge population changed",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-assessment-change-error",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "assessment-change-error",
+        "reason": "aftershock: Released assessment value or standard error changed",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-instruction-population",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "instruction-population",
+        "reason": "aftershock: Remote instruction denominator unit changed",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-icu-denominator",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "icu-denominator",
+        "reason": "aftershock: Surveillance value changed: CA.hospital.2020-07-20.all_cause_adult_icu_occupancy.staffed_bed_days",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-pcr-result-population",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "pcr-result-population",
+        "reason": "aftershock: Surveillance value changed: CA.testing.2020-03-02.determinate_results",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-vaccine-report-date",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "vaccine-report-date",
+        "reason": "aftershock: Surveillance value changed: CA.vaccination.2020-12-14.latest_report.report_date",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-survey-bridge-recall",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "survey-bridge-recall",
+        "reason": "aftershock: Survey bridge recall or response-rate contract changed",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-survey-bridge-weight",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "survey-bridge-weight",
+        "reason": "aftershock: Survey bridge value changed: 33.national.United States.Symptoms of Anxiety Disorder.denominator",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-sector-hours-denominator",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "sector-hours-denominator",
+        "reason": "aftershock: Sector-hours worker denominator changed",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-sector-break-treatment",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "sector-break-treatment",
+        "reason": "aftershock: Sector comparison or break handling changed.change_hours",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-cps-survey-denominator",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "cps-survey-denominator",
+        "reason": "aftershock: CPS worker weighting or disclosure changed.adult_worker_denominator",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-cps-suppression-leak",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "cps-suppression-leak",
+        "reason": "aftershock: CPS worker weighting or disclosure changed.complete_respondents",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-ct-county-assignment",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "ct-county-assignment",
+        "reason": "aftershock: Connecticut municipal allocation differs from original crosswalk",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-ct-event-weight-substitution",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "ct-event-weight-substitution",
+        "reason": "aftershock: Connecticut resident weights promoted to event counts",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-uk-forged-original-release-day",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "uk-forged-original-release-day",
+        "reason": "aftershock: ONS release evidence detached from raw editions",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-uk-use-future-release",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "uk-use-future-release",
+        "reason": "aftershock: ONS as-of replay selects a future or incomplete release",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-social-context-suppression-leak",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "social-context-suppression-leak",
+        "reason": "aftershock: Social context suppressed cell exposed a protected estimate or denominator",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-uk-forecast-origin",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "uk-forecast-origin",
+        "reason": "aftershock: Survey bridge value changed: GDP forecast origins and lags.origin",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-uk-forecast-coverage",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "uk-forecast-coverage",
+        "reason": "aftershock: Survey bridge value changed: GDP held-out coverage and interval score.covered",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-territorial-population-reclassification",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "territorial-population-reclassification",
+        "reason": "aftershock: Territory support or predecessor comparability altered",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-mortality-calibration-country-leakage",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "mortality-calibration-country-leakage",
+        "reason": "aftershock: Mortality geographic holdout or completeness changed",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-mortality-interval-coverage",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "mortality-interval-coverage",
+        "reason": "aftershock: Survey bridge value changed: mortality evaluation prediction or coverage.standardized_upper",
+        "rehashes_recomputed": true
+      },
+      {
+        "command": [
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.venv/bin/python",
+          "-m",
+          "aftershock.cli",
+          "verify",
+          "--evidence",
+          "/home/runner/work/aftershock-atlas/aftershock-atlas/.agent-local/negative-controls/combined-browser-linux-full-20261120-browser-missing-active-projections",
+          "--expected-source",
+          "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+        ],
+        "exit": 1,
+        "name": "browser-missing-active-projections",
+        "reason": "aftershock: The integrated browser path is incomplete",
+        "rehashes_recomputed": true
+      }
+    ],
+    "rejected": 43,
+    "source": "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4"
+  },
+  "negative_controls_sha256": "d7b0cf8b6b77fe5cdfe8c50c4473c5f227f9e95c8ab9544f07a5f822ffc5899b",
+  "public_parts_artifact": {
+    "digest": "sha256:8ba225d8f593ff77c747af0eba712495d59d46a0a2295a74f01c817a32c1af74",
+    "id": 14676911201,
+    "size_in_bytes": 422994
+  },
+  "remaining_gates": [
+    {
+      "artifact": "territory-audit.json",
+      "gate": "G02",
+      "reason": "UK release days, Connecticut resident geography and three UN territorial transitions verified. Global original release days and full territory coverage remain incomplete",
+      "status": "blocked"
+    }
+  ],
+  "research_artifact": {
+    "digest": "sha256:83c4959fc8cb891362cb261f48c3afc5bc226e5ffdf750bee9f4b75d5797db2b",
+    "id": 14676436554,
+    "size_in_bytes": 13601622
+  },
+  "run_id": "combined-browser-linux-full-20261120",
+  "source": "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4",
+  "stage_count": 29,
+  "test_count": 41,
+  "verification": {
+    "browser_walkthrough": {
+      "deployment": "bac72de3e8e07d9b08adff134ab6ba53bf1b465c",
+      "download_rows": 236,
+      "downloads": 8,
+      "projected_rows": 12,
+      "research_source": "3f241904cb23fb36b8cfdac7c315347cde383d8e",
+      "viewports": [
+        320,
+        390,
+        1280
+      ]
+    },
+    "domain": {
+      "age_contrasts": 4,
+      "genetic_probes": 20,
+      "suppressed_survey_cells": 235
+    },
+    "extension": {
+      "dynamic": {
+        "exploratory": true,
+        "outcome_families": 6,
+        "replayed_predictions": 6857
+      },
+      "dynamic_scores": {
+        "configurations": 6,
+        "joint_multiyear_economies": 175,
+        "prediction_records": 6857,
+        "score_groups": 1237
+      },
+      "survey": {
+        "aggregate_design_cells": 24,
+        "public_use_records": 74413,
+        "raw_in_bundle": false,
+        "replicates": 80
+      }
+    },
+    "forecasts": {
+      "configurations": 60,
+      "joint_multiyear_economies": 175,
+      "prediction_records": 68570,
+      "score_groups": 12370
+    },
+    "full_acceptance": false,
+    "geography": {
+      "ambiguous_counties": 7,
+      "county_region_links": 19,
+      "municipalities": 169,
+      "residents": 3605944
+    },
+    "historical": {
+      "configurations": 66,
+      "exploratory": true,
+      "feature_rows": 4001,
+      "future_reference_values_excluded": 399,
+      "prediction_rows": 42097,
+      "revision_comparisons": 27342,
+      "score_groups": 12067,
+      "sensitivity_cells": 7812,
+      "serialized_cells": 227850,
+      "source_partitions": 43,
+      "trained_seeds": 3
+    },
+    "measurement": {
+      "hours_rows": 90,
+      "instruction_aggregates": 110,
+      "learning_rows": 243
+    },
+    "mortality_calibration": {
+      "evaluation_weeks": 1144,
+      "held_out_countries": 3,
+      "ridge_passes_observed_coverage": true,
+      "score_checks": 144,
+      "selected_baseline": "seasonal_mean",
+      "selected_ridge": "ridge_10",
+      "test_countries": 22,
+      "test_rows": 6864
+    },
+    "observations": {
+      "metric_counts": {
+        "covid_cases": 85200,
+        "covid_deaths": 85200,
+        "employment": 5642,
+        "gdp": 5642,
+        "immunization": 5642,
+        "life_expectancy": 5642,
+        "mortality": 5642,
+        "population": 5642,
+        "school": 5642
+      },
+      "negative_values": 31,
+      "records": 209894,
+      "surveillance_regions": 231
+    },
+    "occupation": {
+      "cells": 144,
+      "comparisons": 48,
+      "provider_agreements": 3,
+      "suppressed": 13
+    },
+    "profile": "full",
+    "replay": {
+      "replayed_predictions": 20571,
+      "seeds": [
+        11,
+        29,
+        47
+      ]
+    },
+    "sector_hours": {
+      "cohort_summaries": 18,
+      "country_sector_comparisons": 486,
+      "quarter_values": 7776
+    },
+    "social_context": {
+      "contrast_checks": 52,
+      "descriptive_cells": 88,
+      "national_benchmark_agreements": 2,
+      "waves": 2,
+      "withheld_cells": 4
+    },
+    "source": "75823a923b6bc11b0f1242aa06ba83a1a41c4ed4",
+    "state_surveillance": {
+      "state_week_rows": 29376,
+      "states": 51,
+      "summary": {
+        "hospital": {
+          "weeks": 11526,
+          "with_reports": 11144,
+          "with_seven_report_dates": 11034
+        },
+        "testing": {
+          "weeks": 11373,
+          "with_reports": 10838,
+          "with_seven_report_dates": 10751
+        },
+        "vaccination": {
+          "weeks": 6477,
+          "with_reports": 6426,
+          "with_seven_report_dates": 3978
+        }
+      }
+    },
+    "status": "source_checks_passed_full_incomplete",
+    "survey_bridge": {
+      "cell_checks": 66,
+      "provider_comparisons": 36,
+      "provider_point_matches": 32,
+      "waves": 2
+    },
+    "territory_audit": {
+      "future_values_excluded": 9,
+      "populated_rows_before_or_during_change": 1961,
+      "registered_territories": 7,
+      "scoped_cells": 1029,
+      "supplied_rows": 7350
+    },
+    "uk_forecast": {
+      "models": 7,
+      "prediction_checks": 56,
+      "quarters": 8,
+      "validation_selected_baseline": "zero",
+      "validation_selected_ridge": "ridge_100"
+    },
+    "uk_releases": {
+      "editions": 36,
+      "origin_checks": 72,
+      "paired_quarters": 18,
+      "unavailable_editions": 0,
+      "workbook_cells": 846
+    }
+  },
+  "verification_sha256": "07cd888ea585971105d7c9b0123d39c56a474b69cd0d46f77a5063207c2fa9c7",
+  "workflow_conclusion": "failure"
+}
