@@ -30,7 +30,7 @@ jobs:
       - run: uv build --out-dir .agent-local/packages
         env:
           UV_CACHE_DIR: .agent-local/uv-cache
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: public-atlas
           path: dist

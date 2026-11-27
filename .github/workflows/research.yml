@@ -33,7 +33,7 @@ jobs:
           CAMPAIGN_ID: ${{ inputs.run_id }}
           CAMPAIGN_PROFILE: ${{ inputs.profile }}
       - if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: research-results-and-manifests
           path: |
@@ -44,7 +44,7 @@ jobs:
             evidence/*/browser-v9
           retention-days: 7
       - if: always() && hashFiles('evidence/*/VERIFICATION.json') != ''
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: verified-chronology-atlas-parts
           path: |
